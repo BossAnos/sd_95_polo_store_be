@@ -1,7 +1,10 @@
 package com.example.sd_95_polo_store_be.Model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.Date;
 
 @Table(name = "Colors")
 @AllArgsConstructor
@@ -21,4 +24,10 @@ public class Color {
 
 
     private String description;
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private Date create_date ;
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private Date update_date ;
 }
