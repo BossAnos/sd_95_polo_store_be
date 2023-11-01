@@ -1,4 +1,4 @@
-package com.example.sd_95_polo_store.Config;
+package com.example.sd_95_polo_store_be.Config;
 
 import lombok.Data;
 import org.springframework.context.annotation.Bean;

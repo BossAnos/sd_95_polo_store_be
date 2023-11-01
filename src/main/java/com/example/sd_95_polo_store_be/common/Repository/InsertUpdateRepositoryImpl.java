@@ -1,4 +1,4 @@
-package com.example.sd_95_polo_store.common.Repository;
+package com.example.sd_95_polo_store_be.common.Repository;
 
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;

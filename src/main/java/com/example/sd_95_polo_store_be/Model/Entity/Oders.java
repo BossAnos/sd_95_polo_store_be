@@ -1,4 +1,4 @@
-package com.example.sd_95_polo_store.Model.Entity;
+package com.example.sd_95_polo_store_be.Model.Entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

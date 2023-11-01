@@ -1,4 +1,4 @@
-package com.example.sd_95_polo_store.Model.Entity;
+package com.example.sd_95_polo_store_be.Model.Entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.MappedSuperclass;
@@ -11,21 +11,21 @@ import java.time.OffsetDateTime;
 @Data
 @Accessors(chain = true)
 public abstract class BaseEntity<T> {
-    @JsonProperty("created_date")
-    OffsetDateTime createdAt;
+    @JsonProperty("create_date")
+    OffsetDateTime createDate;
 
-    @JsonProperty("updated_date")
-    OffsetDateTime updatedAt;
+    @JsonProperty("update_date")
+    OffsetDateTime updateDate;
 
     protected abstract T self();
 
     public T setCreatedAt(OffsetDateTime createdAt) {
-        this.createdAt = createdAt;
+        this.createDate = createdAt;
         return self();
     }
 
     public T setUpdatedAt(OffsetDateTime updatedAt) {
-        this.updatedAt = updatedAt;
+        this.updateDate = updatedAt;
         return self();
     }
 

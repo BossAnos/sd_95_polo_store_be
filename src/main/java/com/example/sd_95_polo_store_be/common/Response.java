@@ -1,6 +1,6 @@
-package com.example.sd_95_polo_store.common;
+package com.example.sd_95_polo_store_be.common;
 
-import com.example.poloman.common.Util.Constant;
+import com.example.sd_95_polo_store_be.common.Util.Constant;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.data.domain.Page;
 
