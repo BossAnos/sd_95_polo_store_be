@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -33,6 +34,12 @@ public class ColorService {
     public boolean isColorDataDuplicate(Color color) {
         return colorRepository.existsByName(color.getName());
     }
+    public Color findById(Long id) {
+        Optional<Color> color = colorRepository.findById(id);
+        return color.orElse(null);
+    }
+
+
 
 
 }
