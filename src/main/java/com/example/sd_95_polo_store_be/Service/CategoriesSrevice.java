@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class CategoriesSrevice {
     @Autowired
@@ -29,6 +31,10 @@ public class CategoriesSrevice {
 
     public boolean isCategoriesDataDuplicate(Categories categories) {
         return categoriesRepository.existsByName(categories.getName());
+    }
+    public Categories findById(Long id) {
+        Optional<Categories> categories = categoriesRepository.findById(id);
+        return categories.orElse(null);
     }
 
 }

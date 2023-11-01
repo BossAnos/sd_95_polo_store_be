@@ -1,11 +1,13 @@
 package com.example.sd_95_polo_store_be.Controller;
 
 import com.example.sd_95_polo_store_be.Model.Categories;
+import com.example.sd_95_polo_store_be.Model.Color;
 import com.example.sd_95_polo_store_be.Service.CategoriesSrevice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
@@ -38,12 +40,18 @@ public class CategoriesController {
 
         if (!error.isEmpty()) {
             return ResponseEntity.badRequest().body(error);
+
         }
         categoriesSrevice.saveCategories(categories);
-        return ResponseEntity.ok(categories);
+        return ResponseEntity.ok("Thêm loại thành công");
     }
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable  Long id, @RequestBody Categories categories) {
+       Categories existingCategories = categoriesSrevice.findById(id);
+        if (existingCategories == null) {
+            String error = "Không tìm thấy loại với ID: " + id;
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+        }
         String error = "";
         if (ObjectUtils.isEmpty(categories.getName().trim())) {
             error = "Tên không để trống";
@@ -62,8 +70,15 @@ public class CategoriesController {
         return ResponseEntity.ok(categories);
     }
     @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        Categories existingCategories = categoriesSrevice.findById(id);
+        if (existingCategories == null) {
+            String error = "Không tìm thấy loại  với ID: " + id;
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+        }
+
         categoriesSrevice.deleteCategoriesById(id);
+        return ResponseEntity.ok("Loại đã được xóa thành công");
     }
 
     @GetMapping("/get-page")
@@ -72,4 +87,6 @@ public class CategoriesController {
         Page<Categories> page = categoriesSrevice.findAllCategories(pageable);
         return page.toList();
     }
+
+
 }
