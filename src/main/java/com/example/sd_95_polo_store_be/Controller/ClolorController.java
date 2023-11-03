@@ -1,7 +1,8 @@
 package com.example.sd_95_polo_store_be.Controller;
 
+
 import com.example.sd_95_polo_store_be.Model.Color;
-import com.example.sd_95_polo_store_be.Service.ColorService;
+import com.example.sd_95_polo_store_be.Service.ColorServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,14 +12,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/color")
 @RestController
 public class ClolorController {
     @Autowired
-    ColorService colorService;
+    ColorServices colorService;
 
     @GetMapping("/getall")
     public List<?> getAll() {
@@ -27,59 +28,34 @@ public class ClolorController {
 
     @PostMapping("/add")
     public ResponseEntity<?> create(@RequestBody Color color) {
-        String error = "";
-        if (ObjectUtils.isEmpty(color.getName().trim())) {
-            error = "Tên không để trống";
-        } else if (ObjectUtils.isEmpty(color.getStatus().toString().trim())) {
-            error = "Trạng thái không để trống";
-        } else if (ObjectUtils.isEmpty(color.getDescription().trim())) {
-            error = "Mô tả không để trống";
-        } else if (colorService.isColorDataDuplicate(color)) {
-            error = "Màu này đã có rồi";
+        try {
+            colorService.saveColor(color);
+            return ResponseEntity.ok("Thêm màu sắc thành công");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-
-        if (!error.isEmpty()) {
-            return ResponseEntity.badRequest().body(error);
-        }
-        colorService.saveColor(color);
-        return ResponseEntity.ok("Thêm màu sắc thành công");
     }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Color color) {
-        Color existingColor = colorService.findById(id);
-        if (existingColor == null) {
-            String error = "Không tìm thấy màu sắc với ID: " + id;
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+        try {
+            colorService.update(color, id);
+            return ResponseEntity.ok("cap nhat màu sắc thành công");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-        String error = "";
-        if (ObjectUtils.isEmpty(color.getName().trim())) {
-            error = "Tên không để trống";
-        } else if (ObjectUtils.isEmpty(color.getStatus().toString().trim())) {
-            error = "Trạng thái không để trống";
-        } else if (ObjectUtils.isEmpty(color.getDescription().trim())) {
-            error = "Mô tả không để trống";
-        }
-
-        if (!error.isEmpty()) {
-            return ResponseEntity.badRequest().body(error);
-        }
-
-        color.setId(id);
-        colorService.saveColor(color);
-        return ResponseEntity.ok(color);
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
-        Color existingColor = colorService.findById(id);
-        if (existingColor == null) {
-            String error = "Không tìm thấy màu sắc với ID: " + id;
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+
+        try {
+            colorService.deleteColorById(id);
+            return ResponseEntity.ok("Màu sắc đã được xóa thành công");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
 
-        colorService.deleteColorById(id);
-        return ResponseEntity.ok("Màu sắc đã được xóa thành công");
     }
 
     @GetMapping("/get-page")
@@ -89,27 +65,14 @@ public class ClolorController {
         return page.toList();
     }
 
-    @DeleteMapping("/deleteAll/{ids}")
-    public ResponseEntity<String> deleteMultiple(@PathVariable List<Long> ids) {
-        List<String> errors = new ArrayList<>();
-        List<String> successMessages = new ArrayList<>();
-
-        for (Long id : ids) {
-            Color existingColor = colorService.findById(id);
-            if (existingColor == null) {
-                errors.add("Không tìm thấy màu sắc với ID: " + id);
-            } else {
-                colorService.deleteColorById(id);
-                successMessages.add("Màu sắc với ID " + id + " đã được xóa thành công");
-            }
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteMultiple(@RequestBody Map<String, List<Long>> request) {
+        List<Long> ids = request.get("id");
+        try {
+            colorService.deleteColorsByIds(ids);
+            return ResponseEntity.ok("Các màu sắc đã được xóa thành công");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-
-        if (!errors.isEmpty()) {
-            String error = String.join(", ", errors);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
-        }
-
-        String successMessage = String.join(", ", successMessages);
-        return ResponseEntity.ok(successMessage);
     }
 }
