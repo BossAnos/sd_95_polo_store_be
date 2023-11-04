@@ -1,7 +1,6 @@
 package com.example.sd_95_polo_store_be.Service.impl;
 
-import com.example.sd_95_polo_store_be.Model.Categories;
-import com.example.sd_95_polo_store_be.Model.Color;
+import com.example.sd_95_polo_store_be.Model.Entity.Categories;
 import com.example.sd_95_polo_store_be.Repository.CategoriesRepository;
 import com.example.sd_95_polo_store_be.Service.CategoriesService;
 import org.springframework.beans.factory.annotation.Autowired;

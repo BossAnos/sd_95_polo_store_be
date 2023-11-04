@@ -1,6 +1,6 @@
 package com.example.sd_95_polo_store_be.Service;
 
-import com.example.sd_95_polo_store_be.Model.Color;
+import com.example.sd_95_polo_store_be.Model.Entity.Color;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

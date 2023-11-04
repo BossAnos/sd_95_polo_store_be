@@ -1,14 +1,12 @@
 package com.example.sd_95_polo_store_be.Controller;
 
-import com.example.sd_95_polo_store_be.Model.Categories;
+import com.example.sd_95_polo_store_be.Model.Entity.Categories;
 import com.example.sd_95_polo_store_be.Service.CategoriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 

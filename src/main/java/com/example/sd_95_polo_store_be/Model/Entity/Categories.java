@@ -1,4 +1,4 @@
-package com.example.sd_95_polo_store_be.Model;
+package com.example.sd_95_polo_store_be.Model.Entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;

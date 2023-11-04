@@ -1,13 +1,11 @@
 package com.example.sd_95_polo_store_be.Service.impl;
 
-import com.example.sd_95_polo_store_be.Model.Color;
+import com.example.sd_95_polo_store_be.Model.Entity.Color;
 import com.example.sd_95_polo_store_be.Repository.ColorRepository;
 import com.example.sd_95_polo_store_be.Service.ColorServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
