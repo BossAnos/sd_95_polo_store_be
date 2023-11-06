@@ -11,6 +11,7 @@ import java.util.List;
 public class Response<T> {
     private T data;
     private Metadata meta = new Metadata();
+    public static final String ERROR_CODE = Constant.PREFIX_RESPONSE_CODE + 400;
 
     public Response(T data, Metadata meta) {
         this.data = data;
@@ -110,5 +111,11 @@ public class Response<T> {
             this.message = message;
         }
 
+    }
+    public static <T> Response<T> ofError(String errorMessage) {
+        Response<T> response = new Response<>();
+        response.meta.setCode(ERROR_CODE);
+        response.meta.setMessage(errorMessage);
+        return response;
     }
 }

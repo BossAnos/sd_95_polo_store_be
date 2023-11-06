@@ -58,13 +58,11 @@ public class ColorServiceImpl implements ColorServices {
         }
         color.setId(id);
         colorRepository.save(color);
-
     }
 
 
     @Override
     public void deleteColorById(Long id) {
-
         Colors existingColor = findById(id);
         if (existingColor == null) {
             throw new IllegalArgumentException("Không tìm thấy màu sắc với ID: " + id);
