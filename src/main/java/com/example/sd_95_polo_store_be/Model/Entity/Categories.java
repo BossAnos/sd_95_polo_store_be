@@ -28,8 +28,8 @@ public class Categories {
     private String description;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
-    private Date create_date;
+    private Date createdate;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
-    private Date update_date;
+    private Date updatedate;
 }
