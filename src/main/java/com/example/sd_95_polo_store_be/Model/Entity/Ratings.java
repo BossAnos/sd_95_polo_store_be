@@ -21,7 +21,9 @@ public class Ratings extends BaseEntity<Ratings> {
     private Customers customers;
 
     @ManyToOne
-    @JoinColumn()
+    @JoinColumn(name = "productDetailId ")
+    private ProductDetail productDetail;
+
 
 
     @Override
