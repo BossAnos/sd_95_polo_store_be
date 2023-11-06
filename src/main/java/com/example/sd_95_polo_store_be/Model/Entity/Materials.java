@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class Meterials extends BaseEntity<Meterials> {
+public class Materials extends BaseEntity<Materials> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -23,7 +23,7 @@ public class Meterials extends BaseEntity<Meterials> {
 
 
     @Override
-    protected Meterials self() {
+    protected Materials self() {
         return null;
     }
 }

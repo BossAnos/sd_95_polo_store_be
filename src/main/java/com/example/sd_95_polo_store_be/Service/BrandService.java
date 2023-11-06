@@ -9,7 +9,10 @@ import java.util.List;
 
 public interface BrandService {
     List<Brands> gets();
+
     Brands createOrUpdate(BrandRequest request);
 
     boolean isBrand(Brands brands);
+
+    void deleteBrandByIds(List<Integer> ids);
 }
