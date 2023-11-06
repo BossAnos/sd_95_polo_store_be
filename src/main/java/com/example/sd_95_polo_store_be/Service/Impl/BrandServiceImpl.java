@@ -25,9 +25,9 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public Brands createOrUpdate(BrandRequest request) {
-        if (ObjectUtils.isEmpty(request.getNameBrand().trim())) {
+        if (request.getNameBrand() == null || request.getNameBrand().isEmpty()) {
             throw new IllegalArgumentException("Tên không để trống");
-        } else if (ObjectUtils.isEmpty(request.getDescription().trim())) {
+        } else if (request.getDescription() == null || request.getDescription().isEmpty()) {
             throw new IllegalArgumentException("Mô tả không để trống");
         }
 
