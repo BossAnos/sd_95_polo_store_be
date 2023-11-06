@@ -25,15 +25,17 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public Brands createOrUpdate(BrandRequest request) {
-        if (request.getNameBrand() == null) {
+        if (request.getNameBrand() == null || request.getNameBrand().isEmpty()) {
             throw new IllegalArgumentException("Tên không để trống");
-        } else if (request.getDescription() == null) {
+        } else if (request.getDescription() == null || request.getDescription().isEmpty()) {
             throw new IllegalArgumentException("Mô tả không để trống");
         }
 
         Optional<Brands> brands = Optional.empty();
         if (request.getId() != null) {
             brands = brandRepository.findById(request.getId());
+        } else {
+            throw new IllegalArgumentException("Id không hợp lệ");
         }
 
         var now = OffsetDateTime.now();
@@ -48,7 +50,7 @@ public class BrandServiceImpl implements BrandService {
         } else {
             Brands newBrand = new Brands();
             if (isBrand(newBrand)) {
-                throw new IllegalArgumentException("Loại này đã có rồi");
+                throw new IllegalArgumentException("Thương Hiệu này đã có rồi");
             }
             newBrand.setName(request.getNameBrand());
             newBrand.setStatus(0);
