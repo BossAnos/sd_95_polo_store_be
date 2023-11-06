@@ -11,14 +11,9 @@ import java.util.List;
 
 @Service
 public interface ColorServices {
-    ArrayList<Colors> getAllColor(
+    ArrayList<Colors> getAllColor();
 
-
-    );
-
-    void saveColor(Colors color);
-
-    void update(Colors color, Long id);
+    Colors saveColor(Colors color);
 
     void deleteColorById(Long id);
 

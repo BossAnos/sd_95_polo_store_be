@@ -12,7 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 @Data
-public class ProductDetail {
+public class ProductDetail extends BaseEntity<ProductDetail>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,11 +27,10 @@ public class ProductDetail {
 
     private String description;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private Date createdate;
-
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private Date updatedate;
+    @Override
+    protected ProductDetail self() {
+        return this;
+    }
 
     @ManyToOne
     @JoinColumn(name = "productId")

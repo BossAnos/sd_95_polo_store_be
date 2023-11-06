@@ -1,6 +1,7 @@
 package com.example.sd_95_polo_store_be.Service.Impl;
 
 import com.example.sd_95_polo_store_be.Model.Entity.Categories;
+import com.example.sd_95_polo_store_be.Model.Entity.Colors;
 import com.example.sd_95_polo_store_be.Repository.CategoriesRepository;
 import com.example.sd_95_polo_store_be.Service.CategoriesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +26,7 @@ public class CategoriesServiceImpl implements CategoriesService {
     }
 
     @Override
-    public void saveCategories(Categories categories) {
+    public Categories saveCategories(Categories categories) {
         if (ObjectUtils.isEmpty(categories.getName().trim())) {
             throw new IllegalArgumentException("Tên không để trống");
         } else if (ObjectUtils.isEmpty(categories.getStatus().toString().trim())) {
@@ -34,28 +36,34 @@ public class CategoriesServiceImpl implements CategoriesService {
         } else if (isCategoriesDataDuplicate(categories)) {
             throw new IllegalArgumentException("Loại này đã có rồi");
         }
-        categoriesRepository.save(categories);
+        var now = OffsetDateTime.now();
+        if (categories.getId() != null) {
+            Optional<Categories> existingCategori = categoriesRepository.findById(categories.getId());
+            if (existingCategori.isPresent()) {
+                Categories updateCategori = existingCategori.get();
+                updateCategori.setName(categories.getName());
+                updateCategori.setStatus(0);
+                updateCategori.setDescription(categories.getDescription());
+                updateCategori.setUpdatedAt(now);
+                return categoriesRepository.save(updateCategori);
+            } else {
+                throw new IllegalArgumentException("Không tìm thấy kích thước với id: " + categories.getId());
+            }
+        } else {
+            Categories newCategori = new Categories();
+            if (isCategoriesDataDuplicate(categories)) {
+                throw new IllegalArgumentException("loại này đã có rồi");
+            }
+            newCategori.setName(categories.getName());
+            newCategori.setStatus(0);
+            newCategori.setDescription(categories.getDescription());
+            newCategori.setCreatedAt(now);
+            newCategori.setUpdatedAt(now);
+            return categoriesRepository.save(categories);
+        }
+
     }
 
-    @Override
-    public void update(Categories categories, Long id) {
-        Categories existingCategories = findById(id);
-        if (existingCategories == null) {
-            throw new IllegalArgumentException("Không tìm thấy loại với ID: " + id);
-        }
-        if (ObjectUtils.isEmpty(categories.getName().trim())) {
-            throw new IllegalArgumentException("Tên không để trống");
-        } else if (ObjectUtils.isEmpty(categories.getStatus().toString().trim())) {
-            throw new IllegalArgumentException("Trạng thái không để trống");
-        } else if (ObjectUtils.isEmpty(categories.getDescription().trim())) {
-            throw new IllegalArgumentException("Mô tả không để trống");
-        } else if (isCategoriesDataDuplicate(categories)) {
-            throw new IllegalArgumentException("Loại này đã có rồi");
-        }
-        categories.setId(id);
-        categoriesRepository.save(categories);
-
-    }
 
     @Override
     public void deleteCategoriesById(Long id) {

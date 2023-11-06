@@ -3,6 +3,7 @@ package com.example.sd_95_polo_store_be.Controller;
 
 
 import com.example.sd_95_polo_store_be.Model.Entity.Colors;
+import com.example.sd_95_polo_store_be.Model.Entity.Sizes;
 import com.example.sd_95_polo_store_be.Service.ColorServices;
 import com.example.sd_95_polo_store_be.common.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,22 +28,23 @@ public class ClolorController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> create(@RequestBody Colors color) {
+    public Response<Colors> create(@RequestBody Colors color) {
         try {
-            colorServices.saveColor(color);
-            return ResponseEntity.ok("Thêm màu sắc thành công");
+            Colors colors = colorServices.saveColor(color);
+            return Response.ofSucceeded(colors);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return Response.ofError(e.getMessage());
         }
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Colors color) {
+    public Response<Colors> update(@PathVariable Long id, @RequestBody Colors color) {
         try {
-            colorServices.update(color, id);
-            return ResponseEntity.ok("cap nhat màu sắc thành công");
+            color.setId(id);
+            Colors colors = colorServices.saveColor(color);
+            return Response.ofSucceeded(colors);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return Response.ofError(e.getMessage());
         }
     }
 
@@ -66,13 +68,14 @@ public class ClolorController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteMultiple(@RequestBody Map<String, List<Long>> request) {
+    public Response<List<Long>> deleteMultiple(@RequestBody Map<String, List<Long>> request) {
         List<Long> ids = request.get("id");
         try {
             colorServices.deleteColorsByIds(ids);
-            return ResponseEntity.ok("Các màu sắc đã được xóa thành công");
+            return Response.ofSucceeded();
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return Response.ofError(e.getMessage());
         }
+
     }
 }

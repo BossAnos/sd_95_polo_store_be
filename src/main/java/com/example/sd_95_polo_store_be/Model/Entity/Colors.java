@@ -13,7 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 @Data
-public class Colors {
+public class Colors extends BaseEntity<Colors>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,9 +27,8 @@ public class Colors {
 
     private String description;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private Date createdate;
-
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private Date updatedate;
+    @Override
+    protected Colors self() {
+        return this;
+    }
 }
