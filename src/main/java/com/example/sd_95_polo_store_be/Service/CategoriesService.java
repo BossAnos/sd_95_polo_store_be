@@ -11,8 +11,7 @@ import java.util.List;
 @Service
 public interface CategoriesService {
     ArrayList<Categories> getAllCategories();
-    void saveCategories(Categories categories);
-    void update(Categories categories,Long id);
+    Categories saveCategories(Categories categories);
     void deleteCategoriesById(Long id);
     Page<Categories> findAllCategories(Pageable pageable);
     boolean isCategoriesDataDuplicate(Categories categories);

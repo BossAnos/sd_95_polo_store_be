@@ -1,7 +1,9 @@
 package com.example.sd_95_polo_store_be.Controller;
 
 import com.example.sd_95_polo_store_be.Model.Entity.Categories;
+import com.example.sd_95_polo_store_be.Model.Entity.Colors;
 import com.example.sd_95_polo_store_be.Service.CategoriesService;
+import com.example.sd_95_polo_store_be.common.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,27 +21,28 @@ public class CategoriesController {
     CategoriesService categoriesSrevice;
 
     @GetMapping("/getall")
-    public List<?> getAll() {
-        return categoriesSrevice.getAllCategories();
+    public Response<List<Categories>> getAll() {
+        return Response.ofSucceeded(categoriesSrevice.getAllCategories());
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> create(@RequestBody Categories categories) {
+    public Response<Categories> create(@RequestBody Categories categories) {
         try {
-            categoriesSrevice.saveCategories(categories);
-            return ResponseEntity.ok("Thêm loại thành công");
+           Categories categorie = categoriesSrevice.saveCategories(categories);
+            return Response.ofSucceeded(categorie);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return Response.ofError(e.getMessage());
         }
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Categories categories) {
+    public Response<Categories> update(@PathVariable Long id, @RequestBody Categories categories) {
         try {
-            categoriesSrevice.update(categories,id);
-            return ResponseEntity.ok("cập nhật loại thành công");
+            categories.setId(id);
+            Categories categorie = categoriesSrevice.saveCategories(categories);
+            return Response.ofSucceeded(categorie);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return Response.ofError(e.getMessage());
         }
     }
 
@@ -61,14 +64,15 @@ public class CategoriesController {
         Page<Categories> page = categoriesSrevice.findAllCategories(pageable);
         return page.toList();
     }
+
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteMultiple(@RequestBody Map<String, List<Long>> request) {
+    public Response<List<Long>> deleteMultiple(@RequestBody Map<String, List<Long>> request) {
         List<Long> ids = request.get("id");
         try {
             categoriesSrevice.deleteCategoriesByIds(ids);
-            return ResponseEntity.ok("Các loai đã được xóa thành công");
+            return Response.ofSucceeded();
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return Response.ofError(e.getMessage());
         }
     }
 

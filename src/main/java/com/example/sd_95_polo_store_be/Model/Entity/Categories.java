@@ -13,7 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 @Data
-public class Categories {
+public class Categories extends BaseEntity<Categories>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,9 +27,8 @@ public class Categories {
 
     private String description;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private Date createdate;
-
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private Date updatedate;
+    @Override
+    protected Categories self() {
+        return this;
+    }
 }

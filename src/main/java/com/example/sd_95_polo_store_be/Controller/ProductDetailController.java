@@ -1,8 +1,10 @@
 package com.example.sd_95_polo_store_be.Controller;
 
 import com.example.sd_95_polo_store_be.Dto.ProductDetailDto;
+import com.example.sd_95_polo_store_be.Model.Entity.Colors;
 import com.example.sd_95_polo_store_be.Model.Entity.ProductDetail;
 import com.example.sd_95_polo_store_be.Service.ProductDetailService;
+import com.example.sd_95_polo_store_be.common.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,8 +25,8 @@ public class ProductDetailController {
         return items;
     }
 
-    @GetMapping("/getall")
-    public List<?> getAll() {
-        return (serializeList(productDetailService.getAll()));
-    }
+//    @GetMapping("/getall")
+//    public Response<List<ProductDetail>> getAll() {
+//        return Response.ofSucceeded(serializeList(productDetailService.getAllProductDetail()));
+//    }
 }

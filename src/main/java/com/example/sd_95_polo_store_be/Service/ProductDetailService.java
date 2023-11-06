@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 @Service
 public interface ProductDetailService {
-    ArrayList<ProductDetail> getAll();
+    ArrayList<ProductDetail> getAllProductDetail();
     void saveProductDetail(ProductDetail productDetail);
 
     void update(ProductDetail productDetail, Long id);
