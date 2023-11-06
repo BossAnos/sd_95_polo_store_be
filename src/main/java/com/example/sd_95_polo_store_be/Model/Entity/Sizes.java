@@ -21,6 +21,14 @@ public class Sizes extends BaseEntity<Sizes> {
 
     private String description;
 
+    private Integer shirtlength;
+
+    private Integer shirtwidth;
+
+    private Integer sleevelenght;
+
+    private Integer shoulderlength;
+
     @Override
     protected Sizes self() {
         return this;
