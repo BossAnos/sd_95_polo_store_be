@@ -31,8 +31,8 @@ public class Products extends BaseEntity<Products> {
     private Brands brands;
 
     @ManyToOne
-    @JoinColumn(name = "meterialId")
-    private Meterials meterials;
+    @JoinColumn(name = "materialId")
+    private Materials materials;
 
     @ManyToOne
     @JoinColumn(name = "discountId")

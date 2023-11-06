@@ -2,7 +2,7 @@ package com.example.sd_95_polo_store_be.Service.Impl;
 
 import com.example.sd_95_polo_store_be.Model.Entity.Brands;
 import com.example.sd_95_polo_store_be.Model.Request.BrandRequest;
-import com.example.sd_95_polo_store_be.Model.Response.BrandResponse;
+
 import com.example.sd_95_polo_store_be.Repository.BrandRepository;
 import com.example.sd_95_polo_store_be.Service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,28 +25,25 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public Brands createOrUpdate(BrandRequest request) {
-        if (request.getNameBrand() == null || request.getNameBrand().isEmpty()) {
+        if (ObjectUtils.isEmpty(request.getNameBrand().trim())) {
             throw new IllegalArgumentException("Tên không để trống");
-        } else if (request.getDescription() == null || request.getDescription().isEmpty()) {
+        } else if (ObjectUtils.isEmpty(request.getDescription().trim())) {
             throw new IllegalArgumentException("Mô tả không để trống");
         }
-
-        Optional<Brands> brands = Optional.empty();
-        if (request.getId() != null) {
-            brands = brandRepository.findById(request.getId());
-        } else {
-            throw new IllegalArgumentException("Id không hợp lệ");
-        }
-
         var now = OffsetDateTime.now();
 
-        if (brands.isPresent()) {
-            Brands updateBrand = brands.get();
-            updateBrand.setName(request.getNameBrand());
-            updateBrand.setStatus(0);
-            updateBrand.setDescription(request.getDescription());
-            updateBrand.setUpdatedAt(now);
-            return brandRepository.save(updateBrand);
+        if (request.getId() != null) {
+            Optional<Brands> existingBrand = brandRepository.findById(request.getId());
+            if (existingBrand.isPresent()) {
+                Brands updateBrand = existingBrand.get();
+                updateBrand.setName(request.getNameBrand());
+                updateBrand.setStatus(0);
+                updateBrand.setDescription(request.getDescription());
+                updateBrand.setUpdatedAt(now);
+                return brandRepository.save(updateBrand);
+            } else {
+                throw new IllegalArgumentException("Không tìm thấy thương hiệu với id: " + request.getId());
+            }
         } else {
             Brands newBrand = new Brands();
             if (isBrand(newBrand)) {
@@ -66,4 +63,21 @@ public class BrandServiceImpl implements BrandService {
         Optional<Brands> existingBrand = brandRepository.findByName(brands.getName());
         return existingBrand.isPresent();
     }
-}
+
+    @Override
+    public void deleteBrandByIds(List<Integer> ids) {
+        if (ids != null && !ids.isEmpty()) {
+            for (Integer id : ids) {
+                Optional<Brands> brands = brandRepository.findById(id);
+                if (brands.isPresent()) {
+                    brandRepository.deleteById(id);
+                } else {
+                    throw new IllegalArgumentException("Không tìm thấy thương hiệu");
+                }
+            }
+        } else {
+            throw new IllegalArgumentException("Danh sách ID không hợp lệ");
+        }
+    }
+    }
+
