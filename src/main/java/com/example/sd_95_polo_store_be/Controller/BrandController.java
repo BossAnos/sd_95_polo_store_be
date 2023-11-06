@@ -23,8 +23,12 @@ public class BrandController {
 
     @PostMapping
     public Response<Brands> createBrand(@RequestBody BrandRequest request) {
-        Brands createdBrand = brandService.createOrUpdate(request);
-        return Response.ofSucceeded(createdBrand);
+        try {
+            Brands createdBrand = brandService.createOrUpdate(request);
+            return Response.ofSucceeded(createdBrand);
+        } catch (IllegalArgumentException e) {
+            return Response.ofError(e.getMessage());
+        }
     }
 
     @PutMapping("/{id}")
