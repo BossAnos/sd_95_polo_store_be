@@ -13,10 +13,6 @@ import java.util.Date;
 public class ProductDetailDto {
     Long id;
 
-
-
-
-
     Integer quantity;
 
     Double cost;
