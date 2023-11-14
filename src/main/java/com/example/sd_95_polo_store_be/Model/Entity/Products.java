@@ -1,9 +1,7 @@
 package com.example.sd_95_polo_store_be.Model.Entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Table(name = "Products")
 @AllArgsConstructor
