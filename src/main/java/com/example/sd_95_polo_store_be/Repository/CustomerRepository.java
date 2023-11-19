@@ -12,9 +12,9 @@ import java.util.List;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customers, Integer> {
     @Query(value = """
-                select new com.example.sd_95_polo_store_be.Model.Response.CustomerForAdminResponse(c.id,c.name,c.phone,c.name,c.avatar)
+                select new com.example.sd_95_polo_store_be.Model.Response.CustomerForAdminResponse(c.id,c.name,c.email,c.phone,c.avatar)
                 from Customers c
-              where c.status = "1"
+              where c.status = '1'
             """)
     List<CustomerForAdminResponse> getCustomersForAdmin();
 }
