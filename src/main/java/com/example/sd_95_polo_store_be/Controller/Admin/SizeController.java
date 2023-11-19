@@ -1,4 +1,4 @@
-package com.example.sd_95_polo_store_be.Controller;
+package com.example.sd_95_polo_store_be.Controller.Admin;
 
 import com.example.sd_95_polo_store_be.Model.Entity.Sizes;
 import com.example.sd_95_polo_store_be.Service.SizeService;
