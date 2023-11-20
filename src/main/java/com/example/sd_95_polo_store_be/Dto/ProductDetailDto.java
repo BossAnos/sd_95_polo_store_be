@@ -31,7 +31,6 @@ public class ProductDetailDto {
         cost = productDetail.getCost();
         price = productDetail.getPrice();
         status = productDetail.getStatus();
-        description = productDetail.getDescription();
         create_date = productDetail.getCreateDate();
         update_date = productDetail.getUpdateDate();
         Products products = productDetail.getProducts();

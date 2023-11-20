@@ -68,7 +68,7 @@ public class ProductDetailServiceImpl implements ProductDetailService {
                 ProductDetail updateProductDetails = existingProductDetails.get();
                 updateProductDetails.setQuantity(request.getQuantity());
                 updateProductDetails.setStatus(1);
-                updateProductDetails.setDescription(request.getDescription());
+
                 updateProductDetails.setCost(request.getCost());
                 updateProductDetails.setPrice(request.getPrice());
                 updateProductDetails.setUpdatedAt(now);
@@ -83,7 +83,6 @@ public class ProductDetailServiceImpl implements ProductDetailService {
             ProductDetail newProductDetail1 = new ProductDetail();
             newProductDetail1.setQuantity(request.getQuantity());
             newProductDetail1.setStatus(1);
-            newProductDetail1.setDescription(request.getDescription());
             newProductDetail1.setCost(request.getCost());
             newProductDetail1.setPrice(request.getPrice());
             newProductDetail1.setCreatedAt(now);

@@ -25,8 +25,6 @@ public class ProductDetail extends BaseEntity<ProductDetail>{
 
     private Integer status;
 
-    private String description;
-
     @Override
     protected ProductDetail self() {
         return this;
@@ -43,4 +41,8 @@ public class ProductDetail extends BaseEntity<ProductDetail>{
     @ManyToOne
     @JoinColumn(name = "colorId")
     private Colors colors;
+
+    @ManyToOne
+    @JoinColumn(name = "discountId")
+    private Discount discount;
 }
