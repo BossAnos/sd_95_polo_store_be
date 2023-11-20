@@ -38,7 +38,7 @@ public class SizeServiceImpl implements SizeService {
             if (existingSize.isPresent()) {
                 Sizes updateSize = existingSize.get();
                 updateSize.setName(sizes.getName());
-                updateSize.setStatus(0);
+                updateSize.setStatus(1);
                 updateSize.setDescription(sizes.getDescription());
                 updateSize.setShirtlength(sizes.getShirtlength());
                 updateSize.setShirtwidth(sizes.getShirtwidth());
@@ -55,7 +55,7 @@ public class SizeServiceImpl implements SizeService {
                 throw new IllegalArgumentException("Kích thước này đã có rồi");
             }
             newSize.setName(sizes.getName());
-            newSize.setStatus(0);
+            newSize.setStatus(1);
             newSize.setDescription(sizes.getDescription());
             newSize.setShirtlength(sizes.getShirtlength());
             newSize.setShirtwidth(sizes.getShirtwidth());

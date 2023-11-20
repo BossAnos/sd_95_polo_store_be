@@ -67,7 +67,7 @@ public class ProductDetailServiceImpl implements ProductDetailService {
             if (existingProductDetails.isPresent()) {
                 ProductDetail updateProductDetails = existingProductDetails.get();
                 updateProductDetails.setQuantity(request.getQuantity());
-                updateProductDetails.setStatus(0);
+                updateProductDetails.setStatus(1);
                 updateProductDetails.setDescription(request.getDescription());
                 updateProductDetails.setCost(request.getCost());
                 updateProductDetails.setPrice(request.getPrice());
@@ -82,7 +82,7 @@ public class ProductDetailServiceImpl implements ProductDetailService {
         } else {
             ProductDetail newProductDetail1 = new ProductDetail();
             newProductDetail1.setQuantity(request.getQuantity());
-            newProductDetail1.setStatus(0);
+            newProductDetail1.setStatus(1);
             newProductDetail1.setDescription(request.getDescription());
             newProductDetail1.setCost(request.getCost());
             newProductDetail1.setPrice(request.getPrice());

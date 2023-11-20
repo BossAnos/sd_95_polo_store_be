@@ -18,10 +18,16 @@ public class BrandController {
     @Autowired
     private BrandService brandService;
 
+//    @GetMapping("")
+//    public Response<List<Brands>> gets() {
+//        return Response.ofSucceeded(brandService.gets());
+//    }
+
     @GetMapping("")
-    public Response<List<Brands>> gets() {
-        return Response.ofSucceeded(brandService.gets());
+    public Response<List<Brands>> getsByStatus() {
+        return Response.ofSucceeded(brandService.getBardByStatus());
     }
+
 
     @PostMapping
     public Response<Brands> createOrUpdateBrand(@RequestBody BrandRequest request) {

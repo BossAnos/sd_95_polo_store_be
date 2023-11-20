@@ -44,7 +44,7 @@ public class ColorServiceImpl implements ColorServices {
             if (existingColor.isPresent()) {
                 Colors updateColor = existingColor.get();
                 updateColor.setName(color.getName());
-                updateColor.setStatus(0);
+                updateColor.setStatus(1);
                 updateColor.setDescription(color.getDescription());
                 updateColor.setUpdatedAt(now);
                 return colorRepository.save(updateColor);
@@ -57,7 +57,7 @@ public class ColorServiceImpl implements ColorServices {
                 throw new IllegalArgumentException("Màu này đã có rồi");
             }
             newColor.setName(color.getName());
-            newColor.setStatus(0);
+            newColor.setStatus(1);
             newColor.setDescription(color.getDescription());
             newColor.setCreatedAt(now);
             newColor.setUpdatedAt(now);
