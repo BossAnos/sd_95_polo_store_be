@@ -42,7 +42,7 @@ public class CategoriesServiceImpl implements CategoriesService {
             if (existingCategori.isPresent()) {
                 Categories updateCategori = existingCategori.get();
                 updateCategori.setName(categories.getName());
-                updateCategori.setStatus(0);
+                updateCategori.setStatus(1);
                 updateCategori.setDescription(categories.getDescription());
                 updateCategori.setUpdatedAt(now);
                 return categoriesRepository.save(updateCategori);
@@ -55,7 +55,7 @@ public class CategoriesServiceImpl implements CategoriesService {
                 throw new IllegalArgumentException("loại này đã có rồi");
             }
             newCategori.setName(categories.getName());
-            newCategori.setStatus(0);
+            newCategori.setStatus(1);
             newCategori.setDescription(categories.getDescription());
             newCategori.setCreatedAt(now);
             newCategori.setUpdatedAt(now);

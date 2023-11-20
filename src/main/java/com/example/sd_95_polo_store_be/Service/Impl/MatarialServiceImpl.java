@@ -35,7 +35,7 @@ public class MatarialServiceImpl implements MatarialService {
             if (existingMaterial.isPresent()) {
                 Materials updateMaterial = existingMaterial.get();
                 updateMaterial.setName(materials.getName());
-                updateMaterial.setStatus(0);
+                updateMaterial.setStatus(1);
                 updateMaterial.setDescription(materials.getDescription());
                 updateMaterial.setUpdatedAt(now);
                 return matarialRepository.save(updateMaterial);
@@ -48,7 +48,7 @@ public class MatarialServiceImpl implements MatarialService {
                 throw new IllegalArgumentException("Vật liệu này đã có rồi");
             }
             newMaterial.setName(materials.getName());
-            newMaterial.setStatus(0);
+            newMaterial.setStatus(1);
             newMaterial.setDescription(materials.getDescription());
             newMaterial.setCreatedAt(now);
             newMaterial.setUpdatedAt(now);

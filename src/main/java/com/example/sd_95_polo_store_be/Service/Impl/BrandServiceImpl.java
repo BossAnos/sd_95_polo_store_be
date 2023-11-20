@@ -24,6 +24,11 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
+    public List<Brands> getBardByStatus() {
+        return brandRepository.findByStatusOrderByCreateDateDesc(1);
+    }
+
+    @Override
     public Brands createOrUpdate(BrandRequest request) {
         if (ObjectUtils.isEmpty(request.getNameBrand().trim())) {
             throw new IllegalArgumentException("Tên không để trống");
@@ -37,7 +42,7 @@ public class BrandServiceImpl implements BrandService {
             if (existingBrand.isPresent()) {
                 Brands updateBrand = existingBrand.get();
                 updateBrand.setName(request.getNameBrand());
-                updateBrand.setStatus(0);
+                updateBrand.setStatus(1);
                 updateBrand.setDescription(request.getDescription());
                 updateBrand.setUpdatedAt(now);
                 return brandRepository.save(updateBrand);
@@ -50,7 +55,7 @@ public class BrandServiceImpl implements BrandService {
                 throw new IllegalArgumentException("Thương Hiệu này đã có rồi");
             }
             newBrand.setName(request.getNameBrand());
-            newBrand.setStatus(0);
+            newBrand.setStatus(1);
             newBrand.setDescription(request.getDescription());
             newBrand.setCreatedAt(now);
             newBrand.setUpdatedAt(now);

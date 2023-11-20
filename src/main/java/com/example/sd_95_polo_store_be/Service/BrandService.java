@@ -10,6 +10,8 @@ import java.util.List;
 public interface BrandService {
     List<Brands> gets();
 
+    List<Brands> getBardByStatus();
+
     Brands createOrUpdate(BrandRequest request);
 
     boolean isBrand(Brands brands);
