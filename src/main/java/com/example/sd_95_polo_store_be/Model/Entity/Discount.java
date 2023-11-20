@@ -24,7 +24,7 @@ public class Discount {
 
     private String description;
 
-    private OffsetDateTime start_date;
-    private OffsetDateTime end_date;
+    private OffsetDateTime startDate;
+    private OffsetDateTime endDate;
 
 }

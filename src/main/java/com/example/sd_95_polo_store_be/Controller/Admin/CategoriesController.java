@@ -18,7 +18,7 @@ import java.util.Map;
 @RestController
 public class CategoriesController {
     @Autowired
-    CategoriesService categoriesSrevice;
+   private CategoriesService categoriesSrevice;
 
     @GetMapping("/getall")
     public Response<List<Categories>> getAll() {

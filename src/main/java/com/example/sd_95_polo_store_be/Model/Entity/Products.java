@@ -20,14 +20,18 @@ public class Products extends BaseEntity<Products> {
     private String description;
 
 
-    private Integer categoryId;
+    @ManyToOne
+    @JoinColumn(name = "categoryId")
+    private Categories categories;
 
 
-    private Integer brandId;
+    @ManyToOne
+    @JoinColumn(name = "brandId")
+    private Brands brands;
 
-    private Integer materialId;
-
-    private Integer discountId;
+    @ManyToOne
+    @JoinColumn(name = "materialId")
+    private Materials materials;
 
 
     @Override

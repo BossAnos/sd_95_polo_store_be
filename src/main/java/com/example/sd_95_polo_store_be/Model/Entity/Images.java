@@ -5,7 +5,7 @@ import lombok.Data;
 import org.springframework.data.repository.cdi.Eager;
 
 @Data
-@Eager
+@Entity
 public class Images extends BaseEntity<Images> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,8 +18,8 @@ public class Images extends BaseEntity<Images> {
     private Integer status;
 
     @ManyToOne
-    @JoinColumn(name = "productId ")
-    private Products products;
+    @JoinColumn(name = "productDetailId ")
+    private ProductDetail productDetail;
 
     @Override
     protected Images self() {
