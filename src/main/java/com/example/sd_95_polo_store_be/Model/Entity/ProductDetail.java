@@ -19,9 +19,9 @@ public class ProductDetail extends BaseEntity<ProductDetail>{
 
     private Integer quantity;
 
-    private Double cost;
+    private Float cost;
 
-    private Double price;
+    private Float price;
 
     private Integer status;
 

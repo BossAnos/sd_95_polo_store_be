@@ -1,15 +1,13 @@
 package com.example.sd_95_polo_store_be.Model.Response;
 
-import com.example.sd_95_polo_store_be.Model.Entity.Images;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import java.awt.*;
 import java.util.List;
 
 @Data
 @Accessors(chain = true)
-public class ProductForAdminResponse {
+public class GetOneProductResponse {
     private Long id;
     private String name;
     private Integer status;
@@ -20,11 +18,10 @@ public class ProductForAdminResponse {
     private String nameBrand;
     private String nameCategory;
     private String nameMaterial;
-    private Integer promotionPercent;
-    private Double price;
-    private String image;
+    List<ProductDetailResponse> productDetails;
 
-    public ProductForAdminResponse(Long id, String name, Integer status, String description, Long categoryId, Integer brandId, Integer materialId, String nameBrand, String nameCategory, String nameMaterial) {
+
+    public GetOneProductResponse(Long id, String name, Integer status, String description, Long categoryId, Integer brandId, Integer materialId, String nameBrand, String nameCategory, String nameMaterial) {
         this.id = id;
         this.name = name;
         this.status = status;
