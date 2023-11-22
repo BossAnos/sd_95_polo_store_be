@@ -28,8 +28,8 @@ public class ProductDetailDto {
     public ProductDetailDto(ProductDetail productDetail) {
         id = productDetail.getId();
         quantity = productDetail.getQuantity();
-        cost = productDetail.getCost();
-        price = productDetail.getPrice();
+//        cost = productDetail.getCost();
+//        price = productDetail.getPrice();
         status = productDetail.getStatus();
         create_date = productDetail.getCreateDate();
         update_date = productDetail.getUpdateDate();

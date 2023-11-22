@@ -3,7 +3,8 @@ package com.example.sd_95_polo_store_be.Controller.Admin;
 import com.example.sd_95_polo_store_be.Dto.ProductDetailDto;
 import com.example.sd_95_polo_store_be.Model.Entity.Colors;
 import com.example.sd_95_polo_store_be.Model.Entity.ProductDetail;
-import com.example.sd_95_polo_store_be.Model.Request.ProductDetailRequest;
+import com.example.sd_95_polo_store_be.Model.Request.ProductDetailRepuest;
+
 import com.example.sd_95_polo_store_be.Service.ProductDetailService;
 import com.example.sd_95_polo_store_be.common.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class ProductDetailController {
     }
 
     @PostMapping("/add")
-    public Response<ProductDetailDto> create(@RequestBody ProductDetailRequest request) {
+    public Response<ProductDetailDto> create(@RequestBody ProductDetailRepuest request) {
         try {
             ProductDetail savedProductDetail = productDetailService.saveProductDetail(request);
             return Response.ofSucceeded(new ProductDetailDto(savedProductDetail));
@@ -44,9 +45,9 @@ public class ProductDetailController {
     }
 
     @PutMapping("/update/{id}")
-    public Response<ProductDetailDto> update(@PathVariable Long id, @RequestBody ProductDetailRequest request) {
+    public Response<ProductDetailDto> update(@PathVariable Long id, @RequestBody ProductDetailRepuest request) {
         try {
-            request.setId(id);
+//            request.getIdProductDetail(id);
             ProductDetail productDetail = productDetailService.saveProductDetail(request);
             return Response.ofSucceeded(new ProductDetailDto(productDetail));
         } catch (IllegalArgumentException e) {
