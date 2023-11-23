@@ -1,6 +1,7 @@
 package com.example.sd_95_polo_store_be.Controller.Admin;
 
 import com.example.sd_95_polo_store_be.Model.Entity.Products;
+import com.example.sd_95_polo_store_be.Model.Request.ProductRequest;
 import com.example.sd_95_polo_store_be.Model.Request.ProductRequset;
 import com.example.sd_95_polo_store_be.Model.Response.GetOneProductResponse;
 import com.example.sd_95_polo_store_be.Model.Response.ProductForAdminResponse;
@@ -34,8 +35,14 @@ public class ProductController {
         }
     }
 
+    @PostMapping("/add")
+    public Response<?> add(@RequestBody ProductRequest productRequest) {
+        productService.create(productRequest);
+        return Response.ofSucceeded();
+    }
+
     @GetMapping("/{id}")
-    public Response<GetOneProductResponse> getOne(@PathVariable Long id) {
+    public Response<GetOneProductResponse> getOne(@PathVariable Integer id) {
         return Response.ofSucceeded(productService.getOne(id));
     }
 }

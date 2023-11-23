@@ -15,7 +15,7 @@ public interface ProductService {
 
     void addProduct(ProductRequset productRequset);
 
-    public GetOneProductResponse getOne(Long id);
+    public GetOneProductResponse getOne(Integer id);
 
     void create(ProductRequest productRequest);
 

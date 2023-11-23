@@ -15,10 +15,10 @@ public interface ProductDetailService {
 
     ProductDetail saveProductDetail(ProductDetailRepuest request);
 
-    ProductDetail createOrUpdate(ProductDetailRepuest productDetailRequest,Long productId);
+    void createOrUpdate(ProductDetailRepuest productDetailRequest,Integer productId);
 
-    void deleteProductDetailById(List<Long> ids);
+//    void deleteProductDetailById(List<Long> ids);
 
-    List<ProductDetailResponse> getForProduct(Long productId);
+    List<ProductDetailResponse> getForProduct(Integer productId);
 
 }

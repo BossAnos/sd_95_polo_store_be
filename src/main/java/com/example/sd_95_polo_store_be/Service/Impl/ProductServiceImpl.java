@@ -2,6 +2,7 @@ package com.example.sd_95_polo_store_be.Service.Impl;
 
 import com.example.sd_95_polo_store_be.Model.Entity.Images;
 import com.example.sd_95_polo_store_be.Model.Entity.Products;
+import com.example.sd_95_polo_store_be.Model.Request.ProductDetailRepuest;
 import com.example.sd_95_polo_store_be.Model.Request.ProductRequest;
 import com.example.sd_95_polo_store_be.Model.Request.ProductRequset;
 import com.example.sd_95_polo_store_be.Model.Response.GetOneProductResponse;
@@ -72,7 +73,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public GetOneProductResponse getOne(Long id) {
+    public GetOneProductResponse getOne(Integer id) {
         var product = productRepository.getId(id).orElseThrow();
         product.setProductDetails(productDetailService.getForProduct(id));
         return product;
@@ -94,6 +95,8 @@ public class ProductServiceImpl implements ProductService {
         products.setBrands(brand);
         products.setMaterials(material);
         productRepository.save(products);
+        List<ProductDetailRepuest> productDetailRepuests = productRequest.getProductDetailRepuests();
+        productDetailRepuests.forEach(request -> productDetailService.createOrUpdate(request, products.getId()));
     }
 
 }

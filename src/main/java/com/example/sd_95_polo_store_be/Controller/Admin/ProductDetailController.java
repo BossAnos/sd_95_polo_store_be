@@ -5,6 +5,7 @@ import com.example.sd_95_polo_store_be.Model.Entity.Colors;
 import com.example.sd_95_polo_store_be.Model.Entity.ProductDetail;
 import com.example.sd_95_polo_store_be.Model.Request.ProductDetailRepuest;
 
+import com.example.sd_95_polo_store_be.Model.Response.ProductDetailResponse;
 import com.example.sd_95_polo_store_be.Service.ProductDetailService;
 import com.example.sd_95_polo_store_be.common.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,11 @@ public class ProductDetailController {
         return Response.ofSucceeded(serializedList);
     }
 
+    @GetMapping("/{id}")
+    public Response<List<ProductDetailResponse>> getAll(@PathVariable Integer id) {
+        return Response.ofSucceeded(productDetailService.getForProduct(id));
+    }
+
     @PostMapping("/add")
     public Response<ProductDetailDto> create(@RequestBody ProductDetailRepuest request) {
         try {
@@ -55,16 +61,16 @@ public class ProductDetailController {
         }
     }
 
-    @DeleteMapping("/delete")
-    public Response<List<Long>> deleteMultiple(@RequestBody Map<String, List<Long>> request) {
-        List<Long> ids = request.get("id");
-        try {
-            productDetailService.deleteProductDetailById(ids);
-            return Response.ofSucceeded();
-        } catch (IllegalArgumentException e) {
-            return Response.ofError(e.getMessage());
-        }
-
-    }
+//    @DeleteMapping("/delete")
+//    public Response<List<Long>> deleteMultiple(@RequestBody Map<String, List<Long>> request) {
+//        List<Long> ids = request.get("id");
+//        try {
+//            productDetailService.deleteProductDetailById(ids);
+//            return Response.ofSucceeded();
+//        } catch (IllegalArgumentException e) {
+//            return Response.ofError(e.getMessage());
+//        }
+//
+//    }
 
 }

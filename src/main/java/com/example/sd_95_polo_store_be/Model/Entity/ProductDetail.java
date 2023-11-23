@@ -15,7 +15,7 @@ import java.util.Date;
 public class ProductDetail extends BaseEntity<ProductDetail>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     private Integer quantity;
 

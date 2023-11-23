@@ -6,12 +6,12 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class DiscountProductDetailReponse {
-    private Long productDetailId;
+    private Integer productDetailId;
     private String nameProdcut;
     private Float cost;
     private Float discount;
 
-    public DiscountProductDetailReponse(Long productDetailId, String nameProdcut, Float cost, Float discount) {
+    public DiscountProductDetailReponse(Integer productDetailId, String nameProdcut, Float cost, Float discount) {
         this.productDetailId = productDetailId;
         this.nameProdcut = nameProdcut;
         this.cost = cost;

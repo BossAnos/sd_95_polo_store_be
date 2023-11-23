@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 public class ProductForAdminResponse {
-    private Long id;
+    private Integer id;
     private String name;
     private Integer status;
     private String description;
@@ -24,7 +24,7 @@ public class ProductForAdminResponse {
     private Double price;
     private String image;
 
-    public ProductForAdminResponse(Long id, String name, Integer status, String description, Long categoryId, Integer brandId, Integer materialId, String nameBrand, String nameCategory, String nameMaterial) {
+    public ProductForAdminResponse(Integer id, String name, Integer status, String description, Long categoryId, Integer brandId, Integer materialId, String nameBrand, String nameCategory, String nameMaterial) {
         this.id = id;
         this.name = name;
         this.status = status;
