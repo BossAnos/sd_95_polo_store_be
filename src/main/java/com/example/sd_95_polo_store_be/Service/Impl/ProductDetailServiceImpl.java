@@ -58,7 +58,7 @@ public class ProductDetailServiceImpl implements ProductDetailService {
         var discount = discountRepository.findById((productDetailRequest.getDiscountId())).orElseThrow();
         var now = OffsetDateTime.now();
         var product = productRepository.findById(productId).orElseThrow();
-        if (productDetailRequest.getIdProductDetail() == null) {
+        if (productDetailRequest.getProductDetailId() == null) {
             ProductDetail productDetail = new ProductDetail();
             productDetail.setCost(productDetailRequest.getCost());
             productDetail.setPrice(productDetailRequest.getPrice());
@@ -75,15 +75,21 @@ public class ProductDetailServiceImpl implements ProductDetailService {
                 imageService.createOrUpdate(productDetailRequest.getImages(), productDetail.getId());
             }
         } else {
-            var updateProductDetail = productDetailRepository.findById(productDetailRequest.getIdProductDetail()).orElseThrow();
+            var updateProductDetail = productDetailRepository.findById(productDetailRequest.getProductDetailId()).orElseThrow();
             updateProductDetail.setStatus(updateProductDetail.getStatus());
             updateProductDetail.setCost(productDetailRequest.getCost());
             updateProductDetail.setPrice(productDetailRequest.getPrice());
             updateProductDetail.setColors(color);
             updateProductDetail.setSizes(size);
+            updateProductDetail.setDiscount(discount);
             updateProductDetail.setProducts(product);
             updateProductDetail.setUpdatedAt(now);
+            updateProductDetail.setQuantity(productDetailRequest.getQuantity());
             productDetailRepository.save(updateProductDetail);
+            if (productDetailRequest.getImages() != null) {
+                imageService.createOrUpdate(productDetailRequest.getImages(), updateProductDetail.getId());
+            }
+
         }
 
     }
