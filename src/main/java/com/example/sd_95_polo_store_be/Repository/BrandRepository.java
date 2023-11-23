@@ -10,5 +10,5 @@ import java.util.Optional;
 @Repository
 public interface BrandRepository extends JpaRepository<Brands,Integer> {
     Optional<Brands> findByName(String name);
-    List<Brands> findByStatusOrderByCreateDateDesc(Integer status);
+    List<Brands> findByOrderByCreateDateDesc();
 }
