@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 public class ProductDetailRepuest {
-    Integer idProductDetail;
+    Integer productDetailId;
     private Long colorId;
     private Integer quantity;
     private Integer sizeId;

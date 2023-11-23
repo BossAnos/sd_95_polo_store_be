@@ -20,7 +20,7 @@ import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-    private EntityMapper entityMapper;
+
     private ProductRepository productRepository;
     @Autowired
     private ImageRepository imageRepository;
@@ -34,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
     private MatarialRepository matarialRepository;
 
     public ProductServiceImpl(ProductRepository productRepository) {
-        this.entityMapper = new EntityMapper();
+
         this.productRepository = productRepository;
     }
 
@@ -98,5 +98,24 @@ public class ProductServiceImpl implements ProductService {
         List<ProductDetailRepuest> productDetailRepuests = productRequest.getProductDetailRepuests();
         productDetailRepuests.forEach(request -> productDetailService.createOrUpdate(request, products.getId()));
     }
+
+        @Override
+        public void update(Integer productId, ProductRequest productRequest) {
+            var now = OffsetDateTime.now();
+            var product = productRepository.findById(productId).orElseThrow();
+            var category = categoriesRepository.findById(productRequest.getCategoryId()).orElseThrow();
+            var brand = brandRepository.findById(productRequest.getBrandId()).orElseThrow();
+            var material = matarialRepository.findById(productRequest.getMaterialId()).orElseThrow();
+            product.setName(productRequest.getName());
+            product.setStatus(product.getStatus());
+            product.setDescription(productRequest.getDescription());
+            product.setUpdatedAt(now);
+            product.setCategories(category);
+            product.setBrands(brand);
+            product.setMaterials(material);
+            productRepository.save(product);
+            List<ProductDetailRepuest> productDetailRepuests = productRequest.getProductDetailRepuests();
+            productDetailRepuests.forEach(request -> productDetailService.createOrUpdate(request, product.getId()));
+        }
 
 }

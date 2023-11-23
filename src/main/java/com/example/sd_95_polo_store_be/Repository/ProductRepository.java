@@ -33,7 +33,7 @@ public interface ProductRepository extends JpaRepository<Products, Integer> {
             select Top 1 i.name from Products 
             join ProductDetail pd on Products.id = pd.productId
             join Images i on pd.id = i.productDetailId
-            where productId = :id
+            where productId = :id and i.status <> 0
 
               """, nativeQuery = true)
     String getImage(Integer id);

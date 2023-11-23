@@ -20,4 +20,7 @@ public interface ProductService {
     void create(ProductRequest productRequest);
 
 
+
+    void update(Integer productId, ProductRequest productRequest);
+
 }

@@ -41,6 +41,12 @@ public class ProductController {
         return Response.ofSucceeded();
     }
 
+    @PutMapping("/update/{productId}")
+    public Response<?> update(@PathVariable Integer productId, @RequestBody ProductRequest productRequest) {
+        productService.update(productId,productRequest);
+        return Response.ofSucceeded();
+    }
+
     @GetMapping("/{id}")
     public Response<GetOneProductResponse> getOne(@PathVariable Integer id) {
         return Response.ofSucceeded(productService.getOne(id));
