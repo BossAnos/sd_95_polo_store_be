@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
 @Data
@@ -24,7 +25,7 @@ public class Discount {
 
     private String description;
 
-    private OffsetDateTime startDate;
-    private OffsetDateTime endDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
 
 }

@@ -15,7 +15,7 @@ public interface ImageRepository extends JpaRepository<Images, Integer> {
                 from Images img
                 where img.productDetail.id = :id and img.status <> 0
             """)
-    List<ImageProductResponse> findByProductDetail(Long id);
+    List<ImageProductResponse> findByProductDetail(Integer id);
 
 
 }

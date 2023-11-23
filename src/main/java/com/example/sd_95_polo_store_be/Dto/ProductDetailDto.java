@@ -12,7 +12,7 @@ import java.util.Date;
 
 @Data
 public class ProductDetailDto {
-    Long id;
+    Integer id;
     Integer quantity;
     Double cost;
     Double price;

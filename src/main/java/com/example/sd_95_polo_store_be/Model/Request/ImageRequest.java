@@ -8,4 +8,5 @@ import lombok.experimental.Accessors;
 public class ImageRequest {
     private Integer id;
     private String name;
+    private String url_image;
 }

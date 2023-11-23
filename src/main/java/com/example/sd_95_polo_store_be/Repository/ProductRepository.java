@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Products, Long> {
+public interface ProductRepository extends JpaRepository<Products, Integer> {
     @Query(value = """
             select new com.example.sd_95_polo_store_be.Model.
             Response.ProductForAdminResponse
@@ -28,7 +28,7 @@ public interface ProductRepository extends JpaRepository<Products, Long> {
              from Products p
              where p.id = :id and p.status <> 0
             """)
-    Optional<GetOneProductResponse> getId(Long id);
+    Optional<GetOneProductResponse> getId(Integer id);
     @Query(value = """
             select Top 1 i.name from Products 
             join ProductDetail pd on Products.id = pd.productId
@@ -36,6 +36,6 @@ public interface ProductRepository extends JpaRepository<Products, Long> {
             where productId = :id
 
               """, nativeQuery = true)
-    String getImage(Long id);
+    String getImage(Integer id);
 
 }

@@ -7,6 +7,6 @@ import com.example.sd_95_polo_store_be.Repository.ImageRepository;
 import java.util.List;
 
 public interface ImageService {
-List<ImageProductResponse> gets(Long id);
-void createOrUpdate(List<ImageRequest> images,Long productDetailId);
+List<ImageProductResponse> gets(Integer id);
+void createOrUpdate(List<ImageRequest> images,Integer productDetailId);
 }

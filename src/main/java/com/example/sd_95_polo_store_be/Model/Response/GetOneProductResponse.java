@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 public class GetOneProductResponse {
-    private Long id;
+    private Integer id;
     private String name;
     private Integer status;
     private String description;
@@ -21,7 +21,7 @@ public class GetOneProductResponse {
     List<ProductDetailResponse> productDetails;
 
 
-    public GetOneProductResponse(Long id, String name, Integer status, String description, Long categoryId, Integer brandId, Integer materialId, String nameBrand, String nameCategory, String nameMaterial) {
+    public GetOneProductResponse(Integer id, String name, Integer status, String description, Long categoryId, Integer brandId, Integer materialId, String nameBrand, String nameCategory, String nameMaterial) {
         this.id = id;
         this.name = name;
         this.status = status;

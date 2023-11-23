@@ -10,10 +10,11 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 public class ProductDetailRepuest {
-    Long idProductDetail;
+    Integer idProductDetail;
     private Long colorId;
     private Integer quantity;
     private Integer sizeId;
+    private Integer discountId;
     private Float price;
     private Float cost;
     private List<ImageRequest> images;

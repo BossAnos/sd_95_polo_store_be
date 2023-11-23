@@ -4,6 +4,7 @@ import com.example.sd_95_polo_store_be.Model.Entity.Colors;
 import com.example.sd_95_polo_store_be.Model.Entity.ProductDetail;
 import com.example.sd_95_polo_store_be.Model.Entity.Products;
 import com.example.sd_95_polo_store_be.Model.Entity.Sizes;
+import com.example.sd_95_polo_store_be.Model.Request.ImageRequest;
 import com.example.sd_95_polo_store_be.Model.Request.ProductDetailRepuest;
 import com.example.sd_95_polo_store_be.Model.Response.DiscountProductDetailReponse;
 import com.example.sd_95_polo_store_be.Model.Response.ProductDetailResponse;
@@ -37,6 +38,8 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     private ImageService imageService;
     @Autowired
     private ImageRepository imageRepository;
+    @Autowired
+    private DiscountRepository discountRepository;
 
     @Override
     public ArrayList<ProductDetail> getAllProductDetail() {
@@ -49,42 +52,60 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     }
 
     @Override
-    public ProductDetail createOrUpdate(ProductDetailRepuest productDetailRequest, Long productId) {
+    public void createOrUpdate(ProductDetailRepuest productDetailRequest, Integer productId) {
         var size = sizeRepository.findById(productDetailRequest.getSizeId()).orElseThrow();
         var color = colorRepository.findById(productDetailRequest.getColorId()).orElseThrow();
+        var discount = discountRepository.findById((productDetailRequest.getDiscountId())).orElseThrow();
+        var now = OffsetDateTime.now();
         var product = productRepository.findById(productId).orElseThrow();
         if (productDetailRequest.getIdProductDetail() == null) {
             ProductDetail productDetail = new ProductDetail();
-            productDetail.setCost(productDetail.getCost());
+            productDetail.setCost(productDetailRequest.getCost());
             productDetail.setPrice(productDetailRequest.getPrice());
             productDetail.setColors(color);
             productDetail.setSizes(size);
+            productDetail.setDiscount(discount);
             productDetail.setProducts(product);
             productDetail.setStatus(1);
+            productDetail.setCreateDate(now);
+            productDetail.setUpdatedAt(now);
             productDetail.setQuantity(productDetailRequest.getQuantity());
-            return productDetailRepository.save(productDetail);
-        }
-        return null;
-    }
-
-    @Override
-    public void deleteProductDetailById(List<Long> ids) {
-        if (ids != null && !ids.isEmpty()) {
-            for (Long id : ids) {
-                Optional<ProductDetail> ProductDetailOptional = productDetailRepository.findById(id);
-                if (ProductDetailOptional.isPresent()) {
-                    productDetailRepository.deleteById(id);
-                } else {
-                    throw new IllegalArgumentException("Chi tiết sản phẩm với ID " + id + " không tồn tại");
-                }
+            productDetailRepository.save(productDetail);
+            if (productDetailRequest.getImages() != null) {
+                imageService.createOrUpdate(productDetailRequest.getImages(), productDetail.getId());
             }
         } else {
-            throw new IllegalArgumentException("Danh sách ID không hợp lệ");
+            var updateProductDetail = productDetailRepository.findById(productDetailRequest.getIdProductDetail()).orElseThrow();
+            updateProductDetail.setStatus(updateProductDetail.getStatus());
+            updateProductDetail.setCost(productDetailRequest.getCost());
+            updateProductDetail.setPrice(productDetailRequest.getPrice());
+            updateProductDetail.setColors(color);
+            updateProductDetail.setSizes(size);
+            updateProductDetail.setProducts(product);
+            updateProductDetail.setUpdatedAt(now);
+            productDetailRepository.save(updateProductDetail);
         }
+
     }
 
+//    @Override
+//    public void deleteProductDetailById(List<Long> ids) {
+//        if (ids != null && !ids.isEmpty()) {
+//            for (Long id : ids) {
+//                Optional<ProductDetail> ProductDetailOptional = productDetailRepository.findById(id);
+//                if (ProductDetailOptional.isPresent()) {
+//                    productDetailRepository.deleteById(id);
+//                } else {
+//                    throw new IllegalArgumentException("Chi tiết sản phẩm với ID " + id + " không tồn tại");
+//                }
+//            }
+//        } else {
+//            throw new IllegalArgumentException("Danh sách ID không hợp lệ");
+//        }
+//    }
+
     @Override
-    public List<ProductDetailResponse> getForProduct(Long productId) {
+    public List<ProductDetailResponse> getForProduct(Integer productId) {
         List<ProductDetailResponse> list = productDetailRepository.getByProductId(productId);
         var productDiscount = productDetailRepository.getProductDiscounts();
         for (ProductDetailResponse productDetailResponses : list) {
