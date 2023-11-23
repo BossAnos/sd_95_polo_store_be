@@ -17,7 +17,7 @@ public interface ProductRepository extends JpaRepository<Products, Integer> {
             Response.ProductForAdminResponse
             (p.id, p.name, p.status, p.description, p.categories.id, p.brands.id,p.materials.id,p.brands.name, p.categories.name,p.materials.name)
              from Products p
-             where p.status <> 0
+             
             """)
     List<ProductForAdminResponse> getAllProductByCreateDateDesc();
 
@@ -26,14 +26,14 @@ public interface ProductRepository extends JpaRepository<Products, Integer> {
             Response.GetOneProductResponse
             (p.id, p.name, p.status, p.description, p.categories.id, p.brands.id,p.materials.id,p.brands.name, p.categories.name,p.materials.name)
              from Products p
-             where p.id = :id and p.status <> 0
+             where p.id = :id
             """)
     Optional<GetOneProductResponse> getId(Integer id);
     @Query(value = """
             select Top 1 i.name from Products 
             join ProductDetail pd on Products.id = pd.productId
             join Images i on pd.id = i.productDetailId
-            where productId = :id and i.status <> 0
+            where productId = :id 
 
               """, nativeQuery = true)
     String getImage(Integer id);
