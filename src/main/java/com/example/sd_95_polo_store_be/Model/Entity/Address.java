@@ -23,6 +23,8 @@ public class Address extends BaseEntity<Address> {
 
     private Integer status;
 
+
+
     @Override
     protected Address self() {
         return this;
