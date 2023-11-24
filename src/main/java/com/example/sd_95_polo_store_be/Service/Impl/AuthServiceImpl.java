@@ -1,10 +1,14 @@
 package com.example.sd_95_polo_store_be.Service.Impl;
 
 import com.example.sd_95_polo_store_be.Model.Entity.Admins;
+import com.example.sd_95_polo_store_be.Model.Entity.Customers;
 import com.example.sd_95_polo_store_be.Model.Request.LoginRequest;
 import com.example.sd_95_polo_store_be.Model.Response.AdminResponse;
+import com.example.sd_95_polo_store_be.Model.Response.CustomerResponse;
 import com.example.sd_95_polo_store_be.Repository.AdminRepository;
+import com.example.sd_95_polo_store_be.Repository.CustomerRepository;
 import com.example.sd_95_polo_store_be.Service.AuthSerivce;
+import com.example.sd_95_polo_store_be.Service.CustomerService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,12 +19,26 @@ public class AuthServiceImpl implements AuthSerivce {
     @Autowired
     private AdminRepository adminRepository;
 
+    @Autowired
+    private CustomerService customerService;
+
+    @Autowired
+    private CustomerRepository customerRepository;
+
     @Override
     @Transactional
     public AdminResponse adminLogin(LoginRequest request) {
         Admins admins = adminRepository.findByEmailAndPassword(request.getEmail(), request.getPassword());
         return generateAdmin(admins);
     }
+
+    @Override
+    public CustomerResponse customerLogin(LoginRequest request) {
+        Customers customers = customerRepository.findByEmailAndPassword(request.getEmail(), request.getPassword());
+        System.out.println(customers.getId());
+        return customerService.getOne(customers.getId());
+    }
+
 
     private AdminResponse generateAdmin(Admins admins) {
         return new AdminResponse().setId(admins.getId()).
