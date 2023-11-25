@@ -17,4 +17,9 @@ public class DiscountServiceImpl implements DiscountService {
     public List<DiscountResponse> gets() {
         return discountRepository.gets();
     }
+
+    @Override
+    public void expireDiscounts() {
+        discountRepository.expireActiveDiscounts();
+    }
 }

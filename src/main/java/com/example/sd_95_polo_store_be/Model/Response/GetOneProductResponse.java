@@ -18,10 +18,12 @@ public class GetOneProductResponse {
     private String nameBrand;
     private String nameCategory;
     private String nameMaterial;
+    private Integer discountId;
+    private String nameDiscount;
     List<ProductDetailResponse> productDetails;
 
 
-    public GetOneProductResponse(Integer id, String name, Integer status, String description, Long categoryId, Integer brandId, Integer materialId, String nameBrand, String nameCategory, String nameMaterial) {
+    public GetOneProductResponse(Integer id, String name, Integer status, String description, Long categoryId, Integer brandId, Integer materialId, String nameBrand, String nameCategory, String nameMaterial,Integer discountId,String nameDiscount) {
         this.id = id;
         this.name = name;
         this.status = status;
@@ -32,5 +34,7 @@ public class GetOneProductResponse {
         this.nameBrand = nameBrand;
         this.nameCategory = nameCategory;
         this.nameMaterial = nameMaterial;
+        this.discountId = discountId;
+        this.nameDiscount= nameDiscount;
     }
 }

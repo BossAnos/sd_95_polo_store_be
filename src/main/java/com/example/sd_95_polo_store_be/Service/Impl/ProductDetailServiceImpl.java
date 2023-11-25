@@ -55,22 +55,22 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     public void createOrUpdate(ProductDetailRepuest productDetailRequest, Integer productId) {
         var size = sizeRepository.findById(productDetailRequest.getSizeId()).orElseThrow();
         var color = colorRepository.findById(productDetailRequest.getColorId()).orElseThrow();
-        var discount = discountRepository.findById((productDetailRequest.getDiscountId())).orElseThrow();
         var now = OffsetDateTime.now();
         var product = productRepository.findById(productId).orElseThrow();
+
         if (productDetailRequest.getProductDetailId() == null) {
             ProductDetail productDetail = new ProductDetail();
             productDetail.setCost(productDetailRequest.getCost());
             productDetail.setPrice(productDetailRequest.getPrice());
             productDetail.setColors(color);
             productDetail.setSizes(size);
-            productDetail.setDiscount(discount);
             productDetail.setProducts(product);
             productDetail.setStatus(1);
             productDetail.setCreateDate(now);
             productDetail.setUpdatedAt(now);
             productDetail.setQuantity(productDetailRequest.getQuantity());
             productDetailRepository.save(productDetail);
+
             if (productDetailRequest.getImages() != null) {
                 imageService.createOrUpdate(productDetailRequest.getImages(), productDetail.getId());
             }
@@ -81,58 +81,26 @@ public class ProductDetailServiceImpl implements ProductDetailService {
             updateProductDetail.setPrice(productDetailRequest.getPrice());
             updateProductDetail.setColors(color);
             updateProductDetail.setSizes(size);
-            updateProductDetail.setDiscount(discount);
             updateProductDetail.setProducts(product);
             updateProductDetail.setUpdatedAt(now);
             updateProductDetail.setQuantity(productDetailRequest.getQuantity());
             productDetailRepository.save(updateProductDetail);
+
             if (productDetailRequest.getImages() != null) {
-                imageService.createOrUpdate(productDetailRequest.getImages(), updateProductDetail.getId());
+                List<ImageRequest> updatedImages = productDetailRequest.getImages();
+                imageService.updateImages(updatedImages, updateProductDetail.getId());
             }
-
         }
-
     }
-
-//    @Override
-//    public void deleteProductDetailById(List<Long> ids) {
-//        if (ids != null && !ids.isEmpty()) {
-//            for (Long id : ids) {
-//                Optional<ProductDetail> ProductDetailOptional = productDetailRepository.findById(id);
-//                if (ProductDetailOptional.isPresent()) {
-//                    productDetailRepository.deleteById(id);
-//                } else {
-//                    throw new IllegalArgumentException("Chi tiết sản phẩm với ID " + id + " không tồn tại");
-//                }
-//            }
-//        } else {
-//            throw new IllegalArgumentException("Danh sách ID không hợp lệ");
-//        }
-//    }
 
     @Override
     public List<ProductDetailResponse> getForProduct(Integer productId) {
         List<ProductDetailResponse> list = productDetailRepository.getByProductId(productId);
-        var productDiscount = productDetailRepository.getProductDiscounts();
         for (ProductDetailResponse productDetailResponses : list) {
             productDetailResponses.setImages(imageService.gets(productDetailResponses.getProductDetailId()));
-            if (productDetailResponses.getStatus() == 3) {
-                for (DiscountProductDetailReponse discountProductDetailReponse : productDiscount) {
-                    if (Objects.equals(productDetailResponses.getProductDetailId(), discountProductDetailReponse.getProductDetailId())) {
-                        var pricePromotion = calculatePromotion(discountProductDetailReponse.getCost(), discountProductDetailReponse.getDiscount());
-                        productDetailResponses.setPromotionPercent((int) (100 - pricePromotion / productDetailResponses.getPricecost() * 100));
-                        productDetailResponses.setPrice(pricePromotion);
-                    }
-                }
-            } else {
-                productDetailResponses.setPromotionPercent(0);
-            }
         }
         return list;
     }
 
-    private Double calculatePromotion(Float price, Float pricePromotion) {
-        return Math.floor((price - price * (pricePromotion / 100)) / 1000) * 1000 + 9000;
-    }
 
 }

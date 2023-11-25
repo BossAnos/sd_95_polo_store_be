@@ -7,8 +7,10 @@ import com.example.sd_95_polo_store_be.Model.Request.ProductRequest;
 import com.example.sd_95_polo_store_be.Model.Request.ProductRequset;
 import com.example.sd_95_polo_store_be.Model.Response.GetOneProductResponse;
 import com.example.sd_95_polo_store_be.Model.Response.ImageProductResponse;
+import com.example.sd_95_polo_store_be.Model.Response.ProductDiscountResponse;
 import com.example.sd_95_polo_store_be.Model.Response.ProductForAdminResponse;
 import com.example.sd_95_polo_store_be.Repository.*;
+import com.example.sd_95_polo_store_be.Service.DiscountService;
 import com.example.sd_95_polo_store_be.Service.ProductDetailService;
 import com.example.sd_95_polo_store_be.Service.ProductService;
 import com.example.sd_95_polo_store_be.common.Mapper.EntityMapper;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -32,6 +35,10 @@ public class ProductServiceImpl implements ProductService {
     private BrandRepository brandRepository;
     @Autowired
     private MatarialRepository matarialRepository;
+    @Autowired
+    private DiscountRepository discountRepository;
+    @Autowired
+    private DiscountService discountService;
 
     public ProductServiceImpl(ProductRepository productRepository) {
 
@@ -40,13 +47,45 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductForAdminResponse> getAllProductForAdmin() {
-        List<ProductForAdminResponse> product = productRepository.getAllProductByCreateDateDesc();
+        discountService.expireDiscounts();
+        productRepository.updateProductsForExpiredDiscounts();
+        var product = productRepository.getAllProductByCreateDateDesc();
         for (ProductForAdminResponse productForAdminResponse : product) {
             var image = productRepository.getImage(productForAdminResponse.getId());
-            productForAdminResponse.setImage(image);
+            var price = productRepository.getPrice(productForAdminResponse.getId());
         }
 
         return product;
+    }
+
+    @Override
+    public List<ProductForAdminResponse> getAllProductForUser() {
+        discountService.expireDiscounts();
+        productRepository.updateProductsForExpiredDiscounts();
+        var productDiscount = productRepository.getProductDiscounts();
+        var products = productRepository.getAllProductByCreateDateDesc();
+        var productStatusActive = products.stream().filter(product -> !product.getStatus().equals(0)).toList();
+        for (ProductForAdminResponse product : productStatusActive) {
+            var price = productRepository.getPrice(product.getId());
+            product.setPrice(price);
+            System.out.println(price);
+            if (product.getStatus().equals(3)) {
+                for (ProductDiscountResponse productDiscountResponse : productDiscount) {
+                    if (Objects.equals(product.getId(), productDiscountResponse.getProductId())) {
+                        product.setPricecost(product.getPrice() - (product.getPrice() * product.getDiscount()));
+                        product.setPromotionPercent(Math.round(product.getDiscount() * 100));
+                        break;
+                    }
+                }
+            } else {
+                product.setPromotionPercent(0);
+                product.setPricecost(price);
+            }
+            var image = productRepository.getImage(product.getId());
+            product.setImage(image);
+        }
+
+        return productStatusActive;
     }
 
     @Override
@@ -85,37 +124,49 @@ public class ProductServiceImpl implements ProductService {
         var category = categoriesRepository.findById(productRequest.getCategoryId()).orElseThrow();
         var brand = brandRepository.findById(productRequest.getBrandId()).orElseThrow();
         var material = matarialRepository.findById(productRequest.getMaterialId()).orElseThrow();
+        var discount = discountRepository.findById(productRequest.getDiscountId()).orElseThrow();
         Products products = new Products();
         products.setName(productRequest.getName());
-        products.setStatus(1);
+
         products.setDescription(productRequest.getDescription());
         products.setCreateDate(now);
         products.setUpdatedAt(now);
         products.setCategories(category);
         products.setBrands(brand);
+        products.setDiscount(discount);
+        if (discount.getStatus() == 1) {
+            products.setStatus(3);
+        } else {
+            products.setStatus(1);
+        }
         products.setMaterials(material);
         productRepository.save(products);
         List<ProductDetailRepuest> productDetailRepuests = productRequest.getProductDetailRepuests();
         productDetailRepuests.forEach(request -> productDetailService.createOrUpdate(request, products.getId()));
     }
 
-        @Override
-        public void update(Integer productId, ProductRequest productRequest) {
-            var now = OffsetDateTime.now();
-            var product = productRepository.findById(productId).orElseThrow();
-            var category = categoriesRepository.findById(productRequest.getCategoryId()).orElseThrow();
-            var brand = brandRepository.findById(productRequest.getBrandId()).orElseThrow();
-            var material = matarialRepository.findById(productRequest.getMaterialId()).orElseThrow();
-            product.setName(productRequest.getName());
-            product.setStatus(product.getStatus());
-            product.setDescription(productRequest.getDescription());
-            product.setUpdatedAt(now);
-            product.setCategories(category);
-            product.setBrands(brand);
-            product.setMaterials(material);
-            productRepository.save(product);
-            List<ProductDetailRepuest> productDetailRepuests = productRequest.getProductDetailRepuests();
-            productDetailRepuests.forEach(request -> productDetailService.createOrUpdate(request, product.getId()));
-        }
+    @Override
+    public void update(Integer productId, ProductRequest productRequest) {
+        var now = OffsetDateTime.now();
+        var product = productRepository.findById(productId).orElseThrow();
+        var category = categoriesRepository.findById(productRequest.getCategoryId()).orElseThrow();
+        var brand = brandRepository.findById(productRequest.getBrandId()).orElseThrow();
+        var material = matarialRepository.findById(productRequest.getMaterialId()).orElseThrow();
+        var discount = discountRepository.findById(productRequest.getDiscountId()).orElseThrow();
+        product.setName(productRequest.getName());
+        product.setStatus(product.getStatus());
+        product.setDescription(productRequest.getDescription());
+        product.setUpdatedAt(now);
+        product.setCategories(category);
+        product.setBrands(brand);
+        product.setDiscount(discount);
+        product.setMaterials(material);
+        productRepository.save(product);
+        List<ProductDetailRepuest> productDetailRepuests = productRequest.getProductDetailRepuests();
+        productDetailRepuests.forEach(request -> productDetailService.createOrUpdate(request, product.getId()));
+    }
+    private Double calculatePromotion(Double price, Float pricePromotion) {
+        return Math.floor((price - price * (pricePromotion / 100)) / 1000) * 1000 + 9000;
+    }
 
 }

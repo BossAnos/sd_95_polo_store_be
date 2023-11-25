@@ -25,6 +25,11 @@ public class ProductController {
         return Response.ofSucceeded(productService.getAllProductForAdmin());
     }
 
+    @GetMapping("/homepage")
+    public Response<List<ProductForAdminResponse>> getProductForHomePage() {
+        return Response.ofSucceeded(productService.getAllProductForUser());
+    }
+
     @PostMapping
     public Response<Products> addProduct(@RequestBody ProductRequset requset) {
         try {

@@ -13,6 +13,7 @@ public class ProductRequest {
     private Long categoryId;
     private Integer brandId;
     private Integer materialId;
+    private Integer discountId;
     private List<ProductDetailRepuest> productDetailRepuests;
 
 }

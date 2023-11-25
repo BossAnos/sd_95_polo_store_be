@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface DiscountService {
     List<DiscountResponse> gets();
+    void expireDiscounts();
 }

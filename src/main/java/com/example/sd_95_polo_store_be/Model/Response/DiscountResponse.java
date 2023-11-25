@@ -12,6 +12,7 @@ public class DiscountResponse {
     private String name;
     private Float discount;
     private String description;
+    private Float priceCore;
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime startDate;
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")

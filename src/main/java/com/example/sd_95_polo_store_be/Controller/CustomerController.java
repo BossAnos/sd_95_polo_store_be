@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class CustomerController {
     @Autowired
     private CustomerService customerService;
-//
-//    @GetMapping("/{id}")
-//    public Response<CustomerResponse> getOne(@PathVariable Integer id){
-//        return Response.ofSucceeded(customerService.getOne(id));
-//    }
+
+    @GetMapping("/{id}")
+    public Response<CustomerResponse> getOne(@PathVariable Integer id){
+        return Response.ofSucceeded(customerService.getOne(id));
+    }
 }

@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ImageServiceImpl implements ImageService {
@@ -51,37 +53,83 @@ public class ImageServiceImpl implements ImageService {
         var productDetail = productDetailRepository.findById(productDetailId)
                 .orElseThrow(() -> new IllegalArgumentException("Product detail not found."));
 
-        for (int i = 0; i < images.size(); i++) {
-            ImageRequest imageRequest = images.get(i);
+        if (images != null) {
+            List<Images> existingImages = imageRepository.findByProductDetail(productDetail);
+            Set<String> existingImageNames = existingImages.stream()
+                    .map(Images::getName)
+                    .collect(Collectors.toSet());
 
-            if (imageRequest.getId() == null) {
-                // Check if an image with the same name already exists for the given product detail
-                Images existingImage = imageRepository.findByNameAndProductDetail(imageRequest.getName(), productDetail);
+            for (int i = 0; i < images.size(); i++) {
+                ImageRequest imageRequest = images.get(i);
 
-                if (existingImage == null) {
-                    Images newImage = new Images();
-                    newImage.setName(imageRequest.getName());
-                    newImage.setUrl_image(String.valueOf(i));
-                    newImage.setStatus(1);
-                    newImage.setCreatedAt(now);
-                    newImage.setUpdatedAt(now);
-                    newImage.setProductDetail(productDetail);
-                    imageRepository.save(newImage);
-                }
-            } else {
-                var imageUpdate = imageRepository.findById(imageRequest.getId())
-                        .orElseThrow(() -> new IllegalArgumentException("Image not found."));
+                if (imageRequest.getId() == null) {
+                    Images existingImage = imageRepository.findByNameAndProductDetail(imageRequest.getName(), productDetail);
 
-                if (!imageUpdate.getName().equals(imageRequest.getName())) {
-                    // Only update the image if the name is different
-                    imageUpdate.setName(imageRequest.getName());
-                    imageUpdate.setUpdatedAt(now);
-                    imageRepository.save(imageUpdate);
+                    if (existingImage == null) {
+                        Images newImage = new Images();
+                        newImage.setName(imageRequest.getName());
+                        newImage.setUrl_image(String.valueOf(existingImages.size()));
+                        newImage.setStatus(1);
+                        newImage.setCreatedAt(now);
+                        newImage.setUpdatedAt(now);
+                        newImage.setProductDetail(productDetail);
+                        imageRepository.save(newImage);
+                    }
+                } else {
+                    var imageUpdate = imageRepository.findById(imageRequest.getId())
+                            .orElseThrow(() -> new IllegalArgumentException("Image not found."));
+
+                    if (!imageUpdate.getName().equals(imageRequest.getName())) {
+                        imageUpdate.setName(imageRequest.getName());
+                        imageUpdate.setUpdatedAt(now);
+                        imageRepository.save(imageUpdate);
+                    }
                 }
             }
         }
     }
 
+    @Override
+    public void updateImages(List<ImageRequest> images, Integer productDetailId) {
+        var now = OffsetDateTime.now();
+        var productDetail = productDetailRepository.findById(productDetailId)
+                .orElseThrow(() -> new IllegalArgumentException("Product detail not found."));
+
+        if (images != null) {
+            List<Images> existingImages = imageRepository.findByProductDetail(productDetail);
+            Set<String> existingImageNames = existingImages.stream()
+                    .map(Images::getName)
+                    .collect(Collectors.toSet());
+
+            for (int i = 0; i < images.size(); i++) {
+                ImageRequest imageRequest = images.get(i);
+
+                if (imageRequest.getId() == null) {
+                    Images existingImage = imageRepository.findByNameAndProductDetail(imageRequest.getName(), productDetail);
+
+                    if (existingImage == null) {
+                        Images newImage = new Images();
+                        newImage.setName(imageRequest.getName());
+                        newImage.setUrl_image(imageRequest.getUrl_image());  // Set the URL of the new image
+                        newImage.setStatus(1);
+                        newImage.setCreatedAt(now);
+                        newImage.setUpdatedAt(now);
+                        newImage.setProductDetail(productDetail);
+                        imageRepository.save(newImage);
+                    }
+                } else {
+                    var imageUpdate = imageRepository.findById(imageRequest.getId())
+                            .orElseThrow(() -> new IllegalArgumentException("Image not found."));
+
+                    if (!imageUpdate.getName().equals(imageRequest.getName())) {
+                        imageUpdate.setName(imageRequest.getName());
+                        imageUpdate.setUpdatedAt(now);
+                        imageRepository.save(imageUpdate);
+                    }
+                }
+            }
+        }
+    }
 
     @Override
     public void delete(List<ImageRequest> imageDelete, Integer id) {

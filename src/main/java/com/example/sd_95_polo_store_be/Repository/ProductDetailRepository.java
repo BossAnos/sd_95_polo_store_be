@@ -16,18 +16,12 @@ public interface ProductDetailRepository extends JpaRepository<ProductDetail, In
     Optional<ProductDetail> findById(Integer id);
 
     @Query(value = """
-                select new com.example.sd_95_polo_store_be.Model.Response.ProductDetailResponse(pd.id, pd.sizes.id, pd.colors.id, pd.discount.id, pd.discount.name,pd.discount.discount, pd.sizes.name,pd.colors.name,pd.quantity,pd.cost,pd.price,pd.status)
+                select new com.example.sd_95_polo_store_be.Model.Response.ProductDetailResponse(pd.id, pd.sizes.id, pd.colors.id, pd.sizes.name,pd.colors.name,pd.quantity,pd.cost,pd.price,pd.status)
                 from ProductDetail pd
                 where pd.products.id = :id
                 and pd.status <> 0
             """)
     List<ProductDetailResponse> getByProductId(Integer id);
 
-    @Query("""
-                select new com.example.sd_95_polo_store_be.Model.Response.DiscountProductDetailReponse(p.id, p.products.name, p.price, d.discount) from ProductDetail p
-                    join Discount d on d.id = p.discount.id
-                where d.status = 1
-            """)
-    List<DiscountProductDetailReponse> getProductDiscounts();
 
 }

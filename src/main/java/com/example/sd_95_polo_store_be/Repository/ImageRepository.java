@@ -21,6 +21,7 @@ public interface ImageRepository extends JpaRepository<Images, Integer> {
                 where img.productDetail.id = :id 
             """)
     List<ImageProductResponse> findByProductDetail(Integer id);
+    List<Images> findByProductDetail(ProductDetail productDetail);
 
     @Query(value = """
             delete from Images where id = :id

@@ -14,16 +14,16 @@ public class AddressResponse {
 
     private String ward;
 
-    private String full_address;
+    private String fullAddress;
 
     private Integer status;
 
-    public AddressResponse(Integer id, String city, String district, String ward, String full_address, Integer status) {
+    public AddressResponse(Integer id, String city, String district, String ward, String fullAddress, Integer status) {
         this.id = id;
         this.city = city;
         this.district = district;
         this.ward = ward;
-        this.full_address = full_address;
+        this.fullAddress = fullAddress;
         this.status = status;
     }
 }

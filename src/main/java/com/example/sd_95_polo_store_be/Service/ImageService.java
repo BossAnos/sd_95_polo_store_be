@@ -12,7 +12,7 @@ public interface ImageService {
 
     void updateStatus(Integer id, ChangeStatusImage changeStatusImage);
     void createOrUpdate(List<ImageRequest> images, Integer productDetailId);
-
+    void updateImages(List<ImageRequest> images, Integer productDetailId);
     void deleteOne(Integer id);
     void delete(List<ImageRequest> imageDelete, Integer id);
 

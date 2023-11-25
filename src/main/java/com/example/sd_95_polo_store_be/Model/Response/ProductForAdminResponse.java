@@ -21,10 +21,13 @@ public class ProductForAdminResponse {
     private String nameCategory;
     private String nameMaterial;
     private Integer promotionPercent;
-    private Double price;
+    private Integer discountId;
+    private Float discount;
+    private Float price;
     private String image;
+    private Float pricecost;
 
-    public ProductForAdminResponse(Integer id, String name, Integer status, String description, Long categoryId, Integer brandId, Integer materialId, String nameBrand, String nameCategory, String nameMaterial) {
+    public ProductForAdminResponse(Integer id, String name, Integer status, String description, Long categoryId, Integer brandId, Integer materialId, String nameBrand, String nameCategory, String nameMaterial,Integer discountId,Float discount) {
         this.id = id;
         this.name = name;
         this.status = status;
@@ -35,5 +38,7 @@ public class ProductForAdminResponse {
         this.nameBrand = nameBrand;
         this.nameCategory = nameCategory;
         this.nameMaterial = nameMaterial;
+        this.discountId = discountId;
+        this.discount = discount;
     }
 }

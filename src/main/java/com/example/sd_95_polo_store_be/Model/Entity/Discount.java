@@ -28,4 +28,6 @@ public class Discount {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 
+
+
 }

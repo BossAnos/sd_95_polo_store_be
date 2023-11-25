@@ -12,14 +12,13 @@ import java.util.List;
 
 public interface ProductService {
     List<ProductForAdminResponse> getAllProductForAdmin();
+    List<ProductForAdminResponse> getAllProductForUser();
 
     void addProduct(ProductRequset productRequset);
 
     public GetOneProductResponse getOne(Integer id);
 
     void create(ProductRequest productRequest);
-
-
 
     void update(Integer productId, ProductRequest productRequest);
 

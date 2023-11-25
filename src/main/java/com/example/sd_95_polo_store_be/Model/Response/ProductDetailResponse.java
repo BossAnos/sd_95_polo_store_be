@@ -11,32 +11,26 @@ public class ProductDetailResponse {
     private Integer productDetailId;
     private Integer sizeId;
     private Long colorId;
-    private Integer discountId;
-    private String namediscount;
-    private Float discount;
     private String nameSize;
     private String nameColor;
     private Integer quantity;
     private Float cost;
-    private Double price;
+    private Float price;
     private Integer status;
     private Integer promotionPercent;
     private Float pricecost;
 
     List<ImageProductResponse> images;
 
-    public ProductDetailResponse(Integer productDetailId, Integer sizeId, Long colorId, Integer discountId, String namediscount, Float discount, String nameSize, String nameColor, Integer quantity, Float cost, Float pricecost, Integer status) {
+    public ProductDetailResponse(Integer productDetailId, Integer sizeId, Long colorId, String nameSize, String nameColor, Integer quantity, Float cost, Float price, Integer status) {
         this.productDetailId = productDetailId;
         this.sizeId = sizeId;
         this.colorId = colorId;
-        this.discountId = discountId;
-        this.namediscount = namediscount;
-        this.discount = discount;
         this.nameSize = nameSize;
         this.nameColor = nameColor;
         this.quantity = quantity;
         this.cost = cost;
-        this.pricecost = pricecost;
+        this.price = price;
         this.status = status;
     }
 }

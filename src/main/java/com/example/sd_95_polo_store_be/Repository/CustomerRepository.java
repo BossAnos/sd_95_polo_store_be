@@ -25,7 +25,7 @@ public interface CustomerRepository extends JpaRepository<Customers, Integer> {
     @Query(value = """
                 select new com.example.sd_95_polo_store_be.Model.Response.CustomerResponse(c.id,c.name,c.email,c.phone,c.avatar,c.status)
                 from Customers c
-              where c.status = '1'
+              where c.id = :id and c.status = '1'
             """)
    Optional<CustomerResponse> getOneCustomer(Integer id);
 }

@@ -19,7 +19,7 @@ public class Address extends BaseEntity<Address> {
 
     private String ward;
 
-    private String full_address;
+    private String fullAddress;
 
     private Integer status;
 

@@ -33,6 +33,10 @@ public class Products extends BaseEntity<Products> {
     @JoinColumn(name = "materialId")
     private Materials materials;
 
+    @ManyToOne
+    @JoinColumn(name = "discountId")
+    private Discount discount;
+
 
     @Override
     protected Products self() {

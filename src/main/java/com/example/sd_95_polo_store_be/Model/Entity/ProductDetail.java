@@ -42,7 +42,4 @@ public class ProductDetail extends BaseEntity<ProductDetail>{
     @JoinColumn(name = "colorId")
     private Colors colors;
 
-    @ManyToOne
-    @JoinColumn(name = "discountId")
-    private Discount discount;
 }
