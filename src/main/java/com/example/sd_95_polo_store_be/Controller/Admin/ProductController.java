@@ -56,4 +56,9 @@ public class ProductController {
     public Response<GetOneProductResponse> getOne(@PathVariable Integer id) {
         return Response.ofSucceeded(productService.getOne(id));
     }
+
+    @GetMapping("/productDetail/{id}")
+    public Response<GetOneProductResponse> getProductDetaul(@PathVariable Integer id) {
+        return Response.ofSucceeded(productService.getProductDetail(id));
+    }
 }

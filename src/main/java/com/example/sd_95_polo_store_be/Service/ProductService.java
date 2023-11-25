@@ -18,6 +18,8 @@ public interface ProductService {
 
     public GetOneProductResponse getOne(Integer id);
 
+    public GetOneProductResponse getProductDetail(Integer id);
+
     void create(ProductRequest productRequest);
 
     void update(Integer productId, ProductRequest productRequest);

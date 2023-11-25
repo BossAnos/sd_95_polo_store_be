@@ -17,7 +17,6 @@ public class ProductDetailResponse {
     private Float cost;
     private Float price;
     private Integer status;
-    private Integer promotionPercent;
     private Float pricecost;
 
     List<ImageProductResponse> images;

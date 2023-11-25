@@ -97,6 +97,7 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     public List<ProductDetailResponse> getForProduct(Integer productId) {
         List<ProductDetailResponse> list = productDetailRepository.getByProductId(productId);
         for (ProductDetailResponse productDetailResponses : list) {
+
             productDetailResponses.setImages(imageService.gets(productDetailResponses.getProductDetailId()));
         }
         return list;

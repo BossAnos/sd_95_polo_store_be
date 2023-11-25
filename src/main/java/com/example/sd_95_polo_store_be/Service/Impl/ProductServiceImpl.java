@@ -5,10 +5,7 @@ import com.example.sd_95_polo_store_be.Model.Entity.Products;
 import com.example.sd_95_polo_store_be.Model.Request.ProductDetailRepuest;
 import com.example.sd_95_polo_store_be.Model.Request.ProductRequest;
 import com.example.sd_95_polo_store_be.Model.Request.ProductRequset;
-import com.example.sd_95_polo_store_be.Model.Response.GetOneProductResponse;
-import com.example.sd_95_polo_store_be.Model.Response.ImageProductResponse;
-import com.example.sd_95_polo_store_be.Model.Response.ProductDiscountResponse;
-import com.example.sd_95_polo_store_be.Model.Response.ProductForAdminResponse;
+import com.example.sd_95_polo_store_be.Model.Response.*;
 import com.example.sd_95_polo_store_be.Repository.*;
 import com.example.sd_95_polo_store_be.Service.DiscountService;
 import com.example.sd_95_polo_store_be.Service.ProductDetailService;
@@ -52,6 +49,7 @@ public class ProductServiceImpl implements ProductService {
         var product = productRepository.getAllProductByCreateDateDesc();
         for (ProductForAdminResponse productForAdminResponse : product) {
             var image = productRepository.getImage(productForAdminResponse.getId());
+            productForAdminResponse.setImage(image);
             var price = productRepository.getPrice(productForAdminResponse.getId());
         }
 
@@ -88,26 +86,12 @@ public class ProductServiceImpl implements ProductService {
         return productStatusActive;
     }
 
+
     @Override
     public void addProduct(ProductRequset productRequset) {
-        if (productRequset.getName() == null || productRequset.getName().isEmpty()) {
-            throw new IllegalArgumentException("Tên sản phẩm không được để trống");
-        }
-
-        if (productRequset.getStatus() == null) {
-            throw new IllegalArgumentException("Trạng thái sản phẩm không được để trống");
-        }
-
+        discountService.expireDiscounts();
+        productRepository.updateProductsForExpiredDiscounts();
         Products product = new Products();
-//        product.setName(productRequset.getName());
-//        product.setStatus(productRequset.getStatus());
-//        product.setDescription(product.getDescription());
-//        product.setCategoryId(product.getCategoryId());
-//        product.setBrandId(productRequset.getBrandId());
-//        product.setMaterialId(productRequset.getMaterialId());
-//        product.setDiscountId(productRequset.getDiscountId());
-
-        // Thực hiện lưu đối tượng Product vào cơ sở dữ liệu hoặc thực hiện các xử lý khác tùy theo yêu cầu của bạn
         productRepository.save(product);
     }
 
@@ -115,6 +99,28 @@ public class ProductServiceImpl implements ProductService {
     public GetOneProductResponse getOne(Integer id) {
         var product = productRepository.getId(id).orElseThrow();
         product.setProductDetails(productDetailService.getForProduct(id));
+        return product;
+    }
+
+    @Override
+    public GetOneProductResponse getProductDetail(Integer id) {
+        var product = productRepository.getId(id).orElseThrow();
+        var productDiscount = productRepository.getProductDiscounts();
+        List<ProductDetailResponse> listProductDetails = productDetailService.getForProduct(id);
+        for (ProductDetailResponse productDetail : listProductDetails) {
+            productDetail.setPrice(productDetail.getPrice());
+
+            if (product.getStatus().equals(3)) {
+                productDetail.setPricecost(productDetail.getPrice() - (productDetail.getPrice() * product.getDiscount()));
+                product.setPromotionPercent(Math.round(product.getDiscount() * 100));
+
+
+            } else {
+                product.setPromotionPercent(0);
+                productDetail.setPricecost(productDetail.getPrice());
+            }
+            product.setProductDetails(listProductDetails);
+        }
         return product;
     }
 
@@ -165,8 +171,6 @@ public class ProductServiceImpl implements ProductService {
         List<ProductDetailRepuest> productDetailRepuests = productRequest.getProductDetailRepuests();
         productDetailRepuests.forEach(request -> productDetailService.createOrUpdate(request, product.getId()));
     }
-    private Double calculatePromotion(Double price, Float pricePromotion) {
-        return Math.floor((price - price * (pricePromotion / 100)) / 1000) * 1000 + 9000;
-    }
+
 
 }
