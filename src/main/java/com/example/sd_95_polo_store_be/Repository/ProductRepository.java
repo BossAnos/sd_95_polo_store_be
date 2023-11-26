@@ -36,7 +36,7 @@ public interface ProductRepository extends JpaRepository<Products, Integer> {
     @Query(value = """
             select new com.example.sd_95_polo_store_be.Model.
             Response.GetOneProductResponse
-            (p.id, p.name, p.status, p.description, p.categories.id, p.brands.id,p.materials.id,p.brands.name, p.categories.name,p.materials.name,p.discount.id,p.discount.name)
+            (p.id, p.name, p.status, p.description, p.categories.id, p.brands.id,p.materials.id,p.brands.name, p.categories.name,p.materials.name,p.discount.id,p.discount.discount,p.discount.name)
              from Products p
              where p.id = :id
             """)
