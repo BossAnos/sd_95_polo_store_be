@@ -8,6 +8,7 @@ import org.hibernate.engine.jdbc.Size;
 import java.util.List;
 
 public interface SizeService {
+    List<Sizes> getSizesByStatus();
     List<Sizes> gets();
 
     Sizes createOrUpdate(Sizes sizes);

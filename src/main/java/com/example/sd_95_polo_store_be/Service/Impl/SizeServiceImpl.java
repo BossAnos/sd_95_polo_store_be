@@ -19,6 +19,11 @@ public class SizeServiceImpl implements SizeService {
     private SizeRepository sizeRepository;
 
     @Override
+    public List<Sizes> getSizesByStatus() {
+        return sizeRepository.findByOrderByCreateDateDesc();
+    }
+
+    @Override
     public List<Sizes> gets() {
         return sizeRepository.findAll();
     }

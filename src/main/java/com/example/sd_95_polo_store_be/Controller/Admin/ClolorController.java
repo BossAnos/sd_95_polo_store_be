@@ -22,10 +22,14 @@ public class ClolorController {
     @Autowired
     private ColorServices colorServices;
 
-    @GetMapping("/getall")
-    public Response<List<Colors>> getAll() {
-        return Response.ofSucceeded(colorServices.getAllColor());
+    @GetMapping("")
+    public Response<List<Colors>> getsByStatus() {
+        return Response.ofSucceeded(colorServices.getColorByStatus());
     }
+//    @GetMapping("/getall")
+//    public Response<List<Colors>> getAll() {
+//        return Response.ofSucceeded(colorServices.getAllColor());
+//    }
 
     @PostMapping("/add")
     public Response<Colors> create(@RequestBody Colors color) {
