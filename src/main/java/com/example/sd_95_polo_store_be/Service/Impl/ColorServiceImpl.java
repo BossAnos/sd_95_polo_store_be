@@ -22,6 +22,11 @@ public class ColorServiceImpl implements ColorServices {
     ColorRepository colorRepository;
 
     @Override
+    public List<Colors> getColorByStatus() {
+        return colorRepository.findByOrderByCreateDateDesc();
+    }
+
+    @Override
     public ArrayList<Colors> getAllColor() {
         return (ArrayList<Colors>) colorRepository.findAll();
     }

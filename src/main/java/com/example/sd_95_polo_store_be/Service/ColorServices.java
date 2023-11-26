@@ -11,6 +11,7 @@ import java.util.List;
 
 @Service
 public interface ColorServices {
+    List<Colors> getColorByStatus();
     ArrayList<Colors> getAllColor();
 
     Colors saveColor(Colors color);
