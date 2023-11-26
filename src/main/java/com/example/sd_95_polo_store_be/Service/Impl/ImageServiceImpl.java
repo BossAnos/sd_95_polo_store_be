@@ -55,9 +55,6 @@ public class ImageServiceImpl implements ImageService {
 
         if (images != null) {
             List<Images> existingImages = imageRepository.findByProductDetail(productDetail);
-            Set<String> existingImageNames = existingImages.stream()
-                    .map(Images::getName)
-                    .collect(Collectors.toSet());
 
             for (int i = 0; i < images.size(); i++) {
                 ImageRequest imageRequest = images.get(i);
@@ -105,9 +102,11 @@ public class ImageServiceImpl implements ImageService {
                 ImageRequest imageRequest = images.get(i);
 
                 if (imageRequest.getId() == null) {
+                    // Kiểm tra xem ảnh đã tồn tại hay chưa
                     Images existingImage = imageRepository.findByNameAndProductDetail(imageRequest.getName(), productDetail);
 
                     if (existingImage == null) {
+                        // Tạo mới ảnh
                         Images newImage = new Images();
                         newImage.setName(imageRequest.getName());
                         newImage.setUrl_image(imageRequest.getUrl_image());  // Set the URL of the new image
@@ -122,6 +121,7 @@ public class ImageServiceImpl implements ImageService {
                             .orElseThrow(() -> new IllegalArgumentException("Image not found."));
 
                     if (!imageUpdate.getName().equals(imageRequest.getName())) {
+                        // Cập nhật tên ảnh
                         imageUpdate.setName(imageRequest.getName());
                         imageUpdate.setUpdatedAt(now);
                         imageRepository.save(imageUpdate);

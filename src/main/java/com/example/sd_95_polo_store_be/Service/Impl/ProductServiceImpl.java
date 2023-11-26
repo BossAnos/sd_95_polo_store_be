@@ -160,7 +160,11 @@ public class ProductServiceImpl implements ProductService {
         var material = matarialRepository.findById(productRequest.getMaterialId()).orElseThrow();
         var discount = discountRepository.findById(productRequest.getDiscountId()).orElseThrow();
         product.setName(productRequest.getName());
-        product.setStatus(product.getStatus());
+        if (discount.getStatus() == 1) {
+            product.setStatus(3);
+        } else {
+            product.setStatus(1);
+        }
         product.setDescription(productRequest.getDescription());
         product.setUpdatedAt(now);
         product.setCategories(category);

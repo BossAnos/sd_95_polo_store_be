@@ -87,8 +87,7 @@ public class ProductDetailServiceImpl implements ProductDetailService {
             productDetailRepository.save(updateProductDetail);
 
             if (productDetailRequest.getImages() != null) {
-                List<ImageRequest> updatedImages = productDetailRequest.getImages();
-                imageService.updateImages(updatedImages, updateProductDetail.getId());
+                imageService.createOrUpdate(productDetailRequest.getImages(), updateProductDetail.getId());
             }
         }
     }
