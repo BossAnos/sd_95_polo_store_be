@@ -1,6 +1,7 @@
 package com.example.sd_95_polo_store_be.Service;
 
 import com.example.sd_95_polo_store_be.Model.Entity.Categories;
+import com.example.sd_95_polo_store_be.Model.Entity.Colors;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Service
 public interface CategoriesService {
+    List<Categories>getCategoryByStatus();
     ArrayList<Categories> getAllCategories();
     Categories saveCategories(Categories categories);
     void deleteCategoriesById(Long id);

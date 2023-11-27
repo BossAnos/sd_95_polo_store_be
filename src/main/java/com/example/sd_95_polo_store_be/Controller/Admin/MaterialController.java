@@ -1,5 +1,6 @@
 package com.example.sd_95_polo_store_be.Controller.Admin;
 
+import com.example.sd_95_polo_store_be.Model.Entity.Colors;
 import com.example.sd_95_polo_store_be.Model.Entity.Materials;
 
 import com.example.sd_95_polo_store_be.Service.MatarialService;
@@ -16,12 +17,15 @@ import java.util.Map;
 public class MaterialController {
     @Autowired
     private MatarialService matarialService;
-
-
     @GetMapping("")
-    public Response<List<Materials>> gets() {
-        return Response.ofSucceeded(matarialService.gets());
+    public Response<List<Materials>> getsByStatus() {
+        return Response.ofSucceeded(matarialService.getMaterialsByStatus());
     }
+
+//    @GetMapping("")
+//    public Response<List<Materials>> gets() {
+//        return Response.ofSucceeded(matarialService.gets());
+//    }
 
     @PostMapping
     public Response<Materials> createOrUpdateMaterial(@RequestBody Materials materials) {
