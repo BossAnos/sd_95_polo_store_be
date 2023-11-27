@@ -14,16 +14,20 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-@RequestMapping("/categories")
+@RequestMapping("/admin/category")
 @RestController
 public class CategoriesController {
     @Autowired
    private CategoriesService categoriesSrevice;
-
-    @GetMapping("/getall")
-    public Response<List<Categories>> getAll() {
-        return Response.ofSucceeded(categoriesSrevice.getAllCategories());
+    @GetMapping("")
+    public Response<List<Categories>> getsByStatus() {
+        return Response.ofSucceeded(categoriesSrevice.getCategoryByStatus());
     }
+
+//    @GetMapping("/getall")
+//    public Response<List<Categories>> getAll() {
+//        return Response.ofSucceeded(categoriesSrevice.getAllCategories());
+//    }
 
     @PostMapping("/add")
     public Response<Categories> create(@RequestBody Categories categories) {

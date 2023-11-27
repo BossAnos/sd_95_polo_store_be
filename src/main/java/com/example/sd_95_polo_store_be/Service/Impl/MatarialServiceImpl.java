@@ -17,6 +17,11 @@ public class MatarialServiceImpl implements MatarialService {
     private MatarialRepository matarialRepository;
 
     @Override
+    public List<Materials> getMaterialsByStatus() {
+        return matarialRepository.findByOrderByCreateDateDesc();
+    }
+
+    @Override
     public List<Materials> gets() {
         return matarialRepository.findAll();
     }
