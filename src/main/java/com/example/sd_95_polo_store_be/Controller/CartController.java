@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class CartController {
     @Autowired
     private CartDetailServie cartDetailServie;
-    @GetMapping("/{id}")
+    @PostMapping("/{id}")
     public Response<Void> getOne(@RequestBody CartRequest cartRequest, @PathVariable Integer id){
         cartDetailServie.addCart(cartRequest,id);
         return Response.ofSucceeded();
