@@ -1,13 +1,12 @@
 package com.example.sd_95_polo_store_be.Controller.Admin;
 
 import com.example.sd_95_polo_store_be.Model.Entity.Oders;
+import com.example.sd_95_polo_store_be.Model.Request.ChangeStatusOrder;
 import com.example.sd_95_polo_store_be.Service.OrderService;
 import com.example.sd_95_polo_store_be.common.Response;
 import jakarta.persistence.criteria.Order;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,7 +17,13 @@ public class OrderController {
     private OrderService orderService;
 
     @GetMapping
-    public Response<List<Oders>> getAll(){
+    public Response<List<Oders>> getAll() {
         return Response.ofSucceeded(orderService.getAll());
+    }
+
+    @PutMapping("/updateStatus/{id}")
+    public Response<Void> updateStatus(@PathVariable Integer id,@RequestBody ChangeStatusOrder changeStatusOrder) {
+        orderService.updateStatusOrder(id, changeStatusOrder);
+        return Response.ofSucceeded();
     }
 }
