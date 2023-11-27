@@ -5,6 +5,8 @@ import com.example.sd_95_polo_store_be.Model.Entity.CartDetail;
 import com.example.sd_95_polo_store_be.Model.Entity.Customers;
 import com.example.sd_95_polo_store_be.Model.Entity.ProductDetail;
 import com.example.sd_95_polo_store_be.Model.Request.CartRequest;
+import com.example.sd_95_polo_store_be.Model.Request.ChangeQuantityCartRequest;
+import com.example.sd_95_polo_store_be.Model.Request.ChangeStatusCartResponse;
 import com.example.sd_95_polo_store_be.Repository.CartDetailRepository;
 import com.example.sd_95_polo_store_be.Repository.CartRepository;
 import com.example.sd_95_polo_store_be.Repository.CustomerRepository;
@@ -36,7 +38,7 @@ public class CartDetailServiceImpl implements CartDetailServie {
             cart = optionalCart.get();
         } else {
             cart = new Cart();
-            cart.setStatus(1);
+            cart.setStatus(0);
             cart.setCustomers(customer);
             cart = cartRepository.save(cart);
         }
@@ -54,11 +56,35 @@ public class CartDetailServiceImpl implements CartDetailServie {
             } else {
                 CartDetail newCartDetail = new CartDetail();
                 newCartDetail.setQuantity(cartRequest.getQuantity());
-                newCartDetail.setStatus(1);
+                newCartDetail.setStatus(0);
                 newCartDetail.setCart(cart);
                 newCartDetail.setProductDetail(productDetail);
                 cartDetailRepository.save(newCartDetail);
             }
+        }
+    }
+
+    @Override
+    public void changeQuantityCart(Long id, ChangeQuantityCartRequest quantityCartRequest) {
+        var cartDetail = cartDetailRepository.findById(id).orElseThrow();
+        if (quantityCartRequest.getQuantity() == 0) {
+            cartDetailRepository.delete(cartDetail);
+        } else {
+            cartDetail.setQuantity(quantityCartRequest.getQuantity());
+            cartDetailRepository.save(cartDetail);
+        }
+
+    }
+
+    @Override
+    public void changeStatusCart(Long id, ChangeStatusCartResponse cartResponse) {
+        var cartDetail = cartDetailRepository.findById(id).orElseThrow();
+        if (cartResponse.getStatus() == 0) {
+            cartDetail.setStatus(1);
+            cartDetailRepository.save(cartDetail);
+        } else {
+            cartDetail.setStatus(0);
+            cartDetailRepository.save(cartDetail);
         }
     }
 }
