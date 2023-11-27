@@ -5,4 +5,5 @@ import java.util.List;
 
 public interface OrderService {
     List<Oders> getByCustomer(Integer id);
+    List<Oders> getAll();
 }
