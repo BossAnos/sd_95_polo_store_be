@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class CartController {
     @Autowired
     private CartDetailServie cartDetailServie;
+
     @Autowired
     private CartService cartService;
 
@@ -33,8 +34,7 @@ public class CartController {
     @PutMapping("updateQuantity/{id}")
     public Response<Void> updateQuantity(@PathVariable Long id, @RequestBody ChangeQuantityCartRequest quantityCartRequest) {
         cartDetailServie.changeQuantityCart(id, quantityCartRequest);
-        return Response.ofSucceeded();
-    }
+
 
     @PutMapping("updateStatus/{id}")
     public Response<Void> updateStatus(@PathVariable Long id, @RequestBody ChangeStatusCartResponse statusCartResponse) {
