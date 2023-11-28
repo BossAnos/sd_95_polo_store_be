@@ -5,7 +5,7 @@ import lombok.Data;
 import org.springframework.data.repository.cdi.Eager;
 
 @Data
-@Eager
+@Entity
 public class OderDetail extends BaseEntity<OderDetail> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +18,7 @@ public class OderDetail extends BaseEntity<OderDetail> {
     private Integer status;
 
     @ManyToOne
-    @JoinColumn(name = "orderId")
+    @JoinColumn(name = "oderId")
     private Oders oders;
 
     @ManyToOne
