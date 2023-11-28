@@ -2,7 +2,15 @@ package com.example.sd_95_polo_store_be.Service.Impl;
 
 import com.example.sd_95_polo_store_be.Model.Entity.Oders;
 import com.example.sd_95_polo_store_be.Model.Request.ChangeStatusOrder;
+import com.example.sd_95_polo_store_be.Model.Request.OrderDetailRequest;
+import com.example.sd_95_polo_store_be.Model.Request.OrderRequest;
+import com.example.sd_95_polo_store_be.Model.Response.CartDetailResponse;
+import com.example.sd_95_polo_store_be.Model.Response.CartResponse;
+import com.example.sd_95_polo_store_be.Repository.CartDetailRepository;
+import com.example.sd_95_polo_store_be.Repository.CustomerRepository;
 import com.example.sd_95_polo_store_be.Repository.OrderRepository;
+import com.example.sd_95_polo_store_be.Service.CartService;
+import com.example.sd_95_polo_store_be.Service.OrderDetailService;
 import com.example.sd_95_polo_store_be.Service.OrderService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +23,14 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
+    @Autowired
+    private OrderDetailService orderDetailService;
+    @Autowired
+    private CartService cartService;
+    @Autowired
+    private CartDetailRepository cartDetailRepository;
 
     @Override
     public List<Oders> getByCustomer(Integer id) {
@@ -58,6 +74,30 @@ public class OrderServiceImpl implements OrderService {
                 orderRepository.save(order);
             }
         }
+    }
+
+    @Override
+    public void orderOnline(OrderRequest orderRequest, Integer id) {
+        var now = OffsetDateTime.now();
+        var customer = customerRepository.findById(id).orElseThrow();
+        Oders oders = new Oders();
+        oders.setAddress(orderRequest.getAddress());
+        oders.setTotalPrice(orderRequest.getTotalPrice());
+        oders.setStatus(1);
+        oders.setUsername(orderRequest.getUsername());
+        oders.setPhone(orderRequest.getPhone());
+        oders.setCreatedAt(now);
+        oders.setUpdatedAt(now);
+        orderRepository.save(oders);
+
+        List<OrderDetailRequest> orderDetailRequests = orderRequest.getOrderDetailRequest();
+        orderDetailRequests.forEach(request -> orderDetailService.create(request, oders.getId()));
+
+        CartResponse cartResponse = cartService.getOneByStatus(id);
+        List<CartDetailResponse> list = cartResponse.getCartDetailResponses();
+        list.forEach(cartDetail -> cartDetailRepository.deleteById(cartDetail.getCartDetailId()));
+
+
     }
 
 
