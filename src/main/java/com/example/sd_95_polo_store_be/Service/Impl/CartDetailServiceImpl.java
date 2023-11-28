@@ -2,11 +2,10 @@ package com.example.sd_95_polo_store_be.Service.Impl;
 
 import com.example.sd_95_polo_store_be.Model.Entity.Cart;
 import com.example.sd_95_polo_store_be.Model.Entity.CartDetail;
-import com.example.sd_95_polo_store_be.Model.Entity.Customers;
 import com.example.sd_95_polo_store_be.Model.Entity.ProductDetail;
 import com.example.sd_95_polo_store_be.Model.Request.CartRequest;
 import com.example.sd_95_polo_store_be.Model.Request.ChangeQuantityCartRequest;
-import com.example.sd_95_polo_store_be.Model.Request.ChangeStatusCartResponse;
+import com.example.sd_95_polo_store_be.Model.Request.ChangeStatusCartRequest;
 import com.example.sd_95_polo_store_be.Repository.CartDetailRepository;
 import com.example.sd_95_polo_store_be.Repository.CartRepository;
 import com.example.sd_95_polo_store_be.Repository.CustomerRepository;
@@ -77,7 +76,7 @@ public class CartDetailServiceImpl implements CartDetailServie {
     }
 
     @Override
-    public void changeStatusCart(Long id, ChangeStatusCartResponse cartResponse) {
+    public void changeStatusCart(Long id, ChangeStatusCartRequest cartResponse) {
         var cartDetail = cartDetailRepository.findById(id).orElseThrow();
         if (cartResponse.getStatus() == 0) {
             cartDetail.setStatus(1);
