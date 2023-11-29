@@ -48,6 +48,10 @@ public class OrderServiceImpl implements OrderService {
         var now = OffsetDateTime.now();
         var order = orderRepository.findById(id).orElseThrow();
         switch (changeStatusOrder.getStatus()) {
+            case 1 -> {
+                order.setStatus(1);
+                orderRepository.save(order);
+            }
             case 2 -> {
                 order.setStatus(2);
                 order.setConfirmDate(now);
@@ -55,22 +59,31 @@ public class OrderServiceImpl implements OrderService {
             }
             case 3 -> {
                 order.setStatus(3);
-                order.setShipDate(now);
                 orderRepository.save(order);
             }
             case 4 -> {
                 order.setStatus(4);
-                order.setConfirmDate(now);
+                order.setShipDate(now);
                 orderRepository.save(order);
             }
             case 5 -> {
                 order.setStatus(5);
+                order.setSuccessDate(now);
                 orderRepository.save(order);
             }
             case 6 -> {
-                if (order.getStatus() == 1
-                        || order.getStatus() == 2)
-                    order.setStatus(6);
+                order.setStatus(6);
+                order.setSuccessDate(now);
+                orderRepository.save(order);
+            }
+            case 7 -> {
+                if (order.getStatus() == 1 || order.getStatus() == 3
+                        || order.getStatus() == 2 || order.getStatus() == 6)
+                    order.setStatus(7);
+                orderRepository.save(order);
+            }
+            case 8 -> {
+                order.setStatus(8);
                 orderRepository.save(order);
             }
         }
@@ -84,6 +97,7 @@ public class OrderServiceImpl implements OrderService {
         oders.setAddress(orderRequest.getAddress());
         oders.setTotalPrice(orderRequest.getTotalPrice());
         oders.setStatus(1);
+        oders.setCustomers(customer);
         oders.setUsername(orderRequest.getUsername());
         oders.setPhone(orderRequest.getPhone());
         oders.setCreatedAt(now);
