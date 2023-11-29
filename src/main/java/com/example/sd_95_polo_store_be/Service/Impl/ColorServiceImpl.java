@@ -32,42 +32,29 @@ public class ColorServiceImpl implements ColorServices {
     }
 
     @Override
-    public Colors saveColor(Colors color) {
-
-        if (ObjectUtils.isEmpty(color.getName().trim())) {
-            throw new IllegalArgumentException("Tên không để trống");
-        } else if (ObjectUtils.isEmpty(color.getStatus().toString().trim())) {
-            throw new IllegalArgumentException("Trạng thái không để trống");
-        } else if (ObjectUtils.isEmpty(color.getDescription().trim())) {
-            throw new IllegalArgumentException("Mô tả không để trống");
-        } else if (isColorDataDuplicate(color)) {
-            throw new IllegalArgumentException("Màu này đã có rồi");
-        }
+    public void saveColor(Colors color) {
         var now = OffsetDateTime.now();
-        if (color.getId() != null) {
-            Optional<Colors> existingColor = colorRepository.findById(color.getId());
-            if (existingColor.isPresent()) {
-                Colors updateColor = existingColor.get();
-                updateColor.setName(color.getName());
-                updateColor.setStatus(1);
-                updateColor.setDescription(color.getDescription());
-                updateColor.setUpdatedAt(now);
-                return colorRepository.save(updateColor);
-            } else {
-                throw new IllegalArgumentException("Không tìm thấy kích thước với id: " + color.getId());
-            }
-        } else {
+//        if (color.getId() != null) {
+//            Optional<Colors> existingColor = colorRepository.findById(color.getId());
+//            if (existingColor.isPresent()) {
+//                Colors updateColor = existingColor.get();
+//                updateColor.setName(color.getName());
+//                updateColor.setStatus(1);
+//                updateColor.setDescription(color.getDescription());
+//                updateColor.setUpdatedAt(now);
+//                return colorRepository.save(updateColor);
+//            } else {
+//                throw new IllegalArgumentException("Không tìm thấy kích thước với id: " + color.getId());
+//            }
+//        } else {
             Colors newColor = new Colors();
-            if (isColorDataDuplicate(color)) {
-                throw new IllegalArgumentException("Màu này đã có rồi");
-            }
             newColor.setName(color.getName());
             newColor.setStatus(1);
             newColor.setDescription(color.getDescription());
             newColor.setCreatedAt(now);
             newColor.setUpdatedAt(now);
-            return colorRepository.save(color);
-        }
+             colorRepository.save(newColor);
+//        }
 
     }
 

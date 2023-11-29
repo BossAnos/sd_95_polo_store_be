@@ -14,7 +14,7 @@ public interface ColorServices {
     List<Colors> getColorByStatus();
     ArrayList<Colors> getAllColor();
 
-    Colors saveColor(Colors color);
+    void saveColor(Colors color);
 
     void deleteColorById(Long id);
 

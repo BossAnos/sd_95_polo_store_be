@@ -5,14 +5,14 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.util.Date;
 
-@Table(name = "Colors")
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Entity
 @Data
+@Accessors(chain = true)
 public class Colors extends BaseEntity<Colors>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
