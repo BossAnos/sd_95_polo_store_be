@@ -6,9 +6,11 @@ import com.example.sd_95_polo_store_be.Model.Request.OrderDetailRequest;
 import com.example.sd_95_polo_store_be.Model.Request.OrderRequest;
 import com.example.sd_95_polo_store_be.Model.Response.CartDetailResponse;
 import com.example.sd_95_polo_store_be.Model.Response.CartResponse;
+import com.example.sd_95_polo_store_be.Model.Response.OrderVnpayResponse;
 import com.example.sd_95_polo_store_be.Repository.CartDetailRepository;
 import com.example.sd_95_polo_store_be.Repository.CustomerRepository;
 import com.example.sd_95_polo_store_be.Repository.OrderRepository;
+import com.example.sd_95_polo_store_be.Repository.TransactionsRepository;
 import com.example.sd_95_polo_store_be.Service.CartService;
 import com.example.sd_95_polo_store_be.Service.OrderDetailService;
 import com.example.sd_95_polo_store_be.Service.OrderService;
@@ -31,6 +33,8 @@ public class OrderServiceImpl implements OrderService {
     private CartService cartService;
     @Autowired
     private CartDetailRepository cartDetailRepository;
+    @Autowired
+    private TransactionsRepository transactionsRepository;
 
     @Override
     public List<Oders> getByCustomer(Integer id) {
@@ -90,9 +94,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void orderOnline(OrderRequest orderRequest, Integer id) {
+    public OrderVnpayResponse orderOnline(OrderRequest orderRequest, Integer id) {
         var now = OffsetDateTime.now();
         var customer = customerRepository.findById(id).orElseThrow();
+        var transaction = transactionsRepository.findById(1).orElseThrow();
         Oders oders = new Oders();
         oders.setAddress(orderRequest.getAddress());
         oders.setTotalPrice(orderRequest.getTotalPrice());
@@ -101,6 +106,8 @@ public class OrderServiceImpl implements OrderService {
         oders.setUsername(orderRequest.getUsername());
         oders.setPhone(orderRequest.getPhone());
         oders.setCreatedAt(now);
+        oders.setShopping("Đặt hàng");
+        oders.setTransactions(transaction);
         oders.setUpdatedAt(now);
         orderRepository.save(oders);
 
@@ -111,8 +118,32 @@ public class OrderServiceImpl implements OrderService {
         List<CartDetailResponse> list = cartResponse.getCartDetailResponses();
         list.forEach(cartDetail -> cartDetailRepository.deleteById(cartDetail.getCartDetailId()));
 
+        return generteOrder(oders);
 
     }
 
+    private OrderVnpayResponse generteOrder(Oders oders) {
+        return new OrderVnpayResponse().setId(oders.getId()).setTotalPrice(oders.getTotalPrice());
+    }
+
+    @Override
+    public Oders get(Integer id) {
+        return getById(id);
+    }
+
+    @Override
+    public void changeTransaction(Integer id) {
+        var order = getById(id);
+        var now = OffsetDateTime.now();
+        var transaction = transactionsRepository.findById(2).orElseThrow();
+        order.setTransactions(transaction);
+        order.setUpdatedAt(now);
+        orderRepository.save(order);
+    }
+
+    private Oders getById(Integer id) {
+        return orderRepository.findById(id)
+                .orElseThrow(() -> new IndexOutOfBoundsException("Order not found"));
+    }
 
 }

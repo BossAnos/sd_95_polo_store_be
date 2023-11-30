@@ -140,7 +140,7 @@ public class ProductServiceImpl implements ProductService {
         products.setCategories(category);
         products.setBrands(brand);
         products.setDiscount(discount);
-        if (discount.getStatus() == 1) {
+        if (discount.getStatus() == 1 && discount.getId() != 1) {
             products.setStatus(3);
         } else {
             products.setStatus(1);
@@ -160,7 +160,7 @@ public class ProductServiceImpl implements ProductService {
         var material = matarialRepository.findById(productRequest.getMaterialId()).orElseThrow();
         var discount = discountRepository.findById(productRequest.getDiscountId()).orElseThrow();
         product.setName(productRequest.getName());
-        if (discount.getStatus() == 1) {
+        if (discount.getStatus() == 1 && discount.getId() != 1) {
             product.setStatus(3);
         } else {
             product.setStatus(1);
