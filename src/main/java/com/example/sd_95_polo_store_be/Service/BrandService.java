@@ -17,4 +17,6 @@ public interface BrandService {
     boolean isBrand(Brands brands);
 
     void deleteBrandByIds(List<Integer> ids);
+
+    public void changeStatus(Integer id);
 }

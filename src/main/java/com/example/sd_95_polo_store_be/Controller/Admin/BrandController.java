@@ -61,4 +61,10 @@ public class BrandController {
         }
 
     }
+
+    @PutMapping("changeStatus/{id}")
+    public Response<Void> changeBran(@PathVariable Integer id){
+        brandService.changeStatus(id);
+        return Response.ofSucceeded();
+    }
 }

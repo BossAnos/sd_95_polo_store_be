@@ -84,5 +84,18 @@ public class BrandServiceImpl implements BrandService {
             throw new IllegalArgumentException("Danh sách ID không hợp lệ");
         }
     }
+
+    @Override
+    public void changeStatus(Integer id) {
+        var brand = brandRepository.findById(id).orElseThrow();
+        if(brand.getStatus() == 1){
+            brand.setStatus(0);
+            brandRepository.save(brand);
+        }else {
+            brand.setStatus(1);
+        }
     }
+
+
+}
 

@@ -4,13 +4,8 @@ import com.example.sd_95_polo_store_be.Model.Entity.Oders;
 import com.example.sd_95_polo_store_be.Model.Request.ChangeStatusOrder;
 import com.example.sd_95_polo_store_be.Model.Request.OrderDetailRequest;
 import com.example.sd_95_polo_store_be.Model.Request.OrderRequest;
-import com.example.sd_95_polo_store_be.Model.Response.CartDetailResponse;
-import com.example.sd_95_polo_store_be.Model.Response.CartResponse;
-import com.example.sd_95_polo_store_be.Model.Response.OrderVnpayResponse;
-import com.example.sd_95_polo_store_be.Repository.CartDetailRepository;
-import com.example.sd_95_polo_store_be.Repository.CustomerRepository;
-import com.example.sd_95_polo_store_be.Repository.OrderRepository;
-import com.example.sd_95_polo_store_be.Repository.TransactionsRepository;
+import com.example.sd_95_polo_store_be.Model.Response.*;
+import com.example.sd_95_polo_store_be.Repository.*;
 import com.example.sd_95_polo_store_be.Service.CartService;
 import com.example.sd_95_polo_store_be.Service.OrderDetailService;
 import com.example.sd_95_polo_store_be.Service.OrderService;
@@ -29,6 +24,8 @@ public class OrderServiceImpl implements OrderService {
     private CustomerRepository customerRepository;
     @Autowired
     private OrderDetailService orderDetailService;
+    @Autowired
+    private OrderDetailRepository orderDetailRepository;
     @Autowired
     private CartService cartService;
     @Autowired
@@ -139,6 +136,18 @@ public class OrderServiceImpl implements OrderService {
         order.setTransactions(transaction);
         order.setUpdatedAt(now);
         orderRepository.save(order);
+    }
+
+    @Override
+    public OrderResponse getOneOrder(Integer id) {
+        var orderResponse = orderRepository.getId(id).orElseThrow();
+        var orderDetail = orderDetailRepository.getId(id);
+        for (OrderDetailResponse orderDetailResponse : orderDetail) {
+            var image = orderDetailRepository.getImage(orderDetailResponse.getId());
+            orderDetailResponse.setImage(image);
+        }
+        orderResponse.setOrderDetailResponse(orderDetail);
+        return orderResponse;
     }
 
     private Oders getById(Integer id) {
