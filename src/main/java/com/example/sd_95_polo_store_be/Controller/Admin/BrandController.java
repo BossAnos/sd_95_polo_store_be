@@ -68,8 +68,5 @@ public class BrandController {
         brandService.changeStatus(id);
         return Response.ofSucceeded();
     }
-    @GetMapping("/{id}")
-    public Response<Brands> get(@PathVariable Long id) {
-        return Response.ofSucceeded(brandService.getOne(id));
-    }
+
 }

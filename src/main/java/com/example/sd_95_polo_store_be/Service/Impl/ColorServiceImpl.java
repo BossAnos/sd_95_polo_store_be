@@ -33,34 +33,7 @@ public class ColorServiceImpl implements ColorServices {
     }
 
     @Override
-    public Colors saveColor(Colors color) {
-        var now = OffsetDateTime.now();
-        if (color.getId() != null) {
-            Optional<Colors> existingCategori = colorRepository.findById(color.getId());
-            if (existingCategori.isPresent()) {
-                Colors updateCategori = existingCategori.get();
-                updateCategori.setName(color.getName());
-                updateCategori.setStatus(1);
-                updateCategori.setDescription(color.getDescription());
-                updateCategori.setUpdatedAt(now);
-                return colorRepository.save(updateCategori);
-            } else {
-                throw new IllegalArgumentException("Không tìm thấy kích thước với id: " + color.getId());
-            }
-        } else {
-            Colors newCategori = new Colors();
-            if (isColorDataDuplicate(color)) {
-                throw new IllegalArgumentException("loại này đã có rồi");
-            }
-            newCategori.setName(color.getName());
-            newCategori.setStatus(1);
-            newCategori.setDescription(color.getDescription());
-            newCategori.setCreatedAt(now);
-            newCategori.setUpdatedAt(now);
-            return colorRepository.save(newCategori);
-        }
 
-    }
 
     @Override
     public Colors getOne(Long id) {
