@@ -27,7 +27,7 @@ public class MaterialController {
 //        return Response.ofSucceeded(matarialService.gets());
 //    }
 
-    @PostMapping
+    @PostMapping("/add")
     public Response<Materials> createOrUpdateMaterial(@RequestBody Materials materials) {
         try {
             Materials material = matarialService.createOrUpdate(materials);
@@ -37,7 +37,7 @@ public class MaterialController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public Response<Materials> updateMaterial(@PathVariable Integer id, @RequestBody Materials materials) {
         try {
             materials.setId(id);
@@ -58,5 +58,9 @@ public class MaterialController {
             return Response.ofError(e.getMessage());
         }
 
+    }
+    @GetMapping("/{id}")
+    public Response<Materials> get(@PathVariable Long id) {
+        return Response.ofSucceeded(matarialService.getOne(id));
     }
 }

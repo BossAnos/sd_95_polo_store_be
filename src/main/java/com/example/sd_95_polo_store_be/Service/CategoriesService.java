@@ -11,6 +11,7 @@ import java.util.List;
 
 @Service
 public interface CategoriesService {
+    Categories getOne(Long id);
     List<Categories>getCategoryByStatus();
     ArrayList<Categories> getAllCategories();
     Categories saveCategories(Categories categories);

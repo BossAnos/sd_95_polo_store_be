@@ -3,6 +3,7 @@ package com.example.sd_95_polo_store_be.Controller.Admin;
 
 import com.example.sd_95_polo_store_be.Model.Entity.Colors;
 import com.example.sd_95_polo_store_be.Model.Entity.Sizes;
+import com.example.sd_95_polo_store_be.Model.Response.GetOneProductResponse;
 import com.example.sd_95_polo_store_be.Service.ColorServices;
 import com.example.sd_95_polo_store_be.common.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,5 +81,9 @@ public class ClolorController {
             return Response.ofError(e.getMessage());
         }
 
+    }
+    @GetMapping("/{id}")
+    public Response<Colors> get(@PathVariable Long id) {
+        return Response.ofSucceeded(colorServices.getOne(id));
     }
 }

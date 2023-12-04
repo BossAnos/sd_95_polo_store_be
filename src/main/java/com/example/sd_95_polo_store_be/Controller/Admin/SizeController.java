@@ -1,5 +1,6 @@
 package com.example.sd_95_polo_store_be.Controller.Admin;
 
+import com.example.sd_95_polo_store_be.Model.Entity.Colors;
 import com.example.sd_95_polo_store_be.Model.Entity.Sizes;
 import com.example.sd_95_polo_store_be.Service.SizeService;
 import com.example.sd_95_polo_store_be.common.Response;
@@ -26,7 +27,7 @@ public class SizeController {
 //        return Response.ofSucceeded(sizeService.gets());
 //    }
 
-    @PostMapping
+    @PostMapping("/add")
     public Response<Sizes> createOrUpdateSize(@RequestBody Sizes sizes) {
         try {
            Sizes size = sizeService.createOrUpdate(sizes);
@@ -57,5 +58,9 @@ public class SizeController {
             return Response.ofError(e.getMessage());
         }
 
+    }
+    @GetMapping("/{id}")
+    public Response<Sizes> get(@PathVariable Long id) {
+        return Response.ofSucceeded(sizeService.getOne(id));
     }
 }

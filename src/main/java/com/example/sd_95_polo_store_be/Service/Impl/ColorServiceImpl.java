@@ -1,6 +1,7 @@
 package com.example.sd_95_polo_store_be.Service.Impl;
 
 
+import com.example.sd_95_polo_store_be.Model.Entity.Categories;
 import com.example.sd_95_polo_store_be.Model.Entity.Colors;
 import com.example.sd_95_polo_store_be.Model.Entity.Sizes;
 import com.example.sd_95_polo_store_be.Repository.ColorRepository;
@@ -32,32 +33,13 @@ public class ColorServiceImpl implements ColorServices {
     }
 
     @Override
-    public void saveColor(Colors color) {
-        var now = OffsetDateTime.now();
-//        if (color.getId() != null) {
-//            Optional<Colors> existingColor = colorRepository.findById(color.getId());
-//            if (existingColor.isPresent()) {
-//                Colors updateColor = existingColor.get();
-//                updateColor.setName(color.getName());
-//                updateColor.setStatus(1);
-//                updateColor.setDescription(color.getDescription());
-//                updateColor.setUpdatedAt(now);
-//                return colorRepository.save(updateColor);
-//            } else {
-//                throw new IllegalArgumentException("Không tìm thấy kích thước với id: " + color.getId());
-//            }
-//        } else {
-            Colors newColor = new Colors();
-            newColor.setName(color.getName());
-            newColor.setStatus(1);
-            newColor.setDescription(color.getDescription());
-            newColor.setCreatedAt(now);
-            newColor.setUpdatedAt(now);
-             colorRepository.save(newColor);
-//        }
 
+
+    @Override
+    public Colors getOne(Long id) {
+        Optional<Colors> optionalMauSac = colorRepository.findById(id);
+        return optionalMauSac.get();
     }
-
 
 
     @Override
