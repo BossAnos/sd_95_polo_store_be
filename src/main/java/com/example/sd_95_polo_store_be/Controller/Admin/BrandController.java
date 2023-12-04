@@ -1,6 +1,7 @@
 package com.example.sd_95_polo_store_be.Controller.Admin;
 
 import com.example.sd_95_polo_store_be.Model.Entity.Brands;
+import com.example.sd_95_polo_store_be.Model.Entity.Colors;
 import com.example.sd_95_polo_store_be.Model.Entity.Sizes;
 import com.example.sd_95_polo_store_be.Model.Request.BrandRequest;
 import com.example.sd_95_polo_store_be.Service.BrandService;
@@ -67,6 +68,10 @@ public class BrandController {
     public Response<Void> changeBran(@PathVariable Integer id){
         brandService.changeStatus(id);
         return Response.ofSucceeded();
+    }
+    @GetMapping("/{id}")
+        public Response<Brands> get(@PathVariable Long id) {
+        return Response.ofSucceeded(brandService.getOne(id));
     }
 
 }
