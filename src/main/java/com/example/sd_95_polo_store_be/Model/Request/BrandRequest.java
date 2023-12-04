@@ -11,7 +11,7 @@ public class BrandRequest {
 //    @NotBlank
     private Integer id;
 //    @NotBlank(message = "Tên thương hiệu không được trống")
-    private String nameBrand;
+    private String name;
 //    @NotBlank
     private String description;
 }

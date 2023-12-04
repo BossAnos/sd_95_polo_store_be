@@ -48,7 +48,8 @@ public class BrandServiceImpl implements BrandService {
             Optional<Brands> existingBrand = brandRepository.findById(request.getId());
             if (existingBrand.isPresent()) {
                 Brands updateBrand = existingBrand.get();
-                updateBrand.setName(request.getNameBrand());
+//                updateBrand.setName(request.getNameBrand());
+                updateBrand.setName(request.getName());
                 updateBrand.setStatus(1);
                 updateBrand.setDescription(request.getDescription());
                 updateBrand.setUpdatedAt(now);
@@ -61,7 +62,7 @@ public class BrandServiceImpl implements BrandService {
 //            if (isBrand(newBrand)) {
 //                throw new IllegalArgumentException("Thương Hiệu này đã có rồi");
 //            }
-            newBrand.setName(request.getNameBrand());
+            newBrand.setName(request.getName());
             newBrand.setStatus(1);
             newBrand.setDescription(request.getDescription());
             newBrand.setCreatedAt(now);
