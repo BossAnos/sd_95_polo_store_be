@@ -15,7 +15,7 @@ public interface ColorServices {
     List<Colors> getColorByStatus();
     ArrayList<Colors> getAllColor();
 
-    void saveColor(Colors color);
+    Colors saveColor(Colors color);
 
     Colors getOne(Long id);
 
