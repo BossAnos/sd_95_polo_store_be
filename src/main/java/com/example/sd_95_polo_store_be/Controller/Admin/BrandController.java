@@ -1,6 +1,7 @@
 package com.example.sd_95_polo_store_be.Controller.Admin;
 
 import com.example.sd_95_polo_store_be.Model.Entity.Brands;
+import com.example.sd_95_polo_store_be.Model.Entity.Sizes;
 import com.example.sd_95_polo_store_be.Model.Request.BrandRequest;
 import com.example.sd_95_polo_store_be.Service.BrandService;
 import com.example.sd_95_polo_store_be.common.Response;
@@ -29,7 +30,7 @@ public class BrandController {
     }
 
 
-    @PostMapping
+    @PostMapping("/add")
     public Response<Brands> createOrUpdateBrand(@RequestBody BrandRequest request) {
         try {
            Brands brands = brandService.createOrUpdate(request);
@@ -60,5 +61,15 @@ public class BrandController {
             return Response.ofError(e.getMessage());
         }
 
+    }
+
+    @PutMapping("changeStatus/{id}")
+    public Response<Void> changeBran(@PathVariable Integer id){
+        brandService.changeStatus(id);
+        return Response.ofSucceeded();
+    }
+    @GetMapping("/{id}")
+    public Response<Brands> get(@PathVariable Long id) {
+        return Response.ofSucceeded(brandService.getOne(id));
     }
 }

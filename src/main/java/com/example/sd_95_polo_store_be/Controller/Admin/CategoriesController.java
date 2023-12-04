@@ -79,6 +79,10 @@ public class CategoriesController {
             return Response.ofError(e.getMessage());
         }
     }
+    @GetMapping("/{id}")
+    public Response<Categories> get(@PathVariable Long id) {
+        return Response.ofSucceeded(categoriesSrevice.getOne(id));
+    }
 
 
 }

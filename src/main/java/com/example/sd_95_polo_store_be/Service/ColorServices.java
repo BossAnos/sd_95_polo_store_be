@@ -2,6 +2,7 @@ package com.example.sd_95_polo_store_be.Service;
 
 
 import com.example.sd_95_polo_store_be.Model.Entity.Colors;
+import com.example.sd_95_polo_store_be.Model.Response.GetOneProductResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,8 @@ public interface ColorServices {
     ArrayList<Colors> getAllColor();
 
     Colors saveColor(Colors color);
+
+    Colors getOne(Long id);
 
     void deleteColorById(Long id);
 

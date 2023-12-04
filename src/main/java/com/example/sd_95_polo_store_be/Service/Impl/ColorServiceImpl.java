@@ -1,6 +1,7 @@
 package com.example.sd_95_polo_store_be.Service.Impl;
 
 
+import com.example.sd_95_polo_store_be.Model.Entity.Categories;
 import com.example.sd_95_polo_store_be.Model.Entity.Colors;
 import com.example.sd_95_polo_store_be.Model.Entity.Sizes;
 import com.example.sd_95_polo_store_be.Repository.ColorRepository;
@@ -33,44 +34,39 @@ public class ColorServiceImpl implements ColorServices {
 
     @Override
     public Colors saveColor(Colors color) {
-
-        if (ObjectUtils.isEmpty(color.getName().trim())) {
-            throw new IllegalArgumentException("Tên không để trống");
-        } else if (ObjectUtils.isEmpty(color.getStatus().toString().trim())) {
-            throw new IllegalArgumentException("Trạng thái không để trống");
-        } else if (ObjectUtils.isEmpty(color.getDescription().trim())) {
-            throw new IllegalArgumentException("Mô tả không để trống");
-        } else if (isColorDataDuplicate(color)) {
-            throw new IllegalArgumentException("Màu này đã có rồi");
-        }
         var now = OffsetDateTime.now();
         if (color.getId() != null) {
-            Optional<Colors> existingColor = colorRepository.findById(color.getId());
-            if (existingColor.isPresent()) {
-                Colors updateColor = existingColor.get();
-                updateColor.setName(color.getName());
-                updateColor.setStatus(1);
-                updateColor.setDescription(color.getDescription());
-                updateColor.setUpdatedAt(now);
-                return colorRepository.save(updateColor);
+            Optional<Colors> existingCategori = colorRepository.findById(color.getId());
+            if (existingCategori.isPresent()) {
+                Colors updateCategori = existingCategori.get();
+                updateCategori.setName(color.getName());
+                updateCategori.setStatus(1);
+                updateCategori.setDescription(color.getDescription());
+                updateCategori.setUpdatedAt(now);
+                return colorRepository.save(updateCategori);
             } else {
                 throw new IllegalArgumentException("Không tìm thấy kích thước với id: " + color.getId());
             }
         } else {
-            Colors newColor = new Colors();
+            Colors newCategori = new Colors();
             if (isColorDataDuplicate(color)) {
-                throw new IllegalArgumentException("Màu này đã có rồi");
+                throw new IllegalArgumentException("loại này đã có rồi");
             }
-            newColor.setName(color.getName());
-            newColor.setStatus(1);
-            newColor.setDescription(color.getDescription());
-            newColor.setCreatedAt(now);
-            newColor.setUpdatedAt(now);
-            return colorRepository.save(color);
+            newCategori.setName(color.getName());
+            newCategori.setStatus(1);
+            newCategori.setDescription(color.getDescription());
+            newCategori.setCreatedAt(now);
+            newCategori.setUpdatedAt(now);
+            return colorRepository.save(newCategori);
         }
 
     }
 
+    @Override
+    public Colors getOne(Long id) {
+        Optional<Colors> optionalMauSac = colorRepository.findById(id);
+        return optionalMauSac.get();
+    }
 
 
     @Override

@@ -1,6 +1,7 @@
 package com.example.sd_95_polo_store_be.Service.Impl;
 
 import com.example.sd_95_polo_store_be.Model.Entity.Brands;
+import com.example.sd_95_polo_store_be.Model.Entity.Colors;
 import com.example.sd_95_polo_store_be.Model.Request.BrandRequest;
 
 import com.example.sd_95_polo_store_be.Repository.BrandRepository;
@@ -19,6 +20,12 @@ public class BrandServiceImpl implements BrandService {
     private BrandRepository brandRepository;
 
     @Override
+    public Brands getOne(Long id) {
+        Optional<Brands> optionalMauSac = brandRepository.findById(id);
+        return optionalMauSac.get();
+    }
+
+    @Override
     public List<Brands> gets() {
         return brandRepository.findAll();
     }
@@ -30,11 +37,11 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public Brands createOrUpdate(BrandRequest request) {
-        if (ObjectUtils.isEmpty(request.getNameBrand().trim())) {
-            throw new IllegalArgumentException("Tên không để trống");
-        } else if (ObjectUtils.isEmpty(request.getDescription().trim())) {
-            throw new IllegalArgumentException("Mô tả không để trống");
-        }
+//        if (ObjectUtils.isEmpty(request.getNameBrand().trim())) {
+//            throw new IllegalArgumentException("Tên không để trống");
+//        } else if (ObjectUtils.isEmpty(request.getDescription().trim())) {
+//            throw new IllegalArgumentException("Mô tả không để trống");
+//        }
         var now = OffsetDateTime.now();
 
         if (request.getId() != null) {
@@ -51,9 +58,9 @@ public class BrandServiceImpl implements BrandService {
             }
         } else {
             Brands newBrand = new Brands();
-            if (isBrand(newBrand)) {
-                throw new IllegalArgumentException("Thương Hiệu này đã có rồi");
-            }
+//            if (isBrand(newBrand)) {
+//                throw new IllegalArgumentException("Thương Hiệu này đã có rồi");
+//            }
             newBrand.setName(request.getNameBrand());
             newBrand.setStatus(1);
             newBrand.setDescription(request.getDescription());
@@ -84,5 +91,18 @@ public class BrandServiceImpl implements BrandService {
             throw new IllegalArgumentException("Danh sách ID không hợp lệ");
         }
     }
+
+    @Override
+    public void changeStatus(Integer id) {
+        var brand = brandRepository.findById(id).orElseThrow();
+        if(brand.getStatus() == 1){
+            brand.setStatus(0);
+            brandRepository.save(brand);
+        }else {
+            brand.setStatus(1);
+        }
     }
+
+
+}
 

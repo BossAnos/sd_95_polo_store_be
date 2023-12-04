@@ -1,6 +1,7 @@
 package com.example.sd_95_polo_store_be.Service.Impl;
 
 import com.example.sd_95_polo_store_be.Model.Entity.Brands;
+import com.example.sd_95_polo_store_be.Model.Entity.Colors;
 import com.example.sd_95_polo_store_be.Model.Entity.Sizes;
 import com.example.sd_95_polo_store_be.Repository.SizeRepository;
 import com.example.sd_95_polo_store_be.Service.SizeService;
@@ -17,6 +18,12 @@ public class SizeServiceImpl implements SizeService {
 
     @Autowired
     private SizeRepository sizeRepository;
+
+    @Override
+    public Sizes getOne(Long id) {
+        Optional<Sizes> optionalMauSac = sizeRepository.findById(id);
+        return optionalMauSac.get();
+    }
 
     @Override
     public List<Sizes> getSizesByStatus() {

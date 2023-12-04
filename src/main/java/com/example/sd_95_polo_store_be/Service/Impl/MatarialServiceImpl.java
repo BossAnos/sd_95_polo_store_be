@@ -1,5 +1,6 @@
 package com.example.sd_95_polo_store_be.Service.Impl;
 
+import com.example.sd_95_polo_store_be.Model.Entity.Colors;
 import com.example.sd_95_polo_store_be.Model.Entity.Materials;
 import com.example.sd_95_polo_store_be.Repository.MatarialRepository;
 import com.example.sd_95_polo_store_be.Service.MatarialService;
@@ -82,5 +83,11 @@ public class MatarialServiceImpl implements MatarialService {
             throw new IllegalArgumentException("Danh sách ID không hợp lệ");
         }
 
+    }
+
+    @Override
+    public Materials getOne(Long id) {
+        Optional<Materials> optionalMauSac = matarialRepository.findById(id);
+        return optionalMauSac.get();
     }
 }
