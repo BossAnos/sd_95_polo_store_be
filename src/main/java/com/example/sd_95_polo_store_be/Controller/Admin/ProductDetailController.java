@@ -22,22 +22,11 @@ public class ProductDetailController {
     @Autowired
     ProductDetailService productDetailService;
 
-    List<ProductDetailDto> serializeList(List<ProductDetail> lst) {
-        List items = new ArrayList();
-        for (ProductDetail products : lst) items.add(new ProductDetailDto(products));
-        return items;
-    }
 
-    @GetMapping("/getall")
-    public Response<List<ProductDetailDto>> getAll() {
-        List<ProductDetail> productDetails = productDetailService.getAllProductDetail();
-        List<ProductDetailDto> serializedList = serializeList(productDetails);
-        return Response.ofSucceeded(serializedList);
-    }
 
-    @GetMapping("/{id}")
-    public Response<List<ProductDetailResponse>> getAll(@PathVariable Integer id) {
-        return Response.ofSucceeded(productDetailService.getForProduct(id));
+    @GetMapping()
+    public Response<List<ProductDetailResponse>> getAll() {
+        return Response.ofSucceeded(productDetailService.getList());
     }
 
     @PostMapping("/add")
@@ -61,16 +50,5 @@ public class ProductDetailController {
         }
     }
 
-//    @DeleteMapping("/delete")
-//    public Response<List<Long>> deleteMultiple(@RequestBody Map<String, List<Long>> request) {
-//        List<Long> ids = request.get("id");
-//        try {
-//            productDetailService.deleteProductDetailById(ids);
-//            return Response.ofSucceeded();
-//        } catch (IllegalArgumentException e) {
-//            return Response.ofError(e.getMessage());
-//        }
-//
-//    }
 
 }

@@ -1,6 +1,6 @@
 package com.example.sd_95_polo_store_be.Service.Impl;
 
-import com.example.sd_95_polo_store_be.Model.Entity.Oders;
+import com.example.sd_95_polo_store_be.Model.Entity.Orders;
 import com.example.sd_95_polo_store_be.Model.Request.ChangeStatusOrder;
 import com.example.sd_95_polo_store_be.Model.Request.OrderDetailRequest;
 import com.example.sd_95_polo_store_be.Model.Request.OrderRequest;
@@ -34,12 +34,12 @@ public class OrderServiceImpl implements OrderService {
     private TransactionsRepository transactionsRepository;
 
     @Override
-    public List<Oders> getByCustomer(Integer id) {
+    public List<Orders> getByCustomer(Integer id) {
         return orderRepository.findByCustomersId(id);
     }
 
     @Override
-    public List<Oders> getAll() {
+    public List<Orders> getAll() {
         return orderRepository.findAll();
     }
 
@@ -81,6 +81,7 @@ public class OrderServiceImpl implements OrderService {
                 if (order.getStatus() == 1 || order.getStatus() == 3
                         || order.getStatus() == 2 || order.getStatus() == 6)
                     order.setStatus(7);
+                order.setNote(changeStatusOrder.getNote());
                 orderRepository.save(order);
             }
             case 8 -> {
@@ -95,36 +96,36 @@ public class OrderServiceImpl implements OrderService {
         var now = OffsetDateTime.now();
         var customer = customerRepository.findById(id).orElseThrow();
         var transaction = transactionsRepository.findById(1).orElseThrow();
-        Oders oders = new Oders();
-        oders.setAddress(orderRequest.getAddress());
-        oders.setTotalPrice(orderRequest.getTotalPrice());
-        oders.setStatus(1);
-        oders.setCustomers(customer);
-        oders.setUsername(orderRequest.getUsername());
-        oders.setPhone(orderRequest.getPhone());
-        oders.setCreatedAt(now);
-        oders.setShopping("Đặt hàng");
-        oders.setTransactions(transaction);
-        oders.setUpdatedAt(now);
-        orderRepository.save(oders);
+        Orders orders = new Orders();
+        orders.setAddress(orderRequest.getAddress());
+        orders.setTotalPrice(orderRequest.getTotalPrice());
+        orders.setStatus(1);
+        orders.setCustomers(customer);
+        orders.setUsername(orderRequest.getUsername());
+        orders.setPhone(orderRequest.getPhone());
+        orders.setCreatedAt(now);
+        orders.setShopping("Đặt hàng");
+        orders.setTransactions(transaction);
+        orders.setUpdatedAt(now);
+        orderRepository.save(orders);
 
         List<OrderDetailRequest> orderDetailRequests = orderRequest.getOrderDetailRequest();
-        orderDetailRequests.forEach(request -> orderDetailService.create(request, oders.getId()));
+        orderDetailRequests.forEach(request -> orderDetailService.create(request, orders.getId()));
 
         CartResponse cartResponse = cartService.getOneByStatus(id);
         List<CartDetailResponse> list = cartResponse.getCartDetailResponses();
         list.forEach(cartDetail -> cartDetailRepository.deleteById(cartDetail.getCartDetailId()));
 
-        return generteOrder(oders);
+        return generteOrder(orders);
 
     }
 
-    private OrderVnpayResponse generteOrder(Oders oders) {
-        return new OrderVnpayResponse().setId(oders.getId()).setTotalPrice(oders.getTotalPrice());
+    private OrderVnpayResponse generteOrder(Orders orders) {
+        return new OrderVnpayResponse().setId(orders.getId()).setTotalPrice(orders.getTotalPrice());
     }
 
     @Override
-    public Oders get(Integer id) {
+    public Orders get(Integer id) {
         return getById(id);
     }
 
@@ -150,7 +151,7 @@ public class OrderServiceImpl implements OrderService {
         return orderResponse;
     }
 
-    private Oders getById(Integer id) {
+    private Orders getById(Integer id) {
         return orderRepository.findById(id)
                 .orElseThrow(() -> new IndexOutOfBoundsException("Order not found"));
     }

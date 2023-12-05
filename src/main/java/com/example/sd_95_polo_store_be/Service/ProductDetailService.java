@@ -21,4 +21,6 @@ public interface ProductDetailService {
 
     List<ProductDetailResponse> getForProduct(Integer productId);
 
+    List<ProductDetailResponse> getList();
+
 }

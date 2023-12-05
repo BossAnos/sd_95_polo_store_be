@@ -16,12 +16,21 @@ public interface ProductDetailRepository extends JpaRepository<ProductDetail, In
     Optional<ProductDetail> findById(Integer id);
 
     @Query(value = """
-                select new com.example.sd_95_polo_store_be.Model.Response.ProductDetailResponse(pd.id, pd.sizes.id, pd.colors.id, pd.sizes.name,pd.colors.name,pd.quantity,pd.cost,pd.price,pd.status)
+                select new com.example.sd_95_polo_store_be.Model.Response.ProductDetailResponse(pd.id, pd.sizes.id, pd.colors.id,pd.products.name, pd.sizes.name,pd.colors.name,pd.quantity,pd.cost,pd.price,pd.status,pd.products.discount.id,pd.products.discount.discount,pd.products.status)
                 from ProductDetail pd
                 where pd.products.id = :id
                 and pd.status <> 0
             """)
     List<ProductDetailResponse> getByProductId(Integer id);
+
+    @Query(value = """
+                select new com.example.sd_95_polo_store_be.Model.Response.ProductDetailResponse(pd.id, pd.sizes.id, pd.colors.id ,pd.products.name, pd.sizes.name,pd.colors.name,pd.quantity,pd.cost,pd.price,pd.status,pd.products.discount.id,pd.products.discount.discount,pd.products.status)
+                from ProductDetail pd
+                where 
+               pd.status <> 0
+            """)
+    List<ProductDetailResponse> getAllProductDetail();
+
 
 
 }

@@ -7,7 +7,7 @@ import java.time.OffsetDateTime;
 
 @Data
 @Entity
-public class Oders extends BaseEntity<Oders> {
+public class Orders extends BaseEntity<Orders> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -33,7 +33,7 @@ public class Oders extends BaseEntity<Oders> {
     private Transactions transactions;
 
     @Override
-    protected Oders self() {
+    protected Orders self() {
         return this;
     }
 }

@@ -102,5 +102,22 @@ public class ProductDetailServiceImpl implements ProductDetailService {
         return list;
     }
 
+    @Override
+    public List<ProductDetailResponse> getList() {
+        List<ProductDetailResponse> list = productDetailRepository.getAllProductDetail();
+
+        for (ProductDetailResponse productDetail : list) {
+            productDetail.setPrice(productDetail.getPrice());
+            if(productDetail.getStatusProduct().equals(3)){
+                productDetail.setPricecost(productDetail.getPrice() - (productDetail.getPrice() * productDetail.getDiscount()));
+            }else {
+                productDetail.setPricecost(productDetail.getPrice());
+            }
+            productDetail.setImages(imageService.gets(productDetail.getProductDetailId()));
+        }
+
+        return list;
+    }
+
 
 }
