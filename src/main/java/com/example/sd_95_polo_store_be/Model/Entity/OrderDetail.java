@@ -2,11 +2,10 @@ package com.example.sd_95_polo_store_be.Model.Entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.data.repository.cdi.Eager;
 
 @Data
 @Entity
-public class OderDetail extends BaseEntity<OderDetail> {
+public class OrderDetail extends BaseEntity<OrderDetail> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -18,8 +17,8 @@ public class OderDetail extends BaseEntity<OderDetail> {
     private Integer status;
 
     @ManyToOne
-    @JoinColumn(name = "oderId")
-    private Oders oders;
+    @JoinColumn(name = "orderId")
+    private Orders orders;
 
     @ManyToOne
     @JoinColumn(name = "productDetailId ")
@@ -27,7 +26,7 @@ public class OderDetail extends BaseEntity<OderDetail> {
 
 
     @Override
-    protected OderDetail self() {
+    protected OrderDetail self() {
         return this;
     }
 }

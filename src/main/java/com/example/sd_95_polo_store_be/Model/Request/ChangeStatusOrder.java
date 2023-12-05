@@ -5,4 +5,6 @@ import lombok.Data;
 @Data
 public class ChangeStatusOrder {
     private Integer status;
+    private String note;
+
 }

@@ -1,6 +1,6 @@
 package com.example.sd_95_polo_store_be.Service.Impl;
 
-import com.example.sd_95_polo_store_be.Model.Entity.OderDetail;
+import com.example.sd_95_polo_store_be.Model.Entity.OrderDetail;
 import com.example.sd_95_polo_store_be.Model.Request.OrderDetailRequest;
 import com.example.sd_95_polo_store_be.Repository.OrderDetailRepository;
 import com.example.sd_95_polo_store_be.Repository.OrderRepository;
@@ -21,18 +21,18 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     private ProductDetailRepository productDetailRepository;
 
     @Override
-    public OderDetail create(OrderDetailRequest orderDetailRequest, Integer id) {
+    public OrderDetail create(OrderDetailRequest orderDetailRequest, Integer id) {
         var now = OffsetDateTime.now();
         var order = orderRepository.findById(id) .orElseThrow(() -> new IllegalArgumentException("Invoice not found with ID: " + id));
         var productDetail = productDetailRepository.findById(orderDetailRequest.getProductDetaiId()).orElseThrow();
-        OderDetail oderDetail = new OderDetail();
-        oderDetail.setProductDetail(productDetail);
-        oderDetail.setPrice(orderDetailRequest.getPrice());
-        oderDetail.setQuantity(orderDetailRequest.getQuantity());
-        oderDetail.setCreateDate(now);
-        oderDetail.setUpdatedAt(now);
-        oderDetail.setStatus(1);
-        oderDetail.setOders(order);
-      return   orderDetailRepository.save(oderDetail);
+        OrderDetail orderDetail = new OrderDetail();
+        orderDetail.setProductDetail(productDetail);
+        orderDetail.setPrice(orderDetailRequest.getPrice());
+        orderDetail.setQuantity(orderDetailRequest.getQuantity());
+        orderDetail.setCreateDate(now);
+        orderDetail.setUpdatedAt(now);
+        orderDetail.setStatus(1);
+        orderDetail.setOrders(order);
+      return   orderDetailRepository.save(orderDetail);
     }
 }
