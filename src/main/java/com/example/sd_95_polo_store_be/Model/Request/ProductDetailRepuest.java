@@ -14,6 +14,7 @@ public class ProductDetailRepuest {
     private Long colorId;
     private Integer quantity;
     private Integer sizeId;
+    private Float weight;
     private Float price;
     private Float cost;
     private List<ImageRequest> images;

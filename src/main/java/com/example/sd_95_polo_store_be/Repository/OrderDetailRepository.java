@@ -21,10 +21,10 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail,Integer
     List<OrderDetailResponse> getId(Integer id);
 
     @Query(value = """
-            select Top 1 i.name from OderDetail 
-            join ProductDetail pd on OderDetail.productDetailId = pd.id
+            select Top 1 i.name from OrderDetail 
+            join ProductDetail pd on OrderDetail.productDetailId = pd.id
             join Images i on pd.id = i.productDetailId
-            where OderDetail.id = :id 
+            where OrderDetail.id = :id 
               """, nativeQuery = true)
     String getImage(@Param("id") Integer id);
 }

@@ -24,7 +24,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     public OrderDetail create(OrderDetailRequest orderDetailRequest, Integer id) {
         var now = OffsetDateTime.now();
         var order = orderRepository.findById(id) .orElseThrow(() -> new IllegalArgumentException("Invoice not found with ID: " + id));
-        var productDetail = productDetailRepository.findById(orderDetailRequest.getProductDetaiId()).orElseThrow();
+        var productDetail = productDetailRepository.findById(orderDetailRequest.getProductDetailId()).orElseThrow();
         OrderDetail orderDetail = new OrderDetail();
         orderDetail.setProductDetail(productDetail);
         orderDetail.setPrice(orderDetailRequest.getPrice());
@@ -33,6 +33,6 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         orderDetail.setUpdatedAt(now);
         orderDetail.setStatus(1);
         orderDetail.setOrders(order);
-      return   orderDetailRepository.save(orderDetail);
+      return orderDetailRepository.save(orderDetail);
     }
 }

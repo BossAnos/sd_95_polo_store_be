@@ -23,6 +23,8 @@ public class ProductDetail extends BaseEntity<ProductDetail>{
 
     private Float price;
 
+    private Float weight;
+
     private Integer status;
 
     @Override

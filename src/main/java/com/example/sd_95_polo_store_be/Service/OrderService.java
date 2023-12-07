@@ -16,4 +16,6 @@ public interface OrderService {
     void changeTransaction(Integer id);
 
     OrderResponse getOneOrder(Integer id);
+
+    void OrderOffline(OrderRequest orderRequest, Integer id);
 }

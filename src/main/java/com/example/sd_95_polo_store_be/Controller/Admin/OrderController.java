@@ -2,6 +2,7 @@ package com.example.sd_95_polo_store_be.Controller.Admin;
 
 import com.example.sd_95_polo_store_be.Model.Entity.Orders;
 import com.example.sd_95_polo_store_be.Model.Request.ChangeStatusOrder;
+import com.example.sd_95_polo_store_be.Model.Request.OrderRequest;
 import com.example.sd_95_polo_store_be.Service.OrderService;
 import com.example.sd_95_polo_store_be.common.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,12 @@ public class OrderController {
     @PutMapping("/updateStatus/{id}")
     public Response<Void> updateStatus(@PathVariable Integer id,@RequestBody ChangeStatusOrder changeStatusOrder) {
         orderService.updateStatusOrder(id, changeStatusOrder);
+        return Response.ofSucceeded();
+    }
+
+    @PostMapping("/{id}")
+    public Response<Void> createOrder(@RequestBody OrderRequest orderRequest, @PathVariable Integer id){
+        orderService.OrderOffline(orderRequest, id);
         return Response.ofSucceeded();
     }
 }

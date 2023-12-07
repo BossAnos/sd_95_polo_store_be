@@ -11,6 +11,7 @@ public class CartDetailResponse {
     private String nameProduct;
     private String nameSize;
     private String nameColor;
+    private Float weight;
     private String Image;
     private Integer status;
     private Integer quantity;
@@ -19,12 +20,13 @@ public class CartDetailResponse {
     private Float priceCore;
 
 
-    public CartDetailResponse(Long idCartDetail, Integer productDetailId, String nameProduct, String nameSize, String nameColor, Integer status, Integer quantity,Integer discountId,Float priceCore) {
+    public CartDetailResponse(Long idCartDetail, Integer productDetailId, String nameProduct, String nameSize, String nameColor,Float weight, Integer status, Integer quantity,Integer discountId,Float priceCore) {
         this.cartDetailId = idCartDetail;
         this.productDetailId = productDetailId;
         this.nameProduct = nameProduct;
         this.nameSize = nameSize;
         this.nameColor = nameColor;
+        this.weight = weight;
         this.status = status;
         this.quantity = quantity;
         this.discountId = discountId;
