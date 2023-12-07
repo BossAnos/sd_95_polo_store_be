@@ -32,6 +32,8 @@ public class OrderServiceImpl implements OrderService {
     private CartDetailRepository cartDetailRepository;
     @Autowired
     private TransactionsRepository transactionsRepository;
+    @Autowired
+    private AdminRepository adminRepository;
 
     @Override
     public List<Orders> getByCustomer(Integer id) {
@@ -48,6 +50,7 @@ public class OrderServiceImpl implements OrderService {
     public void updateStatusOrder(Integer id, ChangeStatusOrder changeStatusOrder) {
         var now = OffsetDateTime.now();
         var order = orderRepository.findById(id).orElseThrow();
+        var transaction = transactionsRepository.findById(4).orElseThrow();
         switch (changeStatusOrder.getStatus()) {
             case 1 -> {
                 order.setStatus(1);
@@ -55,6 +58,7 @@ public class OrderServiceImpl implements OrderService {
             }
             case 2 -> {
                 order.setStatus(2);
+                order.setShipCost(changeStatusOrder.getShipCost());
                 order.setConfirmDate(now);
                 orderRepository.save(order);
             }
@@ -69,6 +73,7 @@ public class OrderServiceImpl implements OrderService {
             }
             case 5 -> {
                 order.setStatus(5);
+                order.setTransactions(transaction);
                 order.setSuccessDate(now);
                 orderRepository.save(order);
             }
@@ -100,6 +105,7 @@ public class OrderServiceImpl implements OrderService {
         orders.setAddress(orderRequest.getAddress());
         orders.setTotalPrice(orderRequest.getTotalPrice());
         orders.setStatus(1);
+        orders.setWeight(orderRequest.getWeight());
         orders.setCustomers(customer);
         orders.setUsername(orderRequest.getUsername());
         orders.setPhone(orderRequest.getPhone());
@@ -149,6 +155,43 @@ public class OrderServiceImpl implements OrderService {
         }
         orderResponse.setOrderDetailResponse(orderDetail);
         return orderResponse;
+    }
+
+    @Override
+    public void OrderOffline(OrderRequest orderRequest, Integer id) {
+        var admin = adminRepository.findById(id).orElseThrow();
+        var now = OffsetDateTime.now();
+        var transaction = transactionsRepository.findById(orderRequest.getTransactionId()).orElseThrow();
+        if (orderRequest.getUsername() == null || orderRequest.getUsername().isEmpty()) {
+            orderRequest.setUsername("Khách lẻ");
+        }
+        if (orderRequest.getAddress() == null) {
+            orderRequest.setAddress("Mua tại cửa hàng");
+        }
+        Orders orders = new Orders();
+        orders.setAddress(orderRequest.getAddress());
+        orders.setTotalPrice(orderRequest.getTotalPrice());
+        orders.setWeight(orderRequest.getWeight());
+        orders.setAdmins(admin);
+        orders.setUsername(orderRequest.getUsername());
+        orders.setPhone(orderRequest.getPhone());
+        orders.setCreatedAt(now);
+        orders.setShipCost(orderRequest.getShipCost());
+        orders.setShopping(orderRequest.getShopping());
+        if (orderRequest.getShopping().equals("Tại quầy")) {
+            orders.setStatus(5);
+            orders.setTransactions(transaction);
+        } else {
+            orders.setStatus(2);
+            orders.setTransactions(transaction);
+        }
+        orders.setTransactions(transaction);
+        orders.setUpdatedAt(now);
+        orderRepository.save(orders);
+
+        List<OrderDetailRequest> orderDetailRequests = orderRequest.getOrderDetailRequest();
+        orderDetailRequests.forEach(request -> orderDetailService.create(request, orders.getId()));
+
     }
 
     private Orders getById(Integer id) {

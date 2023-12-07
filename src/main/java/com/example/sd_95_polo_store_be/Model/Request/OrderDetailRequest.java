@@ -6,7 +6,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class OrderDetailRequest {
-    private Integer productDetaiId;
+    private Integer productDetailId;
     private Integer quantity;
     private Float price;
 }

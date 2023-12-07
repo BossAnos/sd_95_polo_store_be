@@ -15,10 +15,12 @@ public class Orders extends BaseEntity<Orders> {
     private String phone;
     private String username;
     private String address;
+    private Float weight;
     private String shopping;
     private Float totalPrice;
     private Float shipCost;
     private String note;
+
     private Integer status;
     OffsetDateTime confirmDate;
     OffsetDateTime successDate;
@@ -31,6 +33,11 @@ public class Orders extends BaseEntity<Orders> {
     @ManyToOne
     @JoinColumn(name = "transactionId")
     private Transactions transactions;
+
+
+    @ManyToOne
+    @JoinColumn(name = "adminId")
+    private Admins admins;
 
     @Override
     protected Orders self() {

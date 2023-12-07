@@ -11,7 +11,11 @@ public class OrderRequest {
     private String phone;
     private String username;
     private String address;
+    private String shopping;
     private Float totalPrice;
+    private Float shipCost;
+    private Float weight;
+    private Integer transactionId;
 
     List<OrderDetailRequest> orderDetailRequest;
 }

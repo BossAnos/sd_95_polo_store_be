@@ -6,5 +6,6 @@ import lombok.Data;
 public class ChangeStatusOrder {
     private Integer status;
     private String note;
+    private Float shipCost;
 
 }

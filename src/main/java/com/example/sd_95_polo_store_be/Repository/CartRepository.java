@@ -15,12 +15,11 @@ public interface CartRepository extends JpaRepository<Cart,Integer> {
     Optional<Cart> findCartByCustomersId(Integer id);
 
     @Query(value = """
-                select new com.example.sd_95_polo_store_be.Model.Response.CartDetailResponse(cd.id, pd.id, pd.products.name, pd.sizes.name,pd.colors.name, cd.status, cd.quantity,pd.products.discount.id,pd.price)
+                select new com.example.sd_95_polo_store_be.Model.Response.CartDetailResponse(cd.id, pd.id, pd.products.name, pd.sizes.name,pd.colors.name,pd.weight , cd.status, cd.quantity,pd.products.discount.id,pd.price)
                 from Cart c
                          join Customers kh on kh.id = c.customers.id
                          join CartDetail cd on c.id = cd.cart.id
                          join ProductDetail pd on pd.id = cd.productDetail.id
-                     
                 where kh.id = :id 
             """)
     List<CartDetailResponse> getCartByCustomers(Integer id);
@@ -34,7 +33,7 @@ public interface CartRepository extends JpaRepository<Cart,Integer> {
     String getImage(@Param("id") Long id);
 
     @Query(value = """
-                select new com.example.sd_95_polo_store_be.Model.Response.CartDetailResponse(cd.id, pd.id, pd.products.name, pd.sizes.name,pd.colors.name, cd.status, cd.quantity,pd.products.discount.id,pd.price)
+                select new com.example.sd_95_polo_store_be.Model.Response.CartDetailResponse(cd.id, pd.id, pd.products.name, pd.sizes.name,pd.colors.name,pd.weight, cd.status, cd.quantity,pd.products.discount.id,pd.price)
                 from Cart c
                          join Customers kh on kh.id = c.customers.id
                          join CartDetail cd on c.id = cd.cart.id

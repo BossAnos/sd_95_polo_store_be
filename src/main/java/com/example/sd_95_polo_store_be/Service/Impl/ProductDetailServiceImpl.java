@@ -64,6 +64,7 @@ public class ProductDetailServiceImpl implements ProductDetailService {
             productDetail.setPrice(productDetailRequest.getPrice());
             productDetail.setColors(color);
             productDetail.setSizes(size);
+            productDetail.setWeight(productDetailRequest.getWeight());
             productDetail.setProducts(product);
             productDetail.setStatus(1);
             productDetail.setCreateDate(now);
@@ -80,6 +81,7 @@ public class ProductDetailServiceImpl implements ProductDetailService {
             updateProductDetail.setCost(productDetailRequest.getCost());
             updateProductDetail.setPrice(productDetailRequest.getPrice());
             updateProductDetail.setColors(color);
+            updateProductDetail.setWeight(productDetailRequest.getWeight());
             updateProductDetail.setSizes(size);
             updateProductDetail.setProducts(product);
             updateProductDetail.setUpdatedAt(now);

@@ -17,6 +17,7 @@ public class ProductDetailResponse {
     private Integer quantity;
     private Float cost;
     private Float price;
+    private Float weight;
     private Integer status;
     private Float pricecost;
     private Integer discoutId;
@@ -25,7 +26,7 @@ public class ProductDetailResponse {
 
     List<ImageProductResponse> images;
 
-    public ProductDetailResponse(Integer productDetailId, Integer sizeId, Long colorId,String nameProduct, String nameSize, String nameColor, Integer quantity, Float cost, Float price, Integer status,Integer discountId,Float discount,Integer statusProduct) {
+    public ProductDetailResponse(Integer productDetailId, Integer sizeId, Long colorId,String nameProduct, String nameSize, String nameColor, Integer quantity, Float cost, Float price,Float weight , Integer status,Integer discountId,Float discount,Integer statusProduct) {
         this.productDetailId = productDetailId;
         this.sizeId = sizeId;
         this.colorId = colorId;
@@ -35,6 +36,7 @@ public class ProductDetailResponse {
         this.quantity = quantity;
         this.cost = cost;
         this.price = price;
+        this.weight = weight;
         this.status = status;
         this.discoutId = discountId;
         this.discount = discount;
