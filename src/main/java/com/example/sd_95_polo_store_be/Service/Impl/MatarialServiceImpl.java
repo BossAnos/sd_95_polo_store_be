@@ -90,4 +90,16 @@ public class MatarialServiceImpl implements MatarialService {
         Optional<Materials> optionalMauSac = matarialRepository.findById(id);
         return optionalMauSac.get();
     }
+
+    @Override
+    public void changeStatus(Long id) {
+        var brand = matarialRepository.findById(id).orElseThrow();
+        if(brand.getStatus() == 1){
+            brand.setStatus(0);
+           matarialRepository.save(brand);
+        }else {
+            brand.setStatus(1);
+        }
+    }
+
 }

@@ -82,6 +82,11 @@ public class ClolorController {
         }
 
     }
+    @PutMapping("changeStatus/{id}")
+    public Response<Void> changeBran(@PathVariable Long id){
+        colorServices.changeStatus(id);
+        return Response.ofSucceeded();
+    }
     @GetMapping("/{id}")
     public Response<Colors> get(@PathVariable Long id) {
         return Response.ofSucceeded(colorServices.getOne(id));

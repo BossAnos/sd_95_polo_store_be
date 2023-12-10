@@ -59,6 +59,11 @@ public class MaterialController {
         }
 
     }
+    @PutMapping("changeStatus/{id}")
+    public Response<Void> changeBran(@PathVariable Long id){
+        matarialService.changeStatus(id);
+        return Response.ofSucceeded();
+    }
     @GetMapping("/{id}")
     public Response<Materials> get(@PathVariable Long id) {
         return Response.ofSucceeded(matarialService.getOne(id));

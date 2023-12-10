@@ -28,4 +28,6 @@ public interface ColorServices {
     Colors findById(Long id);
 
     void deleteColorsByIds(List<Long> ids);
+
+    public void changeStatus(Long id);
 }
