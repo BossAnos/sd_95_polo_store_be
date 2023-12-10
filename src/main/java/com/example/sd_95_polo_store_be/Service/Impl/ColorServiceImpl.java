@@ -110,4 +110,16 @@ public class ColorServiceImpl implements ColorServices {
             throw new IllegalArgumentException("Danh sách ID không hợp lệ");
         }
     }
+
+    @Override
+    public void changeStatus(Long id) {
+        var brand = colorRepository.findById(id).orElseThrow();
+        if(brand.getStatus() == 1){
+            brand.setStatus(0);
+            colorRepository.save(brand);
+        }else {
+            brand.setStatus(1);
+        }
+    }
+
 }

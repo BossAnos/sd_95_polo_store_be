@@ -18,4 +18,6 @@ public interface SizeService {
     boolean isSize(Sizes sizes);
 
     void deleteSizeByIds(List<Integer> ids);
+
+    public void changeStatus(Long id);
 }

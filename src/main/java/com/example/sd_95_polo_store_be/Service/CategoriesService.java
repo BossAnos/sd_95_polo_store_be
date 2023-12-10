@@ -20,4 +20,5 @@ public interface CategoriesService {
     boolean isCategoriesDataDuplicate(Categories categories);
     Categories findById(Long id);
     void deleteCategoriesByIds(List<Long> ids);
+    public void changeStatus(Long id);
 }

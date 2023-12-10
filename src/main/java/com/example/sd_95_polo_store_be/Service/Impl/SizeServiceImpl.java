@@ -101,4 +101,16 @@ public class SizeServiceImpl implements SizeService {
         }
 
     }
+
+    @Override
+    public void changeStatus(Long id) {
+        var brand = sizeRepository.findById(id).orElseThrow();
+        if(brand.getStatus() == 1){
+            brand.setStatus(0);
+            sizeRepository.save(brand);
+        }else {
+            brand.setStatus(1);
+        }
+    }
+
 }

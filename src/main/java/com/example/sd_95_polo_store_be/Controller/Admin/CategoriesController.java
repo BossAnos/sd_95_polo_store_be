@@ -83,6 +83,11 @@ public class CategoriesController {
     public Response<Categories> get(@PathVariable Long id) {
         return Response.ofSucceeded(categoriesSrevice.getOne(id));
     }
+    @PutMapping("changeStatus/{id}")
+    public Response<Void> changeBran(@PathVariable Long id){
+        categoriesSrevice.changeStatus(id);
+        return Response.ofSucceeded();
+    }
 
 
 }

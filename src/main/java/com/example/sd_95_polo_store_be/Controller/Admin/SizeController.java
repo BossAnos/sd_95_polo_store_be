@@ -59,6 +59,11 @@ public class SizeController {
         }
 
     }
+    @PutMapping("changeStatus/{id}")
+    public Response<Void> changeBran(@PathVariable Long id){
+        sizeService.changeStatus(id);
+        return Response.ofSucceeded();
+    }
     @GetMapping("/{id}")
     public Response<Sizes> get(@PathVariable Long id) {
         return Response.ofSucceeded(sizeService.getOne(id));

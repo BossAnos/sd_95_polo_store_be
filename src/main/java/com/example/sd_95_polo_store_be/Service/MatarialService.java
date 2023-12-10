@@ -18,4 +18,6 @@ public interface MatarialService {
     void deleteMaterialByIds(List<Integer> ids);
 
     Materials getOne(Long id);
+
+    public void changeStatus(Long id);
 }

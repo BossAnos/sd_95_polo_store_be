@@ -117,4 +117,16 @@ public class CategoriesServiceImpl implements CategoriesService {
         }
 
     }
+
+    @Override
+    public void changeStatus(Long id) {
+        var brand = categoriesRepository.findById(id).orElseThrow();
+        if(brand.getStatus() == 1){
+            brand.setStatus(0);
+            categoriesRepository.save(brand);
+        }else {
+            brand.setStatus(1);
+        }
+    }
+
 }

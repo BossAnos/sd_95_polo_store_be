@@ -176,5 +176,17 @@ public class ProductServiceImpl implements ProductService {
         productDetailRepuests.forEach(request -> productDetailService.createOrUpdate(request, product.getId()));
     }
 
+    @Override
+    public void changeStatus(Long id) {
+//        var brand = productRepository.findById(id).orElseThrow();
+//        if(brand.getStatus() == 1){
+//            brand.setStatus(0);
+//            productRepository.save(brand);
+//        }else {
+//            brand.setStatus(1);
+//        }
+
+    }
+
 
 }
