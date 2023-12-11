@@ -158,11 +158,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void OrderOffline(OrderRequest orderRequest, Integer id) {
+    public OrderVnpayResponse OrderOffline(OrderRequest orderRequest, Integer id) {
         var admin = adminRepository.findById(id).orElseThrow();
         var now = OffsetDateTime.now();
         var transaction = transactionsRepository.findById(orderRequest.getTransactionId()).orElseThrow();
-        if (orderRequest.getUsername() == null || orderRequest.getUsername().isEmpty()) {
+            if (orderRequest.getUsername() == null || orderRequest.getUsername().isEmpty()) {
             orderRequest.setUsername("Khách lẻ");
         }
         if (orderRequest.getAddress() == null) {
@@ -191,6 +191,8 @@ public class OrderServiceImpl implements OrderService {
 
         List<OrderDetailRequest> orderDetailRequests = orderRequest.getOrderDetailRequest();
         orderDetailRequests.forEach(request -> orderDetailService.create(request, orders.getId()));
+
+        return generteOrder(orders);
 
     }
 

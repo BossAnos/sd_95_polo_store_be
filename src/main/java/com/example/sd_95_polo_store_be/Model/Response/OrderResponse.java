@@ -14,6 +14,7 @@ public class OrderResponse {
     private String phone;
     private String address;
     private Float totalPrice;
+    private Float shipCost;
     private String nameTransaction;
     private String note;
     private Integer status;
@@ -24,11 +25,12 @@ public class OrderResponse {
 
     private List<OrderDetailResponse> orderDetailResponse;
 
-    public OrderResponse(Integer id, String username, String phone, String address, Float totalPrice, String nameTransaction, String note, Integer status, OffsetDateTime confirmDate, OffsetDateTime successDate, OffsetDateTime shipDate, OffsetDateTime createDate) {
+    public OrderResponse(Integer id, String username, String phone, String address,Float shipCost, Float totalPrice, String nameTransaction, String note, Integer status, OffsetDateTime confirmDate, OffsetDateTime successDate, OffsetDateTime shipDate, OffsetDateTime createDate) {
         this.id = id;
         this.username = username;
         this.phone = phone;
         this.address = address;
+        this.shipCost = shipCost;
         this.totalPrice = totalPrice;
         this.nameTransaction = nameTransaction;
         this.note = note;

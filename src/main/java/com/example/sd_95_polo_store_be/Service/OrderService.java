@@ -17,5 +17,5 @@ public interface OrderService {
 
     OrderResponse getOneOrder(Integer id);
 
-    void OrderOffline(OrderRequest orderRequest, Integer id);
+    OrderVnpayResponse OrderOffline(OrderRequest orderRequest, Integer id);
 }
