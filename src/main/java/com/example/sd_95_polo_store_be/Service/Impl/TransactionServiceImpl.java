@@ -25,10 +25,12 @@ import org.slf4j.Logger;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
+
     @Value("${vnpay.redirect.url}")
+    private String redirectUrl;
     private static final Logger logger = LoggerFactory.getLogger(TransactionServiceImpl.class);
     private static final String US_ASCII = StandardCharsets.US_ASCII.toString();
-    private String redirectUrl;
+
     private Integer orderId = 0;
 
     @Autowired
