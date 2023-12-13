@@ -1,5 +1,6 @@
 package com.example.sd_95_polo_store_be.Service.Impl;
 
+import com.example.sd_95_polo_store_be.Model.Entity.OrderDetail;
 import com.example.sd_95_polo_store_be.Model.Entity.Orders;
 import com.example.sd_95_polo_store_be.Model.Request.ChangeStatusOrder;
 import com.example.sd_95_polo_store_be.Model.Request.OrderDetailRequest;
@@ -42,7 +43,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Orders> getAll() {
-        return orderRepository.findAll();
+        return orderRepository.findByOrderByCreateDateDesc();
     }
 
     @Override
@@ -84,13 +85,14 @@ public class OrderServiceImpl implements OrderService {
             }
             case 7 -> {
                 if (order.getStatus() == 1 || order.getStatus() == 3
-                        || order.getStatus() == 2 || order.getStatus() == 6)
+                        || order.getStatus() == 2 || order.getStatus() == 6 || order.getStatus() == 8)
                     order.setStatus(7);
                 order.setNote(changeStatusOrder.getNote());
                 orderRepository.save(order);
             }
             case 8 -> {
                 order.setStatus(8);
+                order.setSuccessDate(now);
                 orderRepository.save(order);
             }
         }

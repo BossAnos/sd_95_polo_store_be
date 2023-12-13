@@ -27,4 +27,6 @@ public interface OrderRepository extends JpaRepository<Orders,Integer> {
                     where o.id = :orderId
                     """)
     Optional<OrderPdfResponse> getOrderByOrderId(Integer orderId);
+
+    List<Orders> findByOrderByCreateDateDesc();
 }
