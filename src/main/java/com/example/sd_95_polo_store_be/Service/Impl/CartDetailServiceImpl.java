@@ -45,11 +45,23 @@ public class CartDetailServiceImpl implements CartDetailServie {
         Optional<ProductDetail> optionalProductDetail = productDetailRepository.findById(cartRequest.getProductDetailId());
         if (optionalProductDetail.isPresent()) {
             ProductDetail productDetail = optionalProductDetail.get();
+
+            // Kiểm tra số lượng tồn của sản phẩm
+            if (productDetail.getQuantity() < cartRequest.getQuantity()) {
+                throw new IllegalArgumentException("Số lượng trong giỏ hàng vượt quá số lượng tồn");
+            }
+
             Optional<CartDetail> optionalCartDetail = cartDetailRepository.findCartDetailByCartAndAndProductDetail(cart, productDetail);
             if (optionalCartDetail.isPresent()) {
                 CartDetail cartDetail = optionalCartDetail.get();
                 Integer currentQuantity = cartDetail.getQuantity();
                 Integer newQuantity = currentQuantity + cartRequest.getQuantity();
+
+                // Kiểm tra số lượng tồn sau khi thêm vào giỏ hàng
+                if (productDetail.getQuantity() < newQuantity) {
+                    throw new IndexOutOfBoundsException("Số lượng trong giỏ hàng vượt quá số lượng tồn");
+                }
+
                 cartDetail.setQuantity(newQuantity);
                 cartDetailRepository.save(cartDetail);
             } else {
@@ -58,6 +70,12 @@ public class CartDetailServiceImpl implements CartDetailServie {
                 newCartDetail.setStatus(0);
                 newCartDetail.setCart(cart);
                 newCartDetail.setProductDetail(productDetail);
+
+                // Kiểm tra số lượng tồn khi thêm mới vào giỏ hàng
+                if (productDetail.getQuantity() < cartRequest.getQuantity()) {
+                    throw new IllegalArgumentException("Số lượng trong giỏ hàng vượt quá số lượng tồn");
+                }
+
                 cartDetailRepository.save(newCartDetail);
             }
         }

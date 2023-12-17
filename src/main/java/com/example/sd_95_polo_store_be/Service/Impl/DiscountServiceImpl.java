@@ -1,5 +1,6 @@
 package com.example.sd_95_polo_store_be.Service.Impl;
 
+import com.example.sd_95_polo_store_be.Model.Entity.Discount;
 import com.example.sd_95_polo_store_be.Model.Entity.Products;
 import com.example.sd_95_polo_store_be.Model.Request.AddDiscountToProductRequest;
 import com.example.sd_95_polo_store_be.Model.Response.DiscountResponse;
@@ -28,6 +29,11 @@ public class DiscountServiceImpl implements DiscountService {
     @Override
     public void expireDiscounts() {
         discountRepository.expireActiveDiscounts();
+    }
+
+    @Override
+    public List<Discount> getAll() {
+        return discountRepository.findAll();
     }
 
     @Override

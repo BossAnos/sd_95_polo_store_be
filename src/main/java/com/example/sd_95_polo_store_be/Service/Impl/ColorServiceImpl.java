@@ -119,6 +119,7 @@ public class ColorServiceImpl implements ColorServices {
             colorRepository.save(brand);
         }else {
             brand.setStatus(1);
+            colorRepository.save(brand);
         }
     }
 

@@ -1,5 +1,6 @@
 package com.example.sd_95_polo_store_be.Controller.Admin;
 
+import com.example.sd_95_polo_store_be.Model.Entity.Discount;
 import com.example.sd_95_polo_store_be.Model.Request.AddDiscountToProductRequest;
 import com.example.sd_95_polo_store_be.Model.Response.DiscountResponse;
 import com.example.sd_95_polo_store_be.Service.DiscountService;
@@ -18,6 +19,11 @@ public class DiscountController {
     @GetMapping
     public Response<List<DiscountResponse>> gets(){
         return Response.ofSucceeded(discountService.gets());
+    }
+
+    @GetMapping("/getAll")
+    public Response<List<Discount>> getAll(){
+        return Response.ofSucceeded(discountService.getAll());
     }
     @PostMapping()
     public Response<Void> addDiscoutToProduct(@RequestBody AddDiscountToProductRequest addDiscountToProductRequest){
