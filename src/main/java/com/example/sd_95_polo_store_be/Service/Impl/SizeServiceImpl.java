@@ -110,6 +110,7 @@ public class SizeServiceImpl implements SizeService {
             sizeRepository.save(brand);
         }else {
             brand.setStatus(1);
+            sizeRepository.save(brand);
         }
     }
 

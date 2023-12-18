@@ -99,6 +99,7 @@ public class MatarialServiceImpl implements MatarialService {
            matarialRepository.save(brand);
         }else {
             brand.setStatus(1);
+            matarialRepository.save(brand);
         }
     }
 
