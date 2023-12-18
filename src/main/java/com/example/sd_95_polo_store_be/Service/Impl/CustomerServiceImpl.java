@@ -20,4 +20,14 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setAddress(addressService.getForCustomer(id));
         return customer;
     }
+
+    @Override
+    public boolean isEmailAvailable(String email) {
+        return !customerRepository.existsByEmail(email);
+    }
+
+    @Override
+    public boolean isPhoneAvailable(String phone) {
+        return !customerRepository.existsByPhone(phone);
+    }
 }

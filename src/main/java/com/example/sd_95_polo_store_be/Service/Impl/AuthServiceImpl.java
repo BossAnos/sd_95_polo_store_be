@@ -13,6 +13,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.OffsetDateTime;
+
 @Service
 public class AuthServiceImpl implements AuthSerivce {
 
@@ -37,6 +39,22 @@ public class AuthServiceImpl implements AuthSerivce {
         Customers customers = customerRepository.findByEmailAndPassword(request.getEmail(), request.getPassword());
         System.out.println(customers.getId());
         return customerService.getOne(customers.getId());
+    }
+
+    @Override
+    public Customers signUpCustomers(Customers customers) {
+        var now = OffsetDateTime.now();
+        Customers newCustomers = new Customers();
+        newCustomers.setName(customers.getName());
+        newCustomers.setEmail(customers.getEmail());
+        newCustomers.setPhone(customers.getPhone());
+        newCustomers.setAvatar(customers.getAvatar());
+        newCustomers.setPassword(customers.getPassword());
+        newCustomers.setStatus("1");
+        newCustomers.setCreatedAt(now);
+        newCustomers.setUpdatedAt(now);
+        customerRepository.save(newCustomers);
+        return newCustomers;
     }
 
 
