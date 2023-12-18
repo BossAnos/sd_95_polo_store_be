@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface CategoriesRepository extends JpaRepository<Categories,Long> {
     boolean existsByName(String name);
     Optional<Categories> findById(Long id);
-    List<Categories> findByOrderByCreateDateDesc();
+    List<Categories> findAllByOrderByCreateDateDesc();
 }

@@ -28,7 +28,7 @@ public class CategoriesServiceImpl implements CategoriesService {
 
     @Override
     public List<Categories> getCategoryByStatus() {
-        return categoriesRepository.findByOrderByCreateDateDesc();
+        return categoriesRepository.findAllByOrderByCreateDateDesc();
     }
 
     @Override

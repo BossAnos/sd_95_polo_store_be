@@ -13,6 +13,6 @@ import java.util.Optional;
 public interface MatarialRepository extends JpaRepository<Materials,Integer> {
 
     Optional<Materials> findByName(String name);
-    List<Materials> findByOrderByCreateDateDesc();
+    List<Materials> findAllByOrderByCreateDateDesc();
     Optional<Materials> findById(Long id);
 }

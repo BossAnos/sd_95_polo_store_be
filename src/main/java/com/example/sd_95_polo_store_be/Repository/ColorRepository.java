@@ -13,5 +13,5 @@ public interface ColorRepository extends JpaRepository<Colors, Long> {
     boolean existsByName(String name);
 //    void deleteAllById(List<Long> ids);
 Optional<Colors> findById(Long id);
-    List<Colors> findByOrderByCreateDateDesc();
+    List<Colors> findAllByOrderByCreateDateDesc();
 }
