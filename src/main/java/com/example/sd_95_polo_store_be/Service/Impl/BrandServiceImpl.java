@@ -101,6 +101,7 @@ public class BrandServiceImpl implements BrandService {
             brandRepository.save(brand);
         }else {
             brand.setStatus(1);
+            brandRepository.save(brand);
         }
     }
 

@@ -126,6 +126,7 @@ public class CategoriesServiceImpl implements CategoriesService {
             categoriesRepository.save(brand);
         }else {
             brand.setStatus(1);
+            categoriesRepository.save(brand);
         }
     }
 
