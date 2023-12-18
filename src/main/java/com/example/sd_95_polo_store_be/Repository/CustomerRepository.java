@@ -28,4 +28,7 @@ public interface CustomerRepository extends JpaRepository<Customers, Integer> {
               where c.id = :id and c.status = '1'
             """)
    Optional<CustomerResponse> getOneCustomer(Integer id);
+
+    boolean existsByEmail(String email);
+    boolean existsByPhone(String phone);
 }

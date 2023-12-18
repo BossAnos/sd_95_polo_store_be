@@ -1,5 +1,6 @@
 package com.example.sd_95_polo_store_be.Controller;
 
+import com.example.sd_95_polo_store_be.Model.Entity.Customers;
 import com.example.sd_95_polo_store_be.Model.Request.LoginRequest;
 import com.example.sd_95_polo_store_be.Model.Response.AdminResponse;
 import com.example.sd_95_polo_store_be.Model.Response.CustomerResponse;
@@ -26,5 +27,10 @@ public class AuthController {
     @PostMapping("/loginCustomer")
     public Response<CustomerResponse> loginCustomer(@RequestBody LoginRequest loginRequest){
         return Response.ofSucceeded(authSerivce.customerLogin(loginRequest));
+    }
+
+    @PostMapping("/signUpCustomer")
+    public Response<Customers> signUpCustomer(@RequestBody Customers customers){
+        return Response.ofSucceeded(authSerivce.signUpCustomers(customers));
     }
 }
