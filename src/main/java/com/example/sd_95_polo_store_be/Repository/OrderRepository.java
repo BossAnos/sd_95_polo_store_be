@@ -18,6 +18,7 @@ public interface OrderRepository extends JpaRepository<Orders,Integer> {
             (o.id, o.username,o.phone,o.address,o.shipCost,o.totalPrice,o.transactions.name,o.note,o.status,o.confirmDate,o.successDate,o.shipDate,o.createDate)
              from Orders o
              where o.id = :id
+              order by o.createDate desc
             """)
     Optional<OrderResponse> getId(Integer id);
 

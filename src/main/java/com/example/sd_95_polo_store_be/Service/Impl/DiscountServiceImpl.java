@@ -53,4 +53,17 @@ public class DiscountServiceImpl implements DiscountService {
     ;
         }
     }
+
+    @Override
+    public Discount addDiscount(Discount discount) {
+        Discount newDiscount = new Discount();
+        newDiscount.setDiscount(discount.getDiscount());
+        newDiscount.setStatus(1);
+        newDiscount.setEndDate(discount.getEndDate());
+        newDiscount.setStartDate(discount.getStartDate());
+        newDiscount.setName(discount.getName());
+        newDiscount.setDescription(discount.getDescription());
+        discountRepository.save(newDiscount);
+        return newDiscount;
+    }
 }

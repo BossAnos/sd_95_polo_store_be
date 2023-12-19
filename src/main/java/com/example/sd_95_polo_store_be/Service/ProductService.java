@@ -13,7 +13,7 @@ import java.util.List;
 public interface ProductService {
     List<ProductForAdminResponse> getAllProductForAdmin();
     List<ProductForAdminResponse> getAllProductForUser();
-
+    List<ProductForAdminResponse> getAllProduct();
     void addProduct(ProductRequset productRequset);
 
     public GetOneProductResponse getOne(Integer id);

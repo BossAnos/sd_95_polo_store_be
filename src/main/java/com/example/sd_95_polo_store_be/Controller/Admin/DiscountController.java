@@ -17,17 +17,23 @@ public class DiscountController {
     private DiscountService discountService;
 
     @GetMapping
-    public Response<List<DiscountResponse>> gets(){
+    public Response<List<DiscountResponse>> gets() {
         return Response.ofSucceeded(discountService.gets());
     }
 
     @GetMapping("/getAll")
-    public Response<List<Discount>> getAll(){
+    public Response<List<Discount>> getAll() {
         return Response.ofSucceeded(discountService.getAll());
     }
+
     @PostMapping()
-    public Response<Void> addDiscoutToProduct(@RequestBody AddDiscountToProductRequest addDiscountToProductRequest){
+    public Response<Void> addDiscoutToProduct(@RequestBody AddDiscountToProductRequest addDiscountToProductRequest) {
         discountService.addDiscount(addDiscountToProductRequest);
         return Response.ofSucceeded();
     }
+
+        @PostMapping("/addDiscount")
+        public Response<Discount> addDiscout(@RequestBody Discount discount) {
+            return Response.ofSucceeded(discountService.addDiscount(discount));
+        }
 }

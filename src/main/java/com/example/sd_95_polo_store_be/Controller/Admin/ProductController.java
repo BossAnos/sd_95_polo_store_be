@@ -30,6 +30,11 @@ public class ProductController {
         return Response.ofSucceeded(productService.getAllProductForUser());
     }
 
+    @GetMapping("/discount")
+    public Response<List<ProductForAdminResponse>> getDiscount() {
+        return Response.ofSucceeded(productService.getAllProduct());
+    }
+
     @PostMapping
     public Response<Products> addProduct(@RequestBody ProductRequset requset) {
         try {
