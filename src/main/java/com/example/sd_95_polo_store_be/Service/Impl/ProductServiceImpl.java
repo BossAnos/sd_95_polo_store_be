@@ -61,7 +61,7 @@ public class ProductServiceImpl implements ProductService {
         discountService.expireDiscounts();
         productRepository.updateProductsForExpiredDiscounts();
         var productDiscount = productRepository.getProductDiscounts();
-        var products = productRepository.getAllProductByCreateDateDesc();
+        var products = productRepository.getAllProductToDiscount();
         var productStatusActive = products.stream().filter(product -> !product.getStatus().equals(0)).toList();
         for (ProductForAdminResponse product : productStatusActive) {
             var price = productRepository.getPrice(product.getId());
@@ -84,6 +84,20 @@ public class ProductServiceImpl implements ProductService {
         }
 
         return productStatusActive;
+    }
+
+    @Override
+    public List<ProductForAdminResponse> getAllProduct() {
+        discountService.expireDiscounts();
+        productRepository.updateProductsForExpiredDiscounts();
+        var product = productRepository.getAllProductToDiscount();
+        for (ProductForAdminResponse productForAdminResponse : product) {
+            var image = productRepository.getImage(productForAdminResponse.getId());
+            productForAdminResponse.setImage(image);
+            var price = productRepository.getPrice(productForAdminResponse.getId());
+        }
+
+        return product;
     }
 
 
