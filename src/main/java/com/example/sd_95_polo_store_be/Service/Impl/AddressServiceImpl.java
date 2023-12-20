@@ -50,6 +50,6 @@ public class AddressServiceImpl implements AddressService {
     }
 
     private AddressRequest gerateAddress(Address address){
-        return new AddressRequest().setCity(address.getCity()).setDistrict(address.getDistrict()).setWard(address.getWard()).setFullAddress(address.getFullAddress());
+        return new AddressRequest().setId(address.getId()).setCity(address.getCity()).setDistrict(address.getDistrict()).setWard(address.getWard()).setFullAddress(address.getFullAddress());
     }
 }

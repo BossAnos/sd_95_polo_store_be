@@ -84,13 +84,23 @@ public class CartDetailServiceImpl implements CartDetailServie {
     @Override
     public void changeQuantityCart(Long id, ChangeQuantityCartRequest quantityCartRequest) {
         var cartDetail = cartDetailRepository.findById(id).orElseThrow();
+        var product = productDetailRepository.findById(quantityCartRequest.getIdProductDetail()).orElseThrow();
+
+        // Kiểm tra nếu số lượng trong giỏ hàng lớn hơn số lượng của sản phẩm
+        if (quantityCartRequest.getQuantity() > product.getQuantity()) {
+            throw new IllegalArgumentException("Số lượng trong giỏ hàng lớn hơn số lượng của sản phẩm");
+        }
+
+        if (quantityCartRequest.getQuantity() < 0) {
+            throw new IllegalArgumentException("Số lượng không hợp lệ");
+        }
+
         if (quantityCartRequest.getQuantity() == 0) {
             cartDetailRepository.delete(cartDetail);
         } else {
             cartDetail.setQuantity(quantityCartRequest.getQuantity());
             cartDetailRepository.save(cartDetail);
         }
-
     }
 
     @Override
