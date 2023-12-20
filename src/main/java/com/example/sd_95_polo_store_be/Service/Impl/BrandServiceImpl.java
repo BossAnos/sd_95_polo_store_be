@@ -32,7 +32,7 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public List<Brands> getBardByStatus() {
-        return brandRepository.findByOrderByCreateDateDesc();
+        return brandRepository.findAllByOrderByCreateDateDesc();
     }
 
     @Override
@@ -101,6 +101,7 @@ public class BrandServiceImpl implements BrandService {
             brandRepository.save(brand);
         }else {
             brand.setStatus(1);
+            brandRepository.save(brand);
         }
     }
 

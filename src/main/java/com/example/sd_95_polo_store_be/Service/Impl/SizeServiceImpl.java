@@ -27,7 +27,7 @@ public class SizeServiceImpl implements SizeService {
 
     @Override
     public List<Sizes> getSizesByStatus() {
-        return sizeRepository.findByOrderByCreateDateDesc();
+        return sizeRepository.findAllByOrderByCreateDateDesc();
     }
 
     @Override
@@ -110,6 +110,7 @@ public class SizeServiceImpl implements SizeService {
             sizeRepository.save(brand);
         }else {
             brand.setStatus(1);
+            sizeRepository.save(brand);
         }
     }
 

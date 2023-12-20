@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 public interface SizeRepository extends JpaRepository<Sizes,Integer> {
     Optional<Sizes> findByName(String name);
-    List<Sizes> findByOrderByCreateDateDesc();
+    List<Sizes> findAllByOrderByCreateDateDesc();
     Optional<Sizes> findById(Long id);
     List<Sizes> findByStatusOrderByCreateDateDesc(Integer status);
 }

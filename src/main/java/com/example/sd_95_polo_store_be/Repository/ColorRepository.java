@@ -16,4 +16,5 @@ public interface ColorRepository extends JpaRepository<Colors, Long> {
 Optional<Colors> findById(Long id);
     List<Colors> findByOrderByCreateDateDesc();
     List<Colors> findByStatusOrderByCreateDateDesc(Long status);
+    List<Colors> findAllByOrderByCreateDateDesc();
 }

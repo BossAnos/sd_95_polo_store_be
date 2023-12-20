@@ -19,7 +19,7 @@ public class MatarialServiceImpl implements MatarialService {
 
     @Override
     public List<Materials> getMaterialsByStatus() {
-        return matarialRepository.findByOrderByCreateDateDesc();
+        return matarialRepository.findAllByOrderByCreateDateDesc();
     }
 
     @Override
@@ -99,6 +99,7 @@ public class MatarialServiceImpl implements MatarialService {
            matarialRepository.save(brand);
         }else {
             brand.setStatus(1);
+            matarialRepository.save(brand);
         }
     }
 
