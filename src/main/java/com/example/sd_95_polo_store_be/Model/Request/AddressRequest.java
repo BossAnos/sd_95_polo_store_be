@@ -7,6 +7,8 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class AddressRequest {
 
+    private Integer id;
+
     private String city;
 
     private String district;
