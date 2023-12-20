@@ -12,8 +12,11 @@ import java.util.List;
 
 public interface ProductService {
     List<ProductForAdminResponse> getAllProductForAdmin();
+
     List<ProductForAdminResponse> getAllProductForUser();
+
     List<ProductForAdminResponse> getAllProduct();
+
     void addProduct(ProductRequset productRequset);
 
     public GetOneProductResponse getOne(Integer id);
@@ -23,6 +26,9 @@ public interface ProductService {
     void create(ProductRequest productRequest);
 
     void update(Integer productId, ProductRequest productRequest);
-    public void changeStatus(Long id);
+
+    public void changeStatus(Integer id);
+
+    void changeSatatusDiscount(Integer id);
 
 }

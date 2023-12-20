@@ -10,6 +10,8 @@ import com.example.sd_95_polo_store_be.Service.DiscountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
@@ -65,5 +67,21 @@ public class DiscountServiceImpl implements DiscountService {
         newDiscount.setDescription(discount.getDescription());
         discountRepository.save(newDiscount);
         return newDiscount;
+    }
+
+    @Override
+    public void changeStatus(Integer id) {
+        var discount = discountRepository.findById(id).orElseThrow();
+        if (discount.getStatus() == 0 ){
+            discount.setStatus(1);
+            discountRepository.save(discount);
+        } else if(discount.getStatus() == 1){
+            discount.setStatus(0);
+            discountRepository.save(discount);
+        } else  if (discount.getStatus() == 2) {
+
+            discount.setStatus(1);
+            discountRepository.save(discount);
+        }
     }
 }

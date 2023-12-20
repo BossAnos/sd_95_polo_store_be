@@ -26,10 +26,10 @@ public class ClolorController {
     public Response<List<Colors>> getsByStatus() {
         return Response.ofSucceeded(colorServices.getColorByStatus());
     }
-//    @GetMapping("/getall")
-//    public Response<List<Colors>> getAll() {
-//        return Response.ofSucceeded(colorServices.getAllColor());
-//    }
+    @GetMapping("/getAll")
+    public Response<List<Colors>> getAll() {
+        return Response.ofSucceeded(colorServices.gets());
+    }
 
     @PostMapping("/add")
     public Response<Colors> create(@RequestBody Colors color) {

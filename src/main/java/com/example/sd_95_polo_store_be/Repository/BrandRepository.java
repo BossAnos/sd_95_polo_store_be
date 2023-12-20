@@ -1,6 +1,7 @@
 package com.example.sd_95_polo_store_be.Repository;
 
 import com.example.sd_95_polo_store_be.Model.Entity.Brands;
+import com.example.sd_95_polo_store_be.Model.Entity.Colors;
 import com.example.sd_95_polo_store_be.Model.Entity.Materials;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -13,4 +14,5 @@ public interface BrandRepository extends JpaRepository<Brands,Integer> {
     Optional<Brands> findByName(String name);
     List<Brands> findByOrderByCreateDateDesc();
     Optional<Brands> findById(Long id);
+    List<Brands> findByStatusOrderByCreateDateDesc(Integer status);
 }

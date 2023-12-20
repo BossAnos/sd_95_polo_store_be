@@ -54,5 +54,16 @@ public class OrderController {
         System.out.println("ccccc");
     }
 
+    @GetMapping("/byTimeRange")
+    public Response<List<Orders>> getOrdersByTimeRange(
+            @RequestParam String timeRange) {
+        try {
+            List<Orders> orders = orderService.getOrdersByTimeRange(timeRange);
+            return Response.ofSucceeded(orders);
+        } catch (Exception e) {
+            return Response.ofError("Lỗi");
+        }
+    }
+
 
 }

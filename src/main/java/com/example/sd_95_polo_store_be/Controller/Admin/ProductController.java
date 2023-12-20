@@ -62,6 +62,18 @@ public class ProductController {
         return Response.ofSucceeded(productService.getOne(id));
     }
 
+    @PutMapping("changeStatus/{id}")
+    public Response<Void> changeStatus(@PathVariable Integer id) {
+        productService.changeStatus(id);
+        return Response.ofSucceeded();
+    }
+
+    @PutMapping("changeStautsDiscount/{id}")
+    public Response<Void> changeStautsDiscount(@PathVariable Integer id) {
+        productService.changeSatatusDiscount(id);
+        return Response.ofSucceeded();
+    }
+
     @GetMapping("/productDetail/{id}")
     public Response<GetOneProductResponse> getProductDetaul(@PathVariable Integer id) {
         return Response.ofSucceeded(productService.getProductDetail(id));
