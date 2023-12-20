@@ -13,6 +13,7 @@ import java.util.List;
 @Service
 public interface ColorServices {
     List<Colors> getColorByStatus();
+    List<Colors> gets();
     ArrayList<Colors> getAllColor();
 
     Colors saveColor(Colors color);

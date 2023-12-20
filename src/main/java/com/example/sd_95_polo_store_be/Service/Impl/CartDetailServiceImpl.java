@@ -82,6 +82,13 @@ public class CartDetailServiceImpl implements CartDetailServie {
     }
 
     @Override
+    public void delete(Long cartDetailId) {
+        var cartDetail = cartDetailRepository.findById(cartDetailId)
+                .orElseThrow(() -> new IndexOutOfBoundsException("Cart not found"));
+        cartDetailRepository.delete(cartDetail);
+    }
+
+    @Override
     public void changeQuantityCart(Long id, ChangeQuantityCartRequest quantityCartRequest) {
         var cartDetail = cartDetailRepository.findById(id).orElseThrow();
         var product = productDetailRepository.findById(quantityCartRequest.getIdProductDetail()).orElseThrow();

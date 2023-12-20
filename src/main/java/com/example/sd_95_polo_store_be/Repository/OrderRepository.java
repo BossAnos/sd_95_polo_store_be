@@ -7,6 +7,7 @@ import com.example.sd_95_polo_store_be.Service.ExportOrderPdfService;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,4 +31,7 @@ public interface OrderRepository extends JpaRepository<Orders,Integer> {
     Optional<OrderPdfResponse> getOrderByOrderId(Integer orderId);
 
     List<Orders> findByOrderByCreateDateDesc();
+
+    List<Orders> findByCreateDateAfter(OffsetDateTime createDate);
+
 }

@@ -20,10 +20,10 @@ public class BrandController {
     @Autowired
     private BrandService brandService;
 
-//    @GetMapping("")
-//    public Response<List<Brands>> gets() {
-//        return Response.ofSucceeded(brandService.gets());
-//    }
+    @GetMapping("/getAll")
+    public Response<List<Brands>> gets() {
+        return Response.ofSucceeded(brandService.gets());
+    }
 
     @GetMapping("")
     public Response<List<Brands>> getsByStatus() {

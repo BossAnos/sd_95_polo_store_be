@@ -21,4 +21,5 @@ public interface CategoriesService {
     Categories findById(Long id);
     void deleteCategoriesByIds(List<Long> ids);
     public void changeStatus(Long id);
+    List<Categories> gets();
 }

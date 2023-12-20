@@ -22,10 +22,10 @@ public class SizeController {
     public Response<List<Sizes>> getsByStatus() {
         return Response.ofSucceeded(sizeService.getSizesByStatus());
     }
-//    @GetMapping("")
-//    public Response<List<Sizes>> gets() {
-//        return Response.ofSucceeded(sizeService.gets());
-//    }
+    @GetMapping("/getAll")
+    public Response<List<Sizes>> gets() {
+        return Response.ofSucceeded(sizeService.gets());
+    }
 
     @PostMapping("/add")
     public Response<Sizes> createOrUpdateSize(@RequestBody Sizes sizes) {

@@ -43,6 +43,13 @@ public class CartController {
         return Response.ofSucceeded();
     }
 
+    @PutMapping("delete/{id}")
+    public Response<Void> delete(@PathVariable Long id) {
+        cartDetailServie.delete(id);
+        return Response.ofSucceeded();
+    }
+
+
     @GetMapping("order/{id}")
     public Response<CartResponse> getOneByTrangThai(@PathVariable Integer id) {
         return Response.ofSucceeded(cartService.getOneByStatus(id));

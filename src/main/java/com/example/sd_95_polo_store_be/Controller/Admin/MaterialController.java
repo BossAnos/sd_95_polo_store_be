@@ -22,10 +22,10 @@ public class MaterialController {
         return Response.ofSucceeded(matarialService.getMaterialsByStatus());
     }
 
-//    @GetMapping("")
-//    public Response<List<Materials>> gets() {
-//        return Response.ofSucceeded(matarialService.gets());
-//    }
+    @GetMapping("/getAll")
+    public Response<List<Materials>> gets() {
+        return Response.ofSucceeded(matarialService.gets());
+    }
 
     @PostMapping("/add")
     public Response<Materials> createOrUpdateMaterial(@RequestBody Materials materials) {

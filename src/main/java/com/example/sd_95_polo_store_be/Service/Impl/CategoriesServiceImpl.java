@@ -130,4 +130,9 @@ public class CategoriesServiceImpl implements CategoriesService {
         }
     }
 
+    @Override
+    public List<Categories> gets() {
+        return categoriesRepository.findByStatusOrderByCreateDateDesc(1L);
+    }
+
 }

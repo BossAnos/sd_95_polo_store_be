@@ -15,4 +15,6 @@ public interface MatarialRepository extends JpaRepository<Materials,Integer> {
     Optional<Materials> findByName(String name);
     List<Materials> findAllByOrderByCreateDateDesc();
     Optional<Materials> findById(Long id);
+
+    List<Materials> findByStatusOrderByCreateDateDesc(Integer status);
 }

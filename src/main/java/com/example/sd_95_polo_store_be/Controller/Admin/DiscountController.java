@@ -8,6 +8,7 @@ import com.example.sd_95_polo_store_be.common.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -29,6 +30,12 @@ public class DiscountController {
     @PostMapping()
     public Response<Void> addDiscoutToProduct(@RequestBody AddDiscountToProductRequest addDiscountToProductRequest) {
         discountService.addDiscount(addDiscountToProductRequest);
+        return Response.ofSucceeded();
+    }
+
+    @PutMapping("changeStatus/{id}")
+    public Response<Void> changeStatus(@PathVariable Integer id) {
+        discountService.changeStatus(id);
         return Response.ofSucceeded();
     }
 

@@ -191,15 +191,25 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void changeStatus(Long id) {
-//        var brand = productRepository.findById(id).orElseThrow();
-//        if(brand.getStatus() == 1){
-//            brand.setStatus(0);
-//            productRepository.save(brand);
-//        }else {
-//            brand.setStatus(1);
-//        }
+    public void changeStatus(Integer id) {
+        var products = productRepository.findById(id).orElseThrow();
+        if(products.getStatus() == 1 || products.getStatus() == 3){
+            products.setStatus(0);
+            productRepository.save(products);
+        }else if (products.getStatus() == 0) {
+            products.setStatus(1);
+            productRepository.save(products);
+        }
 
+    }
+
+    @Override
+    public void changeSatatusDiscount(Integer id) {
+        var products = productRepository.findById(id).orElseThrow();
+        if(products.getStatus() == 3){
+            products.setStatus(1);
+            productRepository.save(products);
+        }
     }
 
 

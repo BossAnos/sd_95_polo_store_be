@@ -24,10 +24,10 @@ public class CategoriesController {
         return Response.ofSucceeded(categoriesSrevice.getCategoryByStatus());
     }
 
-//    @GetMapping("/getall")
-//    public Response<List<Categories>> getAll() {
-//        return Response.ofSucceeded(categoriesSrevice.getAllCategories());
-//    }
+    @GetMapping("/getAll")
+    public Response<List<Categories>> getAll() {
+        return Response.ofSucceeded(categoriesSrevice.gets());
+    }
 
     @PostMapping("/add")
     public Response<Categories> create(@RequestBody Categories categories) {

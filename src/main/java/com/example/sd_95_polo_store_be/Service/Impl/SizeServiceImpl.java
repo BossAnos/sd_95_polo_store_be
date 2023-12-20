@@ -32,7 +32,7 @@ public class SizeServiceImpl implements SizeService {
 
     @Override
     public List<Sizes> gets() {
-        return sizeRepository.findAll();
+        return sizeRepository.findByStatusOrderByCreateDateDesc(1);
     }
 
     @Override

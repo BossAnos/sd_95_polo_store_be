@@ -19,4 +19,6 @@ public interface OrderService {
     OrderResponse getOneOrder(Integer id);
 
     OrderVnpayResponse OrderOffline(OrderRequest orderRequest, Integer id);
+
+    public List<Orders> getOrdersByTimeRange(String timeRange);
 }

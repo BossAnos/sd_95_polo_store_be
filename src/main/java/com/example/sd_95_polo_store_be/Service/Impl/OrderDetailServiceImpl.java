@@ -25,6 +25,12 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         var now = OffsetDateTime.now();
         var order = orderRepository.findById(id) .orElseThrow(() -> new IllegalArgumentException("Invoice not found with ID: " + id));
         var productDetail = productDetailRepository.findById(orderDetailRequest.getProductDetailId()).orElseThrow();
+        Integer quantityOrdered = orderDetailRequest.getQuantity();
+        Integer currentStock = productDetail.getQuantity();
+
+        if (quantityOrdered > currentStock) {
+            throw new IllegalArgumentException("Insufficient stock for the product");
+        }
         OrderDetail orderDetail = new OrderDetail();
         orderDetail.setProductDetail(productDetail);
         orderDetail.setPrice(orderDetailRequest.getPrice());
@@ -33,6 +39,8 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         orderDetail.setUpdatedAt(now);
         orderDetail.setStatus(1);
         orderDetail.setOrders(order);
+        productDetail.setQuantity(currentStock - quantityOrdered);
+        productDetailRepository.save(productDetail);
       return orderDetailRepository.save(orderDetail);
     }
 }

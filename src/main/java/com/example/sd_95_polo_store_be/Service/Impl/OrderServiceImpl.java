@@ -198,6 +198,19 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
+    @Override
+    public List<Orders> getOrdersByTimeRange(String timeRange) {
+        switch (timeRange) {
+            case "15days":
+                return orderRepository.findByCreateDateAfter(OffsetDateTime.now().minusDays(15));
+            case "30days":
+                return orderRepository.findByCreateDateAfter(OffsetDateTime.now().minusDays(30));
+            default:
+
+                return orderRepository.findAll();
+        }
+    }
+
     private Orders getById(Integer id) {
         return orderRepository.findById(id)
                 .orElseThrow(() -> new IndexOutOfBoundsException("Order not found"));
