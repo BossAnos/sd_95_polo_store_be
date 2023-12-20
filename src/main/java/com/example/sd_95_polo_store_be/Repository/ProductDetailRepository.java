@@ -27,7 +27,7 @@ public interface ProductDetailRepository extends JpaRepository<ProductDetail, In
                 select new com.example.sd_95_polo_store_be.Model.Response.ProductDetailResponse(pd.id, pd.sizes.id, pd.colors.id ,pd.products.name, pd.sizes.name,pd.colors.name,pd.quantity,pd.cost,pd.price,pd.weight,pd.status,pd.products.discount.id,pd.products.discount.discount,pd.products.status)
                 from ProductDetail pd
                 where 
-               pd.status <> 0
+               pd.status <> 0 and pd.products.status <> 0
             """)
     List<ProductDetailResponse> getAllProductDetail();
 
