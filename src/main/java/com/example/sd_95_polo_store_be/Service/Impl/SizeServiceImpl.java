@@ -27,7 +27,7 @@ public class SizeServiceImpl implements SizeService {
 
     @Override
     public List<Sizes> getSizesByStatus() {
-        return sizeRepository.findByOrderByCreateDateDesc();
+        return sizeRepository.findAllByOrderByCreateDateDesc();
     }
 
     @Override
